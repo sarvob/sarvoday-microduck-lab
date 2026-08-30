@@ -1,0 +1,393 @@
+{
+  "schema_version": "2",
+  "name": "Microduck School",
+  "references": [
+    {
+      "id": "ref_lesson",
+      "role": "reference",
+      "label": "Lesson",
+      "asset_type": "text",
+      "inputs": [
+        {
+          "id": "in",
+          "label": "Lesson",
+          "type": "text"
+        }
+      ],
+      "outputs": [
+        {
+          "id": "out",
+          "label": "Lesson",
+          "type": "text"
+        }
+      ],
+      "data": {
+        "out": "teach it to turn around and walk to a marker behind it, without falling over"
+      },
+      "x": 40,
+      "y": 60,
+      "width": 260,
+      "height": 160
+    },
+    {
+      "id": "ref_gens",
+      "role": "reference",
+      "label": "Generations",
+      "asset_type": "number",
+      "inputs": [
+        {
+          "id": "in",
+          "label": "Generations",
+          "type": "number"
+        }
+      ],
+      "outputs": [
+        {
+          "id": "out",
+          "label": "Generations",
+          "type": "number"
+        }
+      ],
+      "data": {
+        "out": 8
+      },
+      "x": 40,
+      "y": 260,
+      "width": 260,
+      "height": 110
+    },
+    {
+      "id": "ref_seed",
+      "role": "reference",
+      "label": "Seed",
+      "asset_type": "number",
+      "inputs": [
+        {
+          "id": "in",
+          "label": "Seed",
+          "type": "number"
+        }
+      ],
+      "outputs": [
+        {
+          "id": "out",
+          "label": "Seed",
+          "type": "number"
+        }
+      ],
+      "data": {
+        "out": 0
+      },
+      "x": 40,
+      "y": 410,
+      "width": 260,
+      "height": 110
+    }
+  ],
+  "operators": [
+    {
+      "id": "op_design",
+      "role": "operator",
+      "kind": "fn",
+      "fn": "design_lesson",
+      "label": "design_lesson (LLM)",
+      "inputs": [
+        {
+          "id": "in_lesson",
+          "label": "lesson",
+          "type": "text"
+        }
+      ],
+      "outputs": [
+        {
+          "id": "out_0",
+          "label": "spec",
+          "type": "text",
+          "output_index": 0
+        }
+      ],
+      "data": {},
+      "x": 360,
+      "y": 70,
+      "width": 250,
+      "height": 130
+    },
+    {
+      "id": "op_train",
+      "role": "operator",
+      "kind": "fn",
+      "fn": "train_policy",
+      "label": "train_policy (CEM)",
+      "inputs": [
+        {
+          "id": "in_spec",
+          "label": "spec",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "in_gens",
+          "label": "generations",
+          "type": "number"
+        },
+        {
+          "id": "in_seed",
+          "label": "seed",
+          "type": "number"
+        }
+      ],
+      "outputs": [
+        {
+          "id": "out_0",
+          "label": "controller",
+          "type": "text",
+          "output_index": 0
+        },
+        {
+          "id": "out_1",
+          "label": "curve",
+          "type": "image",
+          "output_index": 1
+        }
+      ],
+      "data": {},
+      "x": 670,
+      "y": 220,
+      "width": 260,
+      "height": 170
+    },
+    {
+      "id": "op_show",
+      "role": "operator",
+      "kind": "fn",
+      "fn": "demonstrate",
+      "label": "demonstrate (before / after)",
+      "inputs": [
+        {
+          "id": "in_spec",
+          "label": "spec",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "in_policy",
+          "label": "controller",
+          "type": "text",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "id": "out_0",
+          "label": "video",
+          "type": "video",
+          "output_index": 0
+        },
+        {
+          "id": "out_1",
+          "label": "tracks",
+          "type": "image",
+          "output_index": 1
+        },
+        {
+          "id": "out_2",
+          "label": "report",
+          "type": "text",
+          "output_index": 2
+        }
+      ],
+      "data": {},
+      "x": 990,
+      "y": 70,
+      "width": 270,
+      "height": 180
+    }
+  ],
+  "subjects": [
+    {
+      "id": "sub_video",
+      "role": "subject",
+      "label": "The duck, after school",
+      "asset_type": "video",
+      "inputs": [
+        {
+          "id": "in",
+          "label": "Video",
+          "type": "video"
+        }
+      ],
+      "outputs": [],
+      "data": {},
+      "x": 1320,
+      "y": 40,
+      "width": 280,
+      "height": 230
+    },
+    {
+      "id": "sub_curve",
+      "role": "subject",
+      "label": "Learning curve",
+      "asset_type": "image",
+      "inputs": [
+        {
+          "id": "in",
+          "label": "Curve",
+          "type": "image"
+        }
+      ],
+      "outputs": [],
+      "data": {},
+      "x": 670,
+      "y": 430,
+      "width": 280,
+      "height": 210
+    },
+    {
+      "id": "sub_tracks",
+      "role": "subject",
+      "label": "Before / after",
+      "asset_type": "image",
+      "inputs": [
+        {
+          "id": "in",
+          "label": "Tracks",
+          "type": "image"
+        }
+      ],
+      "outputs": [],
+      "data": {},
+      "x": 1320,
+      "y": 300,
+      "width": 280,
+      "height": 230
+    },
+    {
+      "id": "sub_report",
+      "role": "subject",
+      "label": "Report card",
+      "asset_type": "text",
+      "inputs": [
+        {
+          "id": "in",
+          "label": "Report",
+          "type": "text"
+        }
+      ],
+      "outputs": [],
+      "data": {},
+      "x": 1320,
+      "y": 560,
+      "width": 280,
+      "height": 190
+    },
+    {
+      "id": "sub_spec",
+      "role": "subject",
+      "label": "The lesson, as a goal",
+      "asset_type": "text",
+      "inputs": [
+        {
+          "id": "in",
+          "label": "Spec",
+          "type": "text"
+        }
+      ],
+      "outputs": [],
+      "data": {},
+      "x": 360,
+      "y": 240,
+      "width": 250,
+      "height": 190
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from_node_id": "ref_lesson",
+      "from_port_id": "out",
+      "to_node_id": "op_design",
+      "to_port_id": "in_lesson",
+      "type": "text"
+    },
+    {
+      "id": "e2",
+      "from_node_id": "op_design",
+      "from_port_id": "out_0",
+      "to_node_id": "sub_spec",
+      "to_port_id": "in",
+      "type": "text"
+    },
+    {
+      "id": "e3",
+      "from_node_id": "op_design",
+      "from_port_id": "out_0",
+      "to_node_id": "op_train",
+      "to_port_id": "in_spec",
+      "type": "text"
+    },
+    {
+      "id": "e4",
+      "from_node_id": "ref_gens",
+      "from_port_id": "out",
+      "to_node_id": "op_train",
+      "to_port_id": "in_gens",
+      "type": "number"
+    },
+    {
+      "id": "e5",
+      "from_node_id": "ref_seed",
+      "from_port_id": "out",
+      "to_node_id": "op_train",
+      "to_port_id": "in_seed",
+      "type": "number"
+    },
+    {
+      "id": "e6",
+      "from_node_id": "op_train",
+      "from_port_id": "out_1",
+      "to_node_id": "sub_curve",
+      "to_port_id": "in",
+      "type": "image"
+    },
+    {
+      "id": "e7",
+      "from_node_id": "op_design",
+      "from_port_id": "out_0",
+      "to_node_id": "op_show",
+      "to_port_id": "in_spec",
+      "type": "text"
+    },
+    {
+      "id": "e8",
+      "from_node_id": "op_train",
+      "from_port_id": "out_0",
+      "to_node_id": "op_show",
+      "to_port_id": "in_policy",
+      "type": "text"
+    },
+    {
+      "id": "e9",
+      "from_node_id": "op_show",
+      "from_port_id": "out_0",
+      "to_node_id": "sub_video",
+      "to_port_id": "in",
+      "type": "video"
+    },
+    {
+      "id": "e10",
+      "from_node_id": "op_show",
+      "from_port_id": "out_1",
+      "to_node_id": "sub_tracks",
+      "to_port_id": "in",
+      "type": "image"
+    },
+    {
+      "id": "e11",
+      "from_node_id": "op_show",
+      "from_port_id": "out_2",
+      "to_node_id": "sub_report",
+      "to_port_id": "in",
+      "type": "text"
+    }
+  ]
+}

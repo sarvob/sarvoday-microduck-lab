@@ -1,0 +1,7 @@
+mujoco>=3.2
+onnxruntime
+numpy
+matplotlib
+imageio
+imageio-ffmpeg
+PyOpenGL
