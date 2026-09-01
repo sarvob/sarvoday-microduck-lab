@@ -27,45 +27,64 @@ import lesson as L  # noqa: E402
 
 LLM = "Qwen/Qwen3-4B-Instruct-2507"
 
-SYSTEM = """You set lessons for Microduck, a 25 cm bipedal robot learning to
-walk to places.
+SYSTEM = """You set lessons for Microduck, a 25 cm bipedal robot.
 
-The duck starts at (0, 0) facing +x. In metres:
-  +x is straight ahead, -x is behind it
-  +y is to its left,    -y is to its right
+Pick ONE task family and fill in what it needs.
 
-It walks at about 0.11 m/s, so distance is a hard budget.
-  ONE marker: put it 0.35 to 1.0 m from the origin.
-  TWO markers (a course): keep each within 0.5 m of the origin.
+  "goto"     walk to one or two markers, in order.
+             needs "targets": [[x, y]] -- one or two pairs.
+  "explore"  get as far from the starting spot as possible.
+  "spin"     turn on the spot without wandering off.
+  "circle"   walk a circle around the starting spot.
+             needs "radius" in metres, 0.12 to 0.25 (bigger is not
+             walkable in one attempt).
+  "ball"     shove a ball as far as possible. A ball is put in front of it.
 
-Reply with ONLY a JSON object:
+The duck starts at (0, 0) facing +x. In metres: +x is ahead, -x is behind,
++y is to its left, -y is to its right. It walks at about 0.11 m/s, so a single
+marker belongs 0.35-0.8 m out, and a two-marker course within 0.5 m each.
 
-{"targets": [[x, y]],
- "weights": {"progress": 1.0, "speed": 0.5, "fall": 1.5},
- "label": "a short description of the lesson"}
+Reply with ONLY a JSON object, and include only the fields the task needs:
 
-"targets" is one or two [x, y] pairs, in the order they must be reached.
-Weights (each 0-4) say what to care about: "speed" rewards arriving sooner,
-"fall" punishes falling over, "progress" rewards closing the distance.
-Raise the one the user emphasises. If they say nothing about it, keep the
-defaults.
+{"task": "spin", "label": "spin on the spot"}
+{"task": "goto", "targets": [[-0.55, 0.12]], "label": "reach the marker behind you"}
+
+Choose the family that matches what was asked. Do NOT force everything into
+"goto": dancing or twirling is "spin", roaming is "explore", a lap is
+"circle", anything about the ball is "ball".
 
 Output the JSON object and nothing else."""
 
 FEWSHOT = [
+    {"role": "user", "content": "teach it to dance"},
+    {"role": "assistant", "content":
+        '{"task": "spin", "label": "spin on the spot like a dance"}'},
     {"role": "user", "content": "teach it to walk to a spot behind it without falling over"},
     {"role": "assistant", "content":
-        '{"targets": [[-0.55, 0.12]], "weights": {"progress": 1.0, "speed": 0.4, '
-        '"fall": 2.5}, "label": "turn around and reach the marker behind you"}'},
+        '{"task": "goto", "targets": [[-0.55, 0.12]], '
+        '"label": "turn around and reach the marker behind you"}'},
+    {"role": "user", "content": "see how far it can get"},
+    {"role": "assistant", "content":
+        '{"task": "explore", "label": "get as far from the start as possible"}'},
 ]
 
-# Direction words -> a target, for the no-token fallback.
+# Keyword -> task family, for the no-token fallback. Order matters: the first
+# family whose word appears wins, so the specific ones come before "goto".
+_TASK_WORDS = [
+    ("ball", ("ball", "kick", "shove", "push", "football", "soccer", "dribble")),
+    ("circle", ("circle", "lap", "laps", "orbit", "loop", "round", "around")),
+    ("spin", ("spin", "twirl", "pirouette", "dance", "rotate", "whirl")),
+    ("explore", ("far", "furthest", "farthest", "explore", "roam", "wander",
+                 "away", "distance", "journey")),
+]
 _DIRECTIONS = [
-    (("behind", "back", "backwards", "turn around", "reverse"), (-0.55, 0.12)),
+    (("behind", "back", "backwards", "reverse"), (-0.55, 0.12)),
     (("left",), (0.35, 0.5)),
     (("right",), (0.35, -0.5)),
     (("ahead", "forward", "front", "straight"), (0.7, 0.0)),
 ]
+
+WORD = r"\b"          # word boundary, so "far" does not match "farm"
 
 
 def _token(oauth_token):
@@ -79,23 +98,28 @@ def _token(oauth_token):
         return None
 
 
+def _has(text, word):
+    return re.search(WORD + re.escape(word) + WORD, text) is not None
+
+
 def _fallback_spec(text):
     t = (text or "").lower()
+    for task, words in _TASK_WORDS:
+        if any(_has(t, w) for w in words):
+            out = {"task": task, "label": (text or task).strip()[:120]}
+            if task == "circle":
+                out["radius"] = 0.2
+            return out
     hits = []
     for words, tgt in _DIRECTIONS:
         pos = min((m.start() for w in words
-                   for m in [re.search(r"\b" + re.escape(w) + r"\b", t)] if m),
+                   for m in [re.search(WORD + re.escape(w) + WORD, t)] if m),
                   default=-1)
         if pos >= 0:
             hits.append((pos, tgt))
     hits.sort(key=lambda h: h[0])
-    targets = [list(t) for _, t in hits[:2]] or [[0.45, 0.35]]
-    weights = dict(L.DEFAULT_WEIGHTS)
-    if re.search(r"\b(fast|quick|quickly|hurry|speed|sprint)\b", t):
-        weights["speed"] = 1.5
-    if re.search(r"\b(without falling|don't fall|stay up|steady|careful)\b", t):
-        weights["fall"] = 3.0
-    return {"targets": targets, "weights": weights,
+    return {"task": "goto",
+            "targets": [list(g) for _, g in hits[:2]] or [[0.45, 0.35]],
             "label": (text or "reach the marker").strip()[:120]}
 
 
@@ -115,7 +139,10 @@ def design_lesson(lesson_text: str,
                 max_tokens=300, temperature=0.2,
             ).choices[0].message.content
             parsed, _ = L.parse_spec(reply)
-            if parsed.get("targets"):
+            # Gate on "task", NOT on "targets": only the goto family has
+            # targets, so checking those rejected every spin/circle/ball plan
+            # and silently fell back to walking to a marker.
+            if parsed.get("task"):
                 spec = parsed
         except Exception:
             spec = None
@@ -147,7 +174,6 @@ def _curve_chart(history, spec):
     gens = np.arange(1, len(history) + 1)
     best = [h[0] for h in history]
     mean = [h[1] for h in history]
-    solved = float(len(spec["targets"]))
 
     fig, ax = plt.subplots(figsize=(7.2, 4.0), dpi=110)
     fig.patch.set_facecolor("white")
@@ -155,10 +181,14 @@ def _curve_chart(history, spec):
             label="best attempt so far")
     ax.plot(gens, mean, lw=1.7, color="#4a7fb5", ls="--", marker="s", ms=3.5,
             label="average of the whole batch")
-    ax.axhline(solved, color="#2e7d32", ls=":", lw=1.4)
-    ax.annotate("reaches the goal", xy=(gens[-1], solved), xytext=(0, 5),
-                textcoords="offset points", ha="right", fontsize=9,
-                color="#2e7d32")
+    # Only the goto family has a score that means "arrived". The others are
+    # open-ended (further, more turns, ball shoved harder), so no target line.
+    if spec["task"] == "goto":
+        n = float(len(spec["targets"]))
+        ax.axhline(n, color="#2e7d32", ls=":", lw=1.4)
+        ax.annotate("reaches the marker(s)", xy=(gens[-1], n), xytext=(0, 5),
+                    textcoords="offset points", ha="right", fontsize=9,
+                    color="#2e7d32")
     ax.set_xlabel("generation")
     ax.set_ylabel("score")
     ax.set_title("Learning to " + spec["label"][:58], fontsize=11)
@@ -175,33 +205,47 @@ def _tracks_chart(spec, before, after):
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
 
+    task = spec["task"]
     fig, ax = plt.subplots(figsize=(6.4, 5.4), dpi=110)
     fig.patch.set_facecolor("white")
+
+    # What the lesson was aiming at, drawn per family.
+    if task == "goto":
+        for i, t in enumerate(spec["targets"]):
+            ax.add_patch(plt.Circle((t[0], t[1]), L.REACH, zorder=1,
+                                    facecolor="#d94a2b" if i == 0 else "#2f6fbf",
+                                    alpha=0.20, edgecolor="none"))
+            ax.annotate(str(i + 1), xy=(t[0], t[1]), ha="center", va="center",
+                        fontsize=11, weight="bold", color="#555", zorder=3)
+    elif task == "circle":
+        ax.add_patch(plt.Circle((0, 0), spec["radius"], fill=False, zorder=1,
+                                edgecolor="#2f6fbf", ls="--", lw=1.6, alpha=0.7))
+        ax.annotate("the circle to walk", xy=(0, spec["radius"]), xytext=(0, 8),
+                    textcoords="offset points", ha="center", fontsize=9,
+                    color="#2f6fbf")
+    elif task == "ball":
+        ax.scatter([0.32], [0.0], s=260, color="#d94a2b", alpha=0.35, zorder=1)
+        ax.annotate("ball", xy=(0.32, 0.0), ha="center", va="center",
+                    fontsize=9, color="#7a2d18", zorder=3)
+
     for pts, color, label in ((before["path"], "#9aa5b1", "before training"),
                               (after["path"], "#c9711f", "after training")):
         if pts:
-            a = np.array(pts)
-            ax.plot(a[:, 0], a[:, 1], lw=2.2, color=color, label=label, zorder=2)
-    # Draw the goals at their true size: a run counts as arrived once the duck
-    # is inside this radius, so a circle in data units makes "it got there"
-    # readable instead of a dot floating near the end of a line.
-    for i, t in enumerate(spec["targets"]):
-        ax.add_patch(plt.Circle((t[0], t[1]), L.REACH, zorder=1,
-                                facecolor="#d94a2b" if i == 0 else "#2f6fbf",
-                                alpha=0.20, edgecolor="none"))
-        ax.annotate(str(i + 1), xy=(t[0], t[1]), ha="center", va="center",
-                    fontsize=11, weight="bold", color="#555", zorder=3)
+            arr = np.array(pts)
+            ax.plot(arr[:, 0], arr[:, 1], lw=2.2, color=color, label=label,
+                    zorder=2)
     ax.scatter([0], [0], s=80, marker="s", color="#2e7d32", zorder=4,
                label="start")
+
     # An untrained controller commands nothing, so its "path" is a dot under
     # the start marker and the legend entry looks like a bug. Say so instead.
     b = np.array(before["path"]) if before["path"] else np.zeros((1, 2))
     if float(np.abs(b - b[0]).max()) < 0.05:
         ax.annotate("before training:\nnever left the spot", xy=(0, 0),
                     xytext=(-16, -52), textcoords="offset points", fontsize=9,
-                    ha="center",
-                    color="#6b7480",
+                    ha="center", color="#6b7480",
                     arrowprops=dict(arrowstyle="->", color="#9aa5b1", lw=1))
+
     ax.set_aspect("equal", adjustable="datalim")
     ax.set_xlabel("x (m)")
     ax.set_ylabel("y (m)")
@@ -215,7 +259,7 @@ def _tracks_chart(spec, before, after):
 def train_policy(spec_text: str, generations: float = 8, seed: float = 0):
     """Search for a controller that solves the lesson. Returns (policy, curve)."""
     spec, notes = L.parse_spec(spec_text)
-    gens, pop, ep_cost = L.plan_search(spec, int(generations or 6))
+    gens, pop, ep_cost = L.plan_search(spec, int(generations or 8))
     sim = D.Microduck(render=False)
     w, history = L.train(sim, spec, generations=gens, population=pop,
                          seed=int(seed or 0))
@@ -238,7 +282,7 @@ def demonstrate(spec_text: str, policy_text: str):
     except Exception as e:
         raise ValueError("could not read the trained controller: " + str(e))
 
-    sim = D.Microduck(width=640, height=360)   # both even: libx264 yuv420p rejects odd
+    sim = D.Microduck(width=640, height=360)   # even dims: libx264 rejects odd
     before = L.rollout(sim, np.zeros(L.N_PARAMS), spec, trace=True)
     # 50 Hz control, every 2nd step photographed -> 25 fps, real time.
     after = L.rollout(sim, w, spec, trace=True, on_frame=(2, lambda s: s.frame()))
@@ -248,42 +292,45 @@ def demonstrate(spec_text: str, policy_text: str):
     imageio.mimsave(mp4, after["frames"], fps=25, codec="libx264",
                     quality=7, macro_block_size=1)
 
-    n = len(spec["targets"])
+    detail = {
+        "goto": "markers: " + ", ".join("(%.2f, %.2f)" % (t[0], t[1])
+                                        for t in spec["targets"]),
+        "circle": "radius: %.2f m" % spec["radius"],
+        "explore": "measured: how far it ends up from the start",
+        "spin": "measured: turns completed, minus any drift",
+        "ball": "measured: how far the ball ends up from where it started",
+    }.get(spec["task"], "")
+
     lines = [
         "Lesson: " + spec["label"],
         "",
-        "goal" + ("s" if n > 1 else "") + ": "
-        + ", ".join("(%.2f, %.2f)" % (t[0], t[1]) for t in spec["targets"])
-        + "   episode: %.1f s" % spec["episode_s"],
-        "reward weights: " + ", ".join("%s %.1f" % kv
-                                       for kv in spec["weights"].items()),
+        "task family: " + spec["task"] + "  --  " + L.TASK_HELP[spec["task"]],
+        detail,
+        "episode: %.1f s     training: %d attempts over %d generations"
+        % (spec["episode_s"], rollouts, len(history)),
         "",
-        "training: %d attempts over %d generations" % (rollouts, len(history)),
+        "                 result                                    score",
+        "---------------------------------------------------------------",
+        "before training  %-40s %+6.2f" % (before["headline"], before["score"]),
+        "after training   %-40s %+6.2f" % (after["headline"], after["score"]),
         "",
-        "                    reached      time      distance left",
-        "----------------------------------------------------------",
-        "before training     %d/%d          %5.2f s     %.3f m"
-        % (len(before["reached"]), n, before["t_end"], before["distance_left"]),
-        "after training      %d/%d          %5.2f s     %.3f m"
-        % (len(after["reached"]), n, after["t_end"], after["distance_left"]),
-        "",
-        "score %+.2f  ->  %+.2f" % (before["score"], after["score"]),
     ]
     if after["all_reached"]:
         lines.append("The duck learned the lesson.")
     else:
-        lines.append("Not solved this time. Try more generations, a different "
-                     "seed, or a closer marker.")
+        lines.append("Partly there. Try more generations, another seed, or an "
+                     "easier version of the lesson.")
     if after["fell"]:
         lines.append("It fell during the final run.")
     lines += ["",
-              "learned controller (vx and turn rate from "
-              "[1, distance, cos(heading error), sin(heading error)]):",
-              "  vx = " + "  ".join("%+.3f" % x for x in w[:4]),
-              "  wz = " + "  ".join("%+.3f" % x for x in w[4:]),
-              "",
-              "The nine shipped policies were not modified. Only these eight "
-              "numbers were learned."]
+              "learned controller -- [forward, sideways, turn] from",
+              "[1, error1, error2, error3, how far through the attempt]:"]
+    W = w.reshape(L.N_OUTPUTS, L.N_FEATURES)
+    for name, row in zip(("forward ", "sideways", "turn    "), W):
+        lines.append("  " + name + "  " + "  ".join("%+.2f" % x for x in row))
+    lines += ["",
+              "The nine shipped policies were not modified. Only these "
+              + str(L.N_PARAMS) + " numbers were learned."]
     if notes:
         lines += [""] + ["note: " + x for x in notes]
 

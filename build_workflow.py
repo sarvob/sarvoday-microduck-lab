@@ -12,7 +12,7 @@ import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
-DEFAULT_LESSON = "teach it to turn around and walk to a marker behind it, without falling over"
+DEFAULT_LESSON = "teach it to shove the ball as far as it can"
 
 
 def port(pid, label, ptype, required=False, output_index=None):

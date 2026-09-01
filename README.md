@@ -15,14 +15,14 @@ hf_oauth_scopes:
 # 🎓 Microduck School
 
 Set a lesson in plain English. The duck **doesn't know how to do it**, tries
-about a hundred times, and gets better — while you watch the score climb.
+a couple of hundred times, and gets better — while you watch the score climb.
 
 ```
 [lesson text] ─▶ (fn) design_lesson ─┬─▶ 📝 The lesson, as a goal
                      LLM             │
                                      ▼
 [generations] ─────────▶ (fn) train_policy ─┬─▶ 📊 Learning curve
-[seed] ─────────────────    CEM, ~96 tries  │
+[seed] ─────────────────   CEM, ~200 tries  │
                                             ▼
                               (fn) demonstrate ─┬─▶ 🎬 The duck, after school
                                                 ├─▶ 📊 Before / after
@@ -41,44 +41,58 @@ The nine shipped policies are **frozen**. Nothing about walking, balancing or
 getting up is retrained — that took Pollen Robotics a GPU cluster and PPO, and
 it is not happening in a CPU Space.
 
-What is learned is the layer **above** them: a controller that watches where the
-duck is and decides what to *ask* the walking policy for — a forward speed and
-a turn rate, twenty times a second. Eight numbers:
+What is learned is the layer **above** them: a controller that watches the world
+and decides what to *ask* the walking policy for — forward speed, sideways speed
+and turn rate, ten times a second. Fifteen numbers:
 
 ```
-[vx, wz] = W · [1, distance_to_goal, cos(heading_error), sin(heading_error)]
+[vx, vy, wz] = W · [1, error1, error2, error3, how_far_through_the_attempt]
 ```
+
+The three error signals depend on the task: distance and heading to a marker,
+to the ball, or how far off the circle it is.
 
 That is the same split real robots use: a locomotion controller you don't
-retrain, and a task policy on top that you do. Eight parameters is small enough
+retrain, and a task policy on top that you do. Fifteen parameters is small enough
 to optimise by **search** rather than gradients — no autograd, no GPU, no replay
 buffer — which is the whole reason this fits in a Space at all.
 
 The optimiser is the cross-entropy method: sample a batch of controllers, score
 each by actually running it, keep the best few, refit the distribution to them,
-repeat. Roughly 96 attempts over 8 generations, about 30–60 seconds of real
+repeat. Roughly 160-200 attempts over 8 generations, about 30-60 seconds of real
 physics.
 
 Before training, the controller is all zeros: the duck commands nothing and
 stands there. Everything it does afterwards was found by search.
 
-## Lessons that work
+## What you can teach it
 
-- *"walk to a marker behind you, without falling over"* — it has to learn to
-  turn around first
-- *"get to the marker on your left as fast as you can"*
-- *"run a two-marker course"* — reach one, then the other
+Five task families. The lesson planner picks one from what you type, and they
+score genuinely different things — this is the part that decides whether your
+words change anything:
 
-Distance is a hard budget: the duck sustains about **0.11 m/s**, so a goal more
-than ~1 m away cannot be reached within an episode and the lesson planner pulls
-it back in. Two-marker courses keep each leg under 0.5 m.
+| say something like | family | what gets measured |
+|---|---|---|
+| "walk to a marker behind you, without falling" | `goto` | markers reached, and how fast |
+| "see how far it can get" | `explore` | distance from the start |
+| "teach it to dance" / "spin on the spot" | `spin` | turns completed, minus drift |
+| "walk a lap around where it started" | `circle` | how much of a lap, and how close to the circle |
+| "shove the ball as far as it can" | `ball` | how far the ball ends up |
+
+Adding a sixth means one `features_*` and one `score_*` in `lesson.py` — the
+workflow, the app and the optimiser do not change.
+
+Physics sets hard limits, and the planner clamps to them rather than accepting
+an impossible lesson: the duck sustains about **0.11 m/s**, so a marker beyond
+~0.8 m cannot be reached in one attempt, and a circle bigger than 0.25 m radius
+cannot be walked in one (a 0.5 m circle is 3.1 m of walking — 29 seconds).
 
 ## What it cannot do
 
 It cannot teach a headstand, or skating on one leg. Those need new *joint-level*
 policies — a reward function in
 [`microduck_rl`](https://github.com/pollen-robotics/microduck_rl), PPO, millions
-of steps on a GPU, then an ONNX export. This Space searches over eight numbers,
+of steps on a GPU, then an ONNX export. This Space searches over fifteen numbers,
 not over a neural network.
 
 A headstand may not be trainable on this robot at all: 14 motors, no arms, and

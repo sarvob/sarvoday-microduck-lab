@@ -350,6 +350,19 @@ class Microduck:
         self.mj.mj_forward(self.model, self.data)
         self.ball_active = True
 
+    def place_ball(self, x, y):
+        """Put the ball at a spot, at rest. Used by the ball-pushing lessons."""
+        q, v = self.data.qpos, self.data.qvel
+        q[self.ball_q:self.ball_q + 3] = [x, y, BALL_RADIUS + 0.005]
+        q[self.ball_q + 3:self.ball_q + 7] = [1, 0, 0, 0]
+        v[self.ball_d:self.ball_d + 6] = 0
+        self.mj.mj_forward(self.model, self.data)
+        self.ball_active = True
+
+    def ball_xy(self):
+        return (float(self.data.qpos[self.ball_q]),
+                float(self.data.qpos[self.ball_q + 1]))
+
     def park_ball(self):
         q, v = self.data.qpos, self.data.qvel
         q[self.ball_q:self.ball_q + 3] = [50, 0, BALL_RADIUS]
