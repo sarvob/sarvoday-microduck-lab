@@ -1,6 +1,9 @@
 .DS_Store
 .venv/
+.tts-venv/
 .microduck_cache/
 __pycache__/
 *.py[cod]
 _test_output/
+stream/tts/models/
+stream/tts/output/
