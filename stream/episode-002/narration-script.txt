@@ -1,0 +1,9 @@
+One robot duck learned to swing. We asked what happens when three ducks work together.
+
+Duck one rides. Duck two learns when to push, using the swing angle and velocity. Duck three claps at every peak.
+
+Cross-entropy search tested one thousand and eighty candidate controllers across three seeds. The winning five-parameter policy reached a peak angle of forty-four point eight degrees and sustained eight strong peaks in sixteen seconds.
+
+The swing timing is learned. The applause is synchronized choreography. Every claim has a measurable gate, and the code and results are public.
+
+This is Sarvoday Robotics: open simulations, honest results, and one new robot challenge at a time.

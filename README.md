@@ -43,6 +43,12 @@ forcing a steering reversal while staying upright and inside a 12.5 s gate.
 Challenge 003 adds object interaction: approach a free ball, push it at least
 0.30 m, and remain upright.
 
+Challenge 004 is a coordinated three-duck MuJoCo scene inspired by a public
+swing demonstration. Cross-entropy search learns the five-parameter timing
+controller that pushes the swing; a third duck's applause is deterministic
+choreography synchronized to the swing peaks. The shipped result reaches a
+44.8-degree peak and sustains eight strong peaks in a 16-second evaluation.
+
 Set a lesson in plain English. The duck **doesn't know how to do it**, tries
 a couple of hundred times, and gets better — while you watch the score climb.
 

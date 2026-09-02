@@ -31,6 +31,14 @@ class ChallengeContractTest(unittest.TestCase):
         self.assertGreaterEqual(spec["success"]["minimum_ball_m"], 0.25)
         self.assertTrue(spec["success"]["must_stay_upright"])
 
+    def test_challenge_004_discloses_learned_and_scripted_parts(self):
+        path = ROOT / "challenges" / "004-duck-swing-team" / "spec.json"
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        self.assertGreaterEqual(spec["success"]["minimum_peak_angle_deg"], 30)
+        self.assertGreaterEqual(spec["success"]["minimum_sustained_peaks"], 6)
+        self.assertIn("learned", spec["disclosure"].lower())
+        self.assertIn("deterministic", spec["disclosure"].lower())
+
 
 if __name__ == "__main__":
     unittest.main()

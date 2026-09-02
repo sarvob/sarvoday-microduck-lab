@@ -1,9 +1,10 @@
 {
-  "active_episode": "episode-001",
+  "active_episode": "episode-002",
   "technical_scope": [
     "001-spin-in-place",
     "002-two-marker-sprint",
-    "003-ball-push"
+    "003-ball-push",
+    "004-duck-swing-team"
   ],
   "technical_status": "passed",
   "editorial_status": "published_without_narration",
@@ -16,5 +17,8 @@
   "human_narration_received": false,
   "synthetic_voice_allowed": true,
   "voice_policy": "Use only neutral stock open-source voices; never clone or impersonate a real person.",
-  "next_step": "Advance the next Microduck skill and use the local Kokoro narrator for future episode drafts."
+  "x_reply_target": "https://x.com/HannesVonEssen/status/2095193921060049010",
+  "episode_002_status": "ready_for_x_reply",
+  "episode_002_video": "stream/episode-002/x-reply-60s.mp4",
+  "next_step": "Publish Episode 002 as a reply to the referenced X post after action-time approval, then advance the next Microduck skill."
 }

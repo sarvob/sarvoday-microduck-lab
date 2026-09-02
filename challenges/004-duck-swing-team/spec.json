@@ -1,0 +1,18 @@
+{
+  "id": "004-duck-swing-team",
+  "title": "Three-duck swing team",
+  "goal": "Learn a repeatable push rhythm that keeps a seated duck swinging while a third duck claps at each peak.",
+  "training": {
+    "algorithm": "cross_entropy_method",
+    "generations": 10,
+    "population": 36,
+    "elite": 7,
+    "seeds": [41, 97, 211]
+  },
+  "success": {
+    "minimum_peak_angle_deg": 38.0,
+    "minimum_sustained_peaks": 8,
+    "maximum_peak_angle_deg": 78.0
+  },
+  "disclosure": "The pusher's five-parameter timing controller is learned. The third duck's clap is deterministic choreography synchronized to swing peaks."
+}
