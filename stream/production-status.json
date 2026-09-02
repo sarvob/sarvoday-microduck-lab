@@ -17,7 +17,7 @@
     "004-duck-swing-team",
     "005-duck-quadruped-jump"
   ],
-  "technical_status": "challenge_005_in_progress",
+  "technical_status": "challenge_005_passed",
   "editorial_status": "published_without_narration",
   "captions_status": "timed_captions_uploaded",
   "audio_finalization_pipeline": "local_kokoro_ready_for_future_episodes",
@@ -38,5 +38,6 @@
   "challenge_005_feasibility": "unassisted launch rejected: stock roll policy rose 0.0737 m with only 0.02 s true airtime versus a 0.417 m target",
   "challenge_005_assistance_policy": "single disclosed initial velocity; zero midair external force; learned landing and hold",
   "challenge_005_launch_calibration": "best initial velocity 1.2 m/s forward + 3.3 m/s vertical; both feet reached the pad with 0.218 m/s landing speed; stock stand held 0.96 s, below the 1.5 s gate",
-  "next_step": "Train a bounded residual landing controller around the calibrated launch, randomize launch and lateral error across three seeds, and require a reproducible 1.5 s two-foot hold."
+  "challenge_005_result": "passed across seeds 17, 71, and 173: both feet landed, zero post-pad ground contact, and holds of 1.68 s, 1.64 s, and 1.64 s",
+  "next_step": "Render compact technical evidence now; wait for at least 20 GB free before producing the 1440p landscape episode and two 1440x2560 Shorts."
 }

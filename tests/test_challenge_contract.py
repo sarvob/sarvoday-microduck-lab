@@ -70,6 +70,15 @@ class ChallengeContractTest(unittest.TestCase):
         self.assertLess(best["longest_untrained_hold_s"], 1.5)
         self.assertGreater(best["longest_untrained_hold_s"], 0.5)
 
+    def test_challenge_005_trained_policy_passes_every_seed(self):
+        path = ROOT / "artifacts" / "005-duck-quadruped-jump" / "landing-result.json"
+        result = json.loads(path.read_text(encoding="utf-8"))
+        self.assertTrue(result["success"])
+        self.assertEqual(result["evaluation_seeds"], [17, 71, 173])
+        self.assertTrue(all(row["both_feet_simultaneous"] for row in result["evaluations"]))
+        self.assertTrue(all(row["longest_hold_s"] >= 1.5 for row in result["evaluations"]))
+        self.assertTrue(all(not row["ground_contact_after_pad"] for row in result["evaluations"]))
+
 
 if __name__ == "__main__":
     unittest.main()

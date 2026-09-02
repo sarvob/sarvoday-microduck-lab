@@ -1,0 +1,83 @@
+{
+  "algorithm": "cross-entropy search over an 8-parameter stand-policy residual",
+  "training_seed": 505,
+  "evaluation_seeds": [
+    17,
+    71,
+    173
+  ],
+  "weights": [
+    -0.1305089,
+    -0.1837232,
+    -0.0469156,
+    0.0723078,
+    -0.2575053,
+    0.3995012,
+    0.1516599,
+    -0.0435712
+  ],
+  "score": 39.43459,
+  "history": [
+    29.29551,
+    32.92367,
+    34.5052,
+    36.80332,
+    36.80332,
+    36.93038,
+    36.93038,
+    37.23006,
+    37.23006,
+    37.92265,
+    39.43459,
+    39.43459,
+    39.43459,
+    39.43459,
+    39.43459,
+    39.43459
+  ],
+  "evaluations": [
+    {
+      "seed": 17,
+      "launch_velocity_mps": [
+        1.2242,
+        -0.0136,
+        3.3052
+      ],
+      "both_feet_simultaneous": true,
+      "longest_hold_s": 1.68,
+      "ground_contact_after_pad": false,
+      "mean_upright_score": 0.9243,
+      "mean_centered_score": 0.8585,
+      "score": 26.79742
+    },
+    {
+      "seed": 71,
+      "launch_velocity_mps": [
+        1.1827,
+        0.0011,
+        3.3235
+      ],
+      "both_feet_simultaneous": true,
+      "longest_hold_s": 1.64,
+      "ground_contact_after_pad": false,
+      "mean_upright_score": 0.9233,
+      "mean_centered_score": 0.8325,
+      "score": 26.21537
+    },
+    {
+      "seed": 173,
+      "launch_velocity_mps": [
+        1.1698,
+        0.0002,
+        3.2802
+      ],
+      "both_feet_simultaneous": true,
+      "longest_hold_s": 1.64,
+      "ground_contact_after_pad": false,
+      "mean_upright_score": 0.9211,
+      "mean_centered_score": 0.4802,
+      "score": 25.93099
+    }
+  ],
+  "success": true
+}
