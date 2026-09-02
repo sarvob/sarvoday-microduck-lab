@@ -6,12 +6,15 @@
     "003-ball-push"
   ],
   "technical_status": "passed",
-  "editorial_status": "visual_master_complete",
-  "captions_status": "timed_draft_complete_pending_human_audio_alignment",
-  "audio_finalization_pipeline": "ready_pending_human_audio",
-  "youtube_status": "not_ready",
-  "human_narration_required": true,
+  "editorial_status": "published_without_narration",
+  "captions_status": "timed_captions_uploaded",
+  "audio_finalization_pipeline": "local_kokoro_ready_for_future_episodes",
+  "youtube_status": "published",
+  "youtube_url": "https://youtu.be/cDT6k8NY8D4",
+  "published_at": "2026-09-02",
+  "human_narration_required": false,
   "human_narration_received": false,
-  "synthetic_voice_allowed": false,
-  "next_step": "Obtain genuine human narration using episode-001/narration-script.txt, then mix, review, align captions to the real delivery, and finalize the episode."
+  "synthetic_voice_allowed": true,
+  "voice_policy": "Use only neutral stock open-source voices; never clone or impersonate a real person.",
+  "next_step": "Advance the next Microduck skill and use the local Kokoro narrator for future episode drafts."
 }
