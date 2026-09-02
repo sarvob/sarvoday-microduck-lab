@@ -1,0 +1,36 @@
+1
+00:00:00,000 --> 00:00:05,900
+Can an AI coding agent teach a robot duck new skills—and prove that they work?
+
+2
+00:00:05,900 --> 00:00:08,200
+We gave Microduck three measurable challenges.
+
+3
+00:00:08,200 --> 00:00:15,800
+First: spin through one full turn without falling or drifting away.
+The controller completed 1.2 turns, with only four centimeters of drift.
+
+4
+00:00:15,800 --> 00:00:24,000
+Next: reach two offset markers in sequence, forcing a steering reversal.
+It reached both markers in 5.86 seconds and stayed upright.
+
+5
+00:00:24,000 --> 00:00:32,500
+Finally: approach a free ball and push it at least thirty centimeters.
+The learned controller moved it one full meter.
+
+6
+00:00:32,500 --> 00:00:41,600
+The key lesson is simple: keep the proven locomotion policy frozen,
+then optimize a small supervisory controller above it.
+
+7
+00:00:41,600 --> 00:00:46,800
+Every result has a clear pass-or-fail gate,
+and the code and measurements are public on GitHub.
+
+8
+00:00:46,800 --> 00:00:50,000
+This is Sarvoday Robotics. Subscribe to follow the next open robotics challenge.

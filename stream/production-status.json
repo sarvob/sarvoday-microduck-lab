@@ -7,9 +7,10 @@
   ],
   "technical_status": "passed",
   "editorial_status": "visual_master_complete",
+  "captions_status": "timed_draft_complete_pending_human_audio_alignment",
   "youtube_status": "not_ready",
   "human_narration_required": true,
   "human_narration_received": false,
   "synthetic_voice_allowed": false,
-  "next_step": "Obtain genuine human narration using episode-001/narration-script.txt, then mix, review, caption, and finalize the episode."
+  "next_step": "Obtain genuine human narration using episode-001/narration-script.txt, then mix, review, align captions to the real delivery, and finalize the episode."
 }
