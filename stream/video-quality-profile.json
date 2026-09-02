@@ -1,0 +1,34 @@
+{
+  "daily_publish_target": 3,
+  "daily_package": [
+    "landscape challenge or result episode",
+    "vertical training or experiment short",
+    "vertical lesson, failure analysis, or measured-result short"
+  ],
+  "landscape": {
+    "width": 2560,
+    "height": 1440,
+    "fps": 60
+  },
+  "vertical_short": {
+    "width": 1440,
+    "height": 2560,
+    "fps": 60
+  },
+  "encoding": {
+    "video_codec": "libx264",
+    "profile": "high",
+    "pixel_format": "yuv420p",
+    "crf": 16,
+    "preset": "slow",
+    "audio_codec": "aac",
+    "audio_sample_rate_hz": 48000,
+    "audio_bitrate": "192k"
+  },
+  "source_rules": {
+    "native_resolution_required": true,
+    "upscaled_720p_allowed": false,
+    "full_playback_qa_required": true
+  },
+  "minimum_free_disk_gb_for_rendering": 20
+}
