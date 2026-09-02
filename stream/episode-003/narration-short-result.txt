@@ -1,0 +1,8 @@
+This robot duck landed on a Unitree Go1 in three out of three randomized tests.
+
+One launch impulse starts the flight. After that, there is no external force.
+The learned residual controller places both feet, recovers upright, and holds.
+
+The measured holds were one point six eight, one point six four, and one point
+six four seconds—with no later ground contact. The code and raw results are
+public.

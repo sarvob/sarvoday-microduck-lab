@@ -18,7 +18,7 @@
     "005-duck-quadruped-jump"
   ],
   "technical_status": "challenge_005_passed",
-  "editorial_status": "published_without_narration",
+  "editorial_status": "episode_003_three_video_scripts_and_metadata_ready",
   "captions_status": "timed_captions_uploaded",
   "audio_finalization_pipeline": "local_kokoro_ready_for_future_episodes",
   "youtube_status": "published",
@@ -39,5 +39,6 @@
   "challenge_005_assistance_policy": "single disclosed initial velocity; zero midair external force; learned landing and hold",
   "challenge_005_launch_calibration": "best initial velocity 1.2 m/s forward + 3.3 m/s vertical; both feet reached the pad with 0.218 m/s landing speed; stock stand held 0.96 s, below the 1.5 s gate",
   "challenge_005_result": "passed across seeds 17, 71, and 173: both feet landed, zero post-pad ground contact, and holds of 1.68 s, 1.64 s, and 1.64 s",
-  "next_step": "Render compact technical evidence now; wait for at least 20 GB free before producing the 1440p landscape episode and two 1440x2560 Shorts."
+  "episode_003_package": "one 2560x1440 landscape episode plus two 1440x2560 Shorts; scripts, structure, metadata, and quality gates ready",
+  "next_step": "After free disk reaches 20 GB, render the simulator natively for the three Episode 003 cuts, generate narration and captions, perform full QA, and prepare a named publishing batch for confirmation."
 }

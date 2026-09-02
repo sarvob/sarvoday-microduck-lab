@@ -1,0 +1,26 @@
+Can a robot duck jump onto a robot dog and stay there?
+
+The target is a real Unitree Go1 model in MuJoCo. Its landing pad is sixty
+centimetres forward and forty-one point seven centimetres above the duck.
+
+First, we tested the honest baseline. The stock Microduck roll policy moved
+forward, but rose only seven point four centimetres and stayed truly airborne
+for two hundredths of a second. That is nowhere near the target, so we rejected
+an unassisted-jump claim.
+
+Instead, the final experiment uses one transparent launch assist at the start:
+one point two metres per second forward and three point three metres per second
+upward. After launch, no external force is applied. The controller must handle
+the flight pose, put both feet on the Go1, recover upright, and hold.
+
+The stock stand controller reached the platform but held for only zero point
+nine six seconds. We then optimized an eight-parameter residual controller for
+flight and landing, using randomized launch error across three evaluation
+seeds.
+
+The trained result passed all three. Both feet landed, the duck never touched
+the ground afterward, and the stable holds measured one point six eight, one
+point six four, and one point six four seconds.
+
+The code, policy parameters, and machine-readable results are public in the
+Sarvoday Robotics repository. Next, we will make the quadruped move.

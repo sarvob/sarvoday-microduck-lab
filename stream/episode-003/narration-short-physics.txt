@@ -1,0 +1,9 @@
+We refused to fake this robot jump.
+
+The Go1 landing target is forty-one point seven centimetres above Microduck.
+The stock roll policy rose only seven point four centimetres and stayed truly
+airborne for two hundredths of a second.
+
+So the experiment uses one disclosed launch velocity at the start, and zero
+external force in flight. What gets trained is the difficult part: landing both
+feet and staying upright.
