@@ -1,0 +1,19 @@
+1
+00:00:00,000 --> 00:00:06,000
+One robot duck learned to swing. We asked what happens when three ducks work together.
+
+2
+00:00:06,000 --> 00:00:14,000
+Duck one rides. Duck two learns when to push, using the swing angle and velocity. Duck three claps at every peak.
+
+3
+00:00:14,000 --> 00:00:27,500
+Cross-entropy search tested 1,080 candidate controllers across three seeds. The winning five-parameter policy reached 44.8 degrees and sustained eight strong peaks in 16 seconds.
+
+4
+00:00:27,500 --> 00:00:35,500
+The swing timing is learned. The applause is synchronized choreography. Every claim has a measurable gate, and the code and results are public.
+
+5
+00:00:35,500 --> 00:00:43,000
+This is Sarvoday Robotics: open simulations, honest results, and one new robot challenge at a time.
