@@ -51,6 +51,9 @@ class ChallengeContractTest(unittest.TestCase):
         self.assertTrue(success["must_avoid_ground_contact_after_landing"])
         self.assertTrue(success["must_keep_quadruped_upright"])
         self.assertIn("fixed standing pose", spec["disclosure"].lower())
+        self.assertFalse(spec["feasibility"]["unassisted_jump_feasible"])
+        self.assertFalse(spec["assistance"]["midair_external_force_allowed"])
+        self.assertIn("stated on-screen", spec["disclosure"].lower())
 
     def test_challenge_005_names_the_pinned_quadruped_asset(self):
         script = (ROOT / "scripts" / "validate_go1_platform.py").read_text(encoding="utf-8")

@@ -27,5 +27,7 @@
   "challenge_005_reference": "https://x.com/jonathanhawkins/status/2094886898384924723?s=20",
   "challenge_005_scene": "validated: Microduck + pinned Unitree Go1, 0.60 m horizontal and 0.417 m vertical target displacement",
   "challenge_005_preview": "artifacts/005-duck-quadruped-jump/scene-validation.png",
-  "next_step": "Implement contact instrumentation and the stage-one launch optimizer, then measure target clearance before adding landing and hold rewards."
+  "challenge_005_feasibility": "unassisted launch rejected: stock roll policy rose 0.0737 m with only 0.02 s true airtime versus a 0.417 m target",
+  "challenge_005_assistance_policy": "single disclosed initial velocity; zero midair external force; learned landing and hold",
+  "next_step": "Calibrate the minimum ballistic launch velocity, add randomized landing spawns and contact instrumentation, then train the two-foot landing-and-hold controller."
 }

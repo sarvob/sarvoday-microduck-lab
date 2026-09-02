@@ -1,0 +1,11 @@
+{
+  "policy": "official shipped roll/roulade ONNX",
+  "settled_trunk_z_m": 0.1162,
+  "maximum_trunk_z_m": 0.1899,
+  "maximum_trunk_rise_m": 0.0737,
+  "maximum_forward_travel_m": 0.5467,
+  "longest_true_airborne_window_s": 0.02,
+  "target_vertical_displacement_m": 0.417,
+  "unassisted_target_feasible": false,
+  "decision": "Use a disclosed launch assist and train the landing policy"
+}

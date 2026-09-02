@@ -2,7 +2,7 @@
   "id": "005-duck-quadruped-jump",
   "title": "Duck jumps onto a quadruped",
   "inspiration": "https://x.com/jonathanhawkins/status/2094886898384924723?s=20",
-  "goal": "Train the Microduck to launch from the floor, land with both feet on a quadruped's back, and remain upright while the quadruped holds a stable stance.",
+  "goal": "Train the Microduck to land with both feet on a quadruped's back and remain upright after a fully disclosed, deterministic launch assist.",
   "quadruped": {
     "model": "Unitree Go1",
     "source": "https://github.com/google-deepmind/mujoco_menagerie/tree/main/unitree_go1",
@@ -10,14 +10,28 @@
     "role": "stationary landing platform for the first reproducible version"
   },
   "training": {
-    "algorithm": "staged optimization followed by policy refinement",
+    "algorithm": "staged landing curriculum with randomized assisted ballistic spawns",
     "stages": [
-      "launch height and forward travel",
-      "two-foot contact inside the back target",
+      "calibrate and bound the minimum launch assist needed to reach the target",
+      "two-foot contact inside the back target across randomized launches",
       "upright landing and stable hold"
     ],
     "seeds": [17, 71, 173],
     "minimum_successful_seeds": 3
+  },
+  "feasibility": {
+    "probe_policy": "official shipped roll/roulade ONNX",
+    "measured_maximum_trunk_rise_m": 0.0737,
+    "measured_longest_airborne_window_s": 0.02,
+    "required_vertical_displacement_m": 0.417,
+    "unassisted_jump_feasible": false,
+    "evidence": "artifacts/005-duck-quadruped-jump/launch-feasibility.json"
+  },
+  "assistance": {
+    "type": "initial root launch velocity",
+    "allowed_when": "only at episode start",
+    "midair_external_force_allowed": false,
+    "must_report_exact_velocity": true
   },
   "success": {
     "minimum_clearance_m": 0.08,
@@ -29,5 +43,5 @@
     "must_avoid_ground_contact_after_landing": true,
     "must_keep_quadruped_upright": true
   },
-  "disclosure": "The quadruped begins in and holds a fixed standing pose for challenge 005. Only the Microduck jump and landing controller is optimized; later variants may add quadruped motion after this baseline passes reproducibly."
+  "disclosure": "The quadruped begins in and holds a fixed standing pose. The stock XL330-class behavior could not produce the required unassisted rise, so a deterministic launch velocity is applied once at episode start and will be stated on-screen. No force is applied in flight. The learned component is the randomized two-foot landing and stable hold."
 }
