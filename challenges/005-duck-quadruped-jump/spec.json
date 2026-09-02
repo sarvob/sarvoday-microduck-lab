@@ -31,7 +31,12 @@
     "type": "initial root launch velocity",
     "allowed_when": "only at episode start",
     "midair_external_force_allowed": false,
-    "must_report_exact_velocity": true
+    "must_report_exact_velocity": true,
+    "calibrated_velocity_mps": {
+      "forward": 1.2,
+      "vertical": 3.3,
+      "magnitude": 3.511
+    }
   },
   "success": {
     "minimum_clearance_m": 0.08,

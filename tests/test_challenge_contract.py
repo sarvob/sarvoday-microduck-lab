@@ -60,6 +60,16 @@ class ChallengeContractTest(unittest.TestCase):
         self.assertIn("MENAGERIE_REVISION", script)
         self.assertIn("unitree_go1", script)
 
+    def test_challenge_005_calibration_reaches_pad_but_not_hold_gate(self):
+        path = ROOT / "artifacts" / "005-duck-quadruped-jump" / "launch-calibration.json"
+        calibration = json.loads(path.read_text(encoding="utf-8"))
+        best = calibration["best"]
+        self.assertFalse(calibration["success_gate_met"])
+        self.assertTrue(best["both_feet_simultaneous"])
+        self.assertFalse(best["ground_contact_after_pad"])
+        self.assertLess(best["longest_untrained_hold_s"], 1.5)
+        self.assertGreater(best["longest_untrained_hold_s"], 0.5)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -37,5 +37,6 @@
   "challenge_005_preview": "artifacts/005-duck-quadruped-jump/scene-validation.png",
   "challenge_005_feasibility": "unassisted launch rejected: stock roll policy rose 0.0737 m with only 0.02 s true airtime versus a 0.417 m target",
   "challenge_005_assistance_policy": "single disclosed initial velocity; zero midair external force; learned landing and hold",
-  "next_step": "Calibrate the minimum ballistic launch velocity, add randomized landing spawns and contact instrumentation, then train the two-foot landing-and-hold controller."
+  "challenge_005_launch_calibration": "best initial velocity 1.2 m/s forward + 3.3 m/s vertical; both feet reached the pad with 0.218 m/s landing speed; stock stand held 0.96 s, below the 1.5 s gate",
+  "next_step": "Train a bounded residual landing controller around the calibrated launch, randomize launch and lateral error across three seeds, and require a reproducible 1.5 s two-foot hold."
 }
