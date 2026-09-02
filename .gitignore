@@ -1,0 +1,6 @@
+.DS_Store
+.venv/
+.microduck_cache/
+__pycache__/
+*.py[cod]
+_test_output/

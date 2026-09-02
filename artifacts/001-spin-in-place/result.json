@@ -1,0 +1,118 @@
+{
+  "challenge": "001-spin-in-place",
+  "passed": true,
+  "source_spec": "challenges/001-spin-in-place/spec.json",
+  "lesson": {
+    "task": "spin",
+    "targets": [],
+    "radius": 0.2,
+    "episode_s": 9.0,
+    "label": "spin in place for one full turn while staying upright"
+  },
+  "success_gate": {
+    "minimum_turns": 1.0,
+    "maximum_drift_m": 0.35,
+    "must_stay_upright": true
+  },
+  "notes": [],
+  "attempts": [
+    {
+      "seed": 0,
+      "passed": true,
+      "history": [
+        [
+          7.3417,
+          3.6686,
+          20
+        ],
+        [
+          7.3417,
+          6.1449,
+          40
+        ],
+        [
+          7.3417,
+          7.2867,
+          60
+        ],
+        [
+          7.3417,
+          7.2104,
+          80
+        ],
+        [
+          7.3519,
+          7.3422,
+          100
+        ],
+        [
+          7.3519,
+          7.2681,
+          120
+        ],
+        [
+          7.3519,
+          7.311,
+          140
+        ],
+        [
+          7.3519,
+          7.2279,
+          160
+        ],
+        [
+          7.3519,
+          7.3347,
+          180
+        ],
+        [
+          7.3768,
+          7.3435,
+          200
+        ]
+      ],
+      "evaluation": {
+        "reached": [],
+        "fell": false,
+        "t_end": 9.0,
+        "travelled": 0.044,
+        "spun_rad": 7.46,
+        "distance_left": 0.0,
+        "all_reached": true,
+        "headline": "1.2 full turns, drifted 0.04 m",
+        "score": 7.376847667392159
+      }
+    }
+  ],
+  "winner": {
+    "seed": 0,
+    "weights": [
+      0.753873,
+      0.085688,
+      0.523667,
+      -5.160975,
+      -0.422305,
+      0.02808,
+      -1.177733,
+      0.964431,
+      -1.066083,
+      -1.904953,
+      -2.259215,
+      -0.431686,
+      0.998586,
+      -0.991648,
+      -0.047
+    ],
+    "evaluation": {
+      "reached": [],
+      "fell": false,
+      "t_end": 9.0,
+      "travelled": 0.044,
+      "spun_rad": 7.46,
+      "distance_left": 0.0,
+      "all_reached": true,
+      "headline": "1.2 full turns, drifted 0.04 m",
+      "score": 7.376847667392159
+    }
+  }
+}

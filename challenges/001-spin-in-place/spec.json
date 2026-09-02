@@ -1,0 +1,21 @@
+{
+  "id": "001-spin-in-place",
+  "title": "Spin in place",
+  "description": "Learn a supervisory controller that completes at least one full turn without falling or drifting excessively.",
+  "lesson": {
+    "task": "spin",
+    "label": "spin in place for one full turn while staying upright",
+    "episode_s": 9.0
+  },
+  "training": {
+    "generations": 10,
+    "population": 20,
+    "elite": 4,
+    "seeds": [0, 1, 2]
+  },
+  "success": {
+    "minimum_turns": 1.0,
+    "maximum_drift_m": 0.35,
+    "must_stay_upright": true
+  }
+}

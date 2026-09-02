@@ -14,6 +14,29 @@ hf_oauth_scopes:
 
 # 🎓 Microduck School
 
+> Sarvoday Robotics challenge lab, derived from the Hugging Face Microduck
+> School and Pollen Robotics Microduck simulator. Upstream provenance and its
+> original documentation are retained below.
+
+## Sarvoday challenge loop
+
+Each challenge has a machine-readable goal and pass/fail gate under
+`challenges/`. A result is publishable only after the simulator passes the gate,
+the tests pass, and `scripts/check_privacy.sh` reports clean.
+
+```bash
+python3.13 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+.venv/bin/python scripts/run_challenge.py challenges/001-spin-in-place/spec.json
+.venv/bin/python scripts/render_challenge.py 001-spin-in-place
+./scripts/check_privacy.sh
+```
+
+Challenge 001 teaches a supervisory controller to spin in place for at least
+one full turn while staying upright and drifting no more than 0.35 m. The
+shipped joint-level locomotion network remains frozen; the learned artifact is
+the higher-level controller that commands it.
+
 Set a lesson in plain English. The duck **doesn't know how to do it**, tries
 a couple of hundred times, and gets better — while you watch the score climb.
 

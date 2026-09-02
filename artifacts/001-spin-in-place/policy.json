@@ -1,0 +1,32 @@
+{
+  "challenge": "001-spin-in-place",
+  "seed": 0,
+  "weights": [
+    0.753873,
+    0.085688,
+    0.523667,
+    -5.160975,
+    -0.422305,
+    0.02808,
+    -1.177733,
+    0.964431,
+    -1.066083,
+    -1.904953,
+    -2.259215,
+    -0.431686,
+    0.998586,
+    -0.991648,
+    -0.047
+  ],
+  "evaluation": {
+    "reached": [],
+    "fell": false,
+    "t_end": 9.0,
+    "travelled": 0.044,
+    "spun_rad": 7.46,
+    "distance_left": 0.0,
+    "all_reached": true,
+    "headline": "1.2 full turns, drifted 0.04 m",
+    "score": 7.376847667392159
+  }
+}
