@@ -52,6 +52,11 @@ class ChallengeContractTest(unittest.TestCase):
         self.assertTrue(success["must_keep_quadruped_upright"])
         self.assertIn("fixed standing pose", spec["disclosure"].lower())
 
+    def test_challenge_005_names_the_pinned_quadruped_asset(self):
+        script = (ROOT / "scripts" / "validate_go1_platform.py").read_text(encoding="utf-8")
+        self.assertIn("MENAGERIE_REVISION", script)
+        self.assertIn("unitree_go1", script)
+
 
 if __name__ == "__main__":
     unittest.main()

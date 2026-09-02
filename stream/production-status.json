@@ -6,7 +6,8 @@
     "001-spin-in-place",
     "002-two-marker-sprint",
     "003-ball-push",
-    "004-duck-swing-team"
+    "004-duck-swing-team",
+    "005-duck-quadruped-jump"
   ],
   "technical_status": "challenge_005_in_progress",
   "editorial_status": "published_without_narration",
@@ -24,5 +25,7 @@
   "episode_002_video": "stream/episode-002/x-reply-60s.mp4",
   "active_challenge": "005-duck-quadruped-jump",
   "challenge_005_reference": "https://x.com/jonathanhawkins/status/2094886898384924723?s=20",
-  "next_step": "Assemble the Microduck and Unitree Go1 in one MuJoCo scene, validate contact labels and launch geometry, then train the staged jump-and-hold objective across three seeds."
+  "challenge_005_scene": "validated: Microduck + pinned Unitree Go1, 0.60 m horizontal and 0.417 m vertical target displacement",
+  "challenge_005_preview": "artifacts/005-duck-quadruped-jump/scene-validation.png",
+  "next_step": "Implement contact instrumentation and the stage-one launch optimizer, then measure target clearance before adding landing and hold rewards."
 }
