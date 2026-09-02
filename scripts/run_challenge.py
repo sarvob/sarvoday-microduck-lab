@@ -21,26 +21,33 @@ import lesson as L
 
 
 def success(record: dict, gate: dict) -> bool:
-    turns = float(record["spun_rad"]) / (2.0 * np.pi)
-    return (
-        turns >= float(gate["minimum_turns"])
-        and float(record["travelled"]) <= float(gate["maximum_drift_m"])
-        and (not gate.get("must_stay_upright", True) or not record["fell"])
-    )
+    checks = []
+    if "minimum_turns" in gate:
+        turns = float(record["spun_rad"]) / (2.0 * np.pi)
+        checks.append(turns >= float(gate["minimum_turns"]))
+    if "maximum_drift_m" in gate:
+        checks.append(float(record["travelled"]) <= float(gate["maximum_drift_m"]))
+    if "minimum_markers" in gate:
+        checks.append(len(record.get("reached", [])) >= int(gate["minimum_markers"]))
+    if "maximum_time_s" in gate:
+        checks.append(float(record["t_end"]) <= float(gate["maximum_time_s"]))
+    if gate.get("must_stay_upright", True):
+        checks.append(not record["fell"])
+    return bool(checks) and all(checks)
 
 
 def serializable_rollout(record: dict) -> dict:
     return {key: value for key, value in record.items() if key not in {"frames", "path"}}
 
 
-def plot_training(histories: list[dict], destination: Path) -> None:
+def plot_training(histories: list[dict], destination: Path, title: str) -> None:
     fig, ax = plt.subplots(figsize=(8, 4.5), dpi=140)
     for attempt in histories:
         history = attempt["history"]
         generations = np.arange(1, len(history) + 1)
         ax.plot(generations, [row[0] for row in history], marker="o", ms=3,
                 label=f"seed {attempt['seed']} best")
-    ax.set(title="Challenge 001 — spin in place", xlabel="generation", ylabel="score")
+    ax.set(title=title, xlabel="generation", ylabel="score")
     ax.grid(alpha=0.25)
     ax.legend(frameon=False)
     fig.tight_layout()
@@ -115,7 +122,7 @@ def main() -> int:
             json.dumps({"challenge": config["id"], **winner}, indent=2) + "\n",
             encoding="utf-8",
         )
-    plot_training(attempts, output / "learning-curve.png")
+    plot_training(attempts, output / "learning-curve.png", config["title"])
     print(f"Result: {'PASS' if winner else 'FAIL'}")
     print(f"Artifacts: {output.relative_to(ROOT)}")
     return 0 if winner else 1

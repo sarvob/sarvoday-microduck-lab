@@ -37,6 +37,9 @@ one full turn while staying upright and drifting no more than 0.35 m. The
 shipped joint-level locomotion network remains frozen; the learned artifact is
 the higher-level controller that commands it.
 
+Challenge 002 teaches that controller to reach two offset markers in sequence,
+forcing a steering reversal while staying upright and inside a 12.5 s gate.
+
 Set a lesson in plain English. The duck **doesn't know how to do it**, tries
 a couple of hundred times, and gets better — while you watch the score climb.
 

@@ -1,0 +1,35 @@
+{
+  "challenge": "002-two-marker-sprint",
+  "seed": 0,
+  "weights": [
+    0.10079,
+    -2.109445,
+    2.322135,
+    -0.348556,
+    -0.181877,
+    0.477526,
+    1.656387,
+    1.445073,
+    1.464525,
+    0.169149,
+    0.549925,
+    -0.27955,
+    0.450033,
+    0.158025,
+    0.166574
+  ],
+  "evaluation": {
+    "reached": [
+      3.1,
+      5.84
+    ],
+    "fell": false,
+    "t_end": 5.86,
+    "travelled": 0.242,
+    "spun_rad": 2.37,
+    "distance_left": 0.149,
+    "all_reached": true,
+    "headline": "2/2 markers reached",
+    "score": 2.8854467714200167
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "002-two-marker-sprint",
+  "title": "Challenge 002 — two-marker agility sprint",
+  "description": "Reach two offset markers in order, reverse steering direction, finish within the time gate, and remain upright.",
+  "lesson": {
+    "task": "goto",
+    "targets": [[0.35, 0.15], [0.35, -0.15]],
+    "label": "sprint through two offset markers in order",
+    "episode_s": 12.5
+  },
+  "training": {
+    "generations": 12,
+    "population": 22,
+    "elite": 5,
+    "seeds": [0, 1, 2]
+  },
+  "success": {
+    "minimum_markers": 2,
+    "maximum_time_s": 12.5,
+    "must_stay_upright": true
+  }
+}

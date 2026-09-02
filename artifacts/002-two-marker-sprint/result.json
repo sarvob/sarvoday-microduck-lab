@@ -1,0 +1,143 @@
+{
+  "challenge": "002-two-marker-sprint",
+  "passed": true,
+  "source_spec": "challenges/002-two-marker-sprint/spec.json",
+  "lesson": {
+    "task": "goto",
+    "targets": [
+      [
+        0.35,
+        0.15
+      ],
+      [
+        0.35,
+        -0.15
+      ]
+    ],
+    "radius": 0.2,
+    "episode_s": 13.4,
+    "label": "sprint through two offset markers in order"
+  },
+  "success_gate": {
+    "minimum_markers": 2,
+    "maximum_time_s": 12.5,
+    "must_stay_upright": true
+  },
+  "notes": [],
+  "attempts": [
+    {
+      "seed": 0,
+      "passed": true,
+      "history": [
+        [
+          2.7993,
+          0.008,
+          22
+        ],
+        [
+          2.8854,
+          1.6996,
+          44
+        ],
+        [
+          2.8854,
+          2.3587,
+          66
+        ],
+        [
+          2.8854,
+          2.7779,
+          88
+        ],
+        [
+          2.8854,
+          2.8605,
+          110
+        ],
+        [
+          2.8854,
+          2.8643,
+          132
+        ],
+        [
+          2.8854,
+          2.7937,
+          154
+        ],
+        [
+          2.8854,
+          2.8129,
+          176
+        ],
+        [
+          2.8854,
+          2.8691,
+          198
+        ],
+        [
+          2.8854,
+          2.8717,
+          220
+        ],
+        [
+          2.8854,
+          2.8723,
+          242
+        ],
+        [
+          2.8854,
+          2.872,
+          264
+        ]
+      ],
+      "evaluation": {
+        "reached": [
+          3.1,
+          5.84
+        ],
+        "fell": false,
+        "t_end": 5.86,
+        "travelled": 0.242,
+        "spun_rad": 2.37,
+        "distance_left": 0.149,
+        "all_reached": true,
+        "headline": "2/2 markers reached",
+        "score": 2.8854467714200167
+      }
+    }
+  ],
+  "winner": {
+    "seed": 0,
+    "weights": [
+      0.10079,
+      -2.109445,
+      2.322135,
+      -0.348556,
+      -0.181877,
+      0.477526,
+      1.656387,
+      1.445073,
+      1.464525,
+      0.169149,
+      0.549925,
+      -0.27955,
+      0.450033,
+      0.158025,
+      0.166574
+    ],
+    "evaluation": {
+      "reached": [
+        3.1,
+        5.84
+      ],
+      "fell": false,
+      "t_end": 5.86,
+      "travelled": 0.242,
+      "spun_rad": 2.37,
+      "distance_left": 0.149,
+      "all_reached": true,
+      "headline": "2/2 markers reached",
+      "score": 2.8854467714200167
+    }
+  }
+}

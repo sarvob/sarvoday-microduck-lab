@@ -16,6 +16,14 @@ class ChallengeContractTest(unittest.TestCase):
         self.assertTrue(spec["success"]["must_stay_upright"])
         self.assertGreaterEqual(len(spec["training"]["seeds"]), 3)
 
+    def test_challenge_002_requires_both_markers_and_balance(self):
+        path = ROOT / "challenges" / "002-two-marker-sprint" / "spec.json"
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(spec["lesson"]["task"], "goto")
+        self.assertEqual(len(spec["lesson"]["targets"]), 2)
+        self.assertEqual(spec["success"]["minimum_markers"], 2)
+        self.assertTrue(spec["success"]["must_stay_upright"])
+
 
 if __name__ == "__main__":
     unittest.main()
