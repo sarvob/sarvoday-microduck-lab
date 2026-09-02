@@ -29,6 +29,8 @@ def success(record: dict, gate: dict) -> bool:
         checks.append(float(record["travelled"]) <= float(gate["maximum_drift_m"]))
     if "minimum_markers" in gate:
         checks.append(len(record.get("reached", [])) >= int(gate["minimum_markers"]))
+    if "minimum_ball_m" in gate:
+        checks.append(float(record.get("ball_moved", 0.0)) >= float(gate["minimum_ball_m"]))
     if "maximum_time_s" in gate:
         checks.append(float(record["t_end"]) <= float(gate["maximum_time_s"]))
     if gate.get("must_stay_upright", True):

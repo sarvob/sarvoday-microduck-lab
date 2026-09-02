@@ -1,0 +1,129 @@
+{
+  "challenge": "003-ball-push",
+  "passed": true,
+  "source_spec": "challenges/003-ball-push/spec.json",
+  "lesson": {
+    "task": "ball",
+    "targets": [],
+    "radius": 0.2,
+    "episode_s": 10.0,
+    "label": "approach the ball and push it at least 0.30 m"
+  },
+  "success_gate": {
+    "minimum_ball_m": 0.3,
+    "must_stay_upright": true
+  },
+  "notes": [],
+  "attempts": [
+    {
+      "seed": 0,
+      "passed": true,
+      "history": [
+        [
+          2.4961,
+          0.2414,
+          24
+        ],
+        [
+          2.9277,
+          0.6215,
+          48
+        ],
+        [
+          2.9277,
+          1.1262,
+          72
+        ],
+        [
+          2.9277,
+          1.3524,
+          96
+        ],
+        [
+          2.9277,
+          0.9599,
+          120
+        ],
+        [
+          2.9277,
+          1.1408,
+          144
+        ],
+        [
+          2.9277,
+          1.2699,
+          168
+        ],
+        [
+          2.9277,
+          1.5735,
+          192
+        ],
+        [
+          2.9277,
+          1.4181,
+          216
+        ],
+        [
+          3.0089,
+          1.535,
+          240
+        ],
+        [
+          3.0089,
+          1.4931,
+          264
+        ],
+        [
+          3.0089,
+          1.4897,
+          288
+        ]
+      ],
+      "evaluation": {
+        "reached": [],
+        "fell": false,
+        "t_end": 10.0,
+        "travelled": 1.05,
+        "spun_rad": 4.81,
+        "distance_left": 0.0,
+        "all_reached": true,
+        "headline": "ball shoved 1.00 m",
+        "ball_moved": 1.003,
+        "score": 3.0089207813358936
+      }
+    }
+  ],
+  "winner": {
+    "seed": 0,
+    "weights": [
+      0.700964,
+      0.998431,
+      1.854251,
+      -1.439014,
+      2.26977,
+      -0.547996,
+      0.178122,
+      0.779746,
+      1.963633,
+      -1.300035,
+      -0.278506,
+      -1.177795,
+      0.340327,
+      -0.931572,
+      0.471563
+    ],
+    "evaluation": {
+      "reached": [],
+      "fell": false,
+      "t_end": 10.0,
+      "travelled": 1.05,
+      "spun_rad": 4.81,
+      "distance_left": 0.0,
+      "all_reached": true,
+      "headline": "ball shoved 1.00 m",
+      "ball_moved": 1.003,
+      "score": 3.0089207813358936
+    }
+  }
+}

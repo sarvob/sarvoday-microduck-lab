@@ -1,0 +1,20 @@
+{
+  "id": "003-ball-push",
+  "title": "Challenge 003 — controlled ball push",
+  "description": "Learn to approach and push a free ball at least 0.30 m while remaining upright.",
+  "lesson": {
+    "task": "ball",
+    "label": "approach the ball and push it at least 0.30 m",
+    "episode_s": 10.0
+  },
+  "training": {
+    "generations": 12,
+    "population": 24,
+    "elite": 5,
+    "seeds": [0, 1, 2]
+  },
+  "success": {
+    "minimum_ball_m": 0.30,
+    "must_stay_upright": true
+  }
+}

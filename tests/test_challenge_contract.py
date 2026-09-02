@@ -24,6 +24,13 @@ class ChallengeContractTest(unittest.TestCase):
         self.assertEqual(spec["success"]["minimum_markers"], 2)
         self.assertTrue(spec["success"]["must_stay_upright"])
 
+    def test_challenge_003_requires_object_displacement(self):
+        path = ROOT / "challenges" / "003-ball-push" / "spec.json"
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(spec["lesson"]["task"], "ball")
+        self.assertGreaterEqual(spec["success"]["minimum_ball_m"], 0.25)
+        self.assertTrue(spec["success"]["must_stay_upright"])
+
 
 if __name__ == "__main__":
     unittest.main()

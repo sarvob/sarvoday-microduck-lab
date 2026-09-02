@@ -40,6 +40,9 @@ the higher-level controller that commands it.
 Challenge 002 teaches that controller to reach two offset markers in sequence,
 forcing a steering reversal while staying upright and inside a 12.5 s gate.
 
+Challenge 003 adds object interaction: approach a free ball, push it at least
+0.30 m, and remain upright.
+
 Set a lesson in plain English. The duck **doesn't know how to do it**, tries
 a couple of hundred times, and gets better — while you watch the score climb.
 
