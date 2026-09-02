@@ -1,0 +1,33 @@
+{
+  "id": "005-duck-quadruped-jump",
+  "title": "Duck jumps onto a quadruped",
+  "inspiration": "https://x.com/jonathanhawkins/status/2094886898384924723?s=20",
+  "goal": "Train the Microduck to launch from the floor, land with both feet on a quadruped's back, and remain upright while the quadruped holds a stable stance.",
+  "quadruped": {
+    "model": "Unitree Go1",
+    "source": "https://github.com/google-deepmind/mujoco_menagerie/tree/main/unitree_go1",
+    "license": "BSD-3-Clause",
+    "role": "stationary landing platform for the first reproducible version"
+  },
+  "training": {
+    "algorithm": "staged optimization followed by policy refinement",
+    "stages": [
+      "launch height and forward travel",
+      "two-foot contact inside the back target",
+      "upright landing and stable hold"
+    ],
+    "seeds": [17, 71, 173],
+    "minimum_successful_seeds": 3
+  },
+  "success": {
+    "minimum_clearance_m": 0.08,
+    "minimum_airborne_time_s": 0.12,
+    "required_feet_on_back": 2,
+    "maximum_landing_speed_mps": 1.2,
+    "minimum_upright_z": 0.75,
+    "minimum_hold_time_s": 1.5,
+    "must_avoid_ground_contact_after_landing": true,
+    "must_keep_quadruped_upright": true
+  },
+  "disclosure": "The quadruped begins in and holds a fixed standing pose for challenge 005. Only the Microduck jump and landing controller is optimized; later variants may add quadruped motion after this baseline passes reproducibly."
+}

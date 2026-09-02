@@ -1,12 +1,14 @@
 {
-  "active_episode": "episode-002",
+  "active_episode": "episode-003",
+  "skills_ledger": "https://docs.google.com/spreadsheets/d/1Tsl9Vt0ISARTrpa3D02ovOulXVu7AdsPh3YLR0cuYQE/edit",
+  "skills_ledger_policy": "Read and update the ledger before selecting work.",
   "technical_scope": [
     "001-spin-in-place",
     "002-two-marker-sprint",
     "003-ball-push",
     "004-duck-swing-team"
   ],
-  "technical_status": "passed",
+  "technical_status": "challenge_005_in_progress",
   "editorial_status": "published_without_narration",
   "captions_status": "timed_captions_uploaded",
   "audio_finalization_pipeline": "local_kokoro_ready_for_future_episodes",
@@ -20,5 +22,7 @@
   "x_reply_target": "https://x.com/HannesVonEssen/status/2095193921060049010",
   "episode_002_status": "ready_for_x_reply",
   "episode_002_video": "stream/episode-002/x-reply-60s.mp4",
-  "next_step": "Publish Episode 002 as a reply to the referenced X post after action-time approval, then advance the next Microduck skill."
+  "active_challenge": "005-duck-quadruped-jump",
+  "challenge_005_reference": "https://x.com/jonathanhawkins/status/2094886898384924723?s=20",
+  "next_step": "Assemble the Microduck and Unitree Go1 in one MuJoCo scene, validate contact labels and launch geometry, then train the staged jump-and-hold objective across three seeds."
 }

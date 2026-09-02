@@ -39,6 +39,19 @@ class ChallengeContractTest(unittest.TestCase):
         self.assertIn("learned", spec["disclosure"].lower())
         self.assertIn("deterministic", spec["disclosure"].lower())
 
+    def test_challenge_005_requires_a_real_jump_and_stable_two_foot_landing(self):
+        path = ROOT / "challenges" / "005-duck-quadruped-jump" / "spec.json"
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        success = spec["success"]
+        self.assertEqual(spec["quadruped"]["model"], "Unitree Go1")
+        self.assertGreaterEqual(len(spec["training"]["seeds"]), 3)
+        self.assertEqual(success["required_feet_on_back"], 2)
+        self.assertGreaterEqual(success["minimum_airborne_time_s"], 0.1)
+        self.assertGreaterEqual(success["minimum_hold_time_s"], 1.0)
+        self.assertTrue(success["must_avoid_ground_contact_after_landing"])
+        self.assertTrue(success["must_keep_quadruped_upright"])
+        self.assertIn("fixed standing pose", spec["disclosure"].lower())
+
 
 if __name__ == "__main__":
     unittest.main()
