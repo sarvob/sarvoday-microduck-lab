@@ -8,6 +8,7 @@
   "technical_status": "passed",
   "editorial_status": "visual_master_complete",
   "captions_status": "timed_draft_complete_pending_human_audio_alignment",
+  "audio_finalization_pipeline": "ready_pending_human_audio",
   "youtube_status": "not_ready",
   "human_narration_required": true,
   "human_narration_received": false,
