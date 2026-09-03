@@ -23,7 +23,7 @@
     "006-controlled-roll",
     "012-variable-speed-boat-balance"
   ],
-  "technical_status": "challenge_012_attempt_5_failed; reproducibility audit found seven-decimal parameter serialization was too coarse; future searches now serialize and verify twelve decimals",
+  "technical_status": "challenge_012_attempt_6_failed_but_reproducibly_improved; all harbor gates pass and worst chop survival rose from 5.56 to 6.18 seconds",
   "editorial_status": "episode_003_short_drafts_rejected_for_youtube; rebuilding as 3-minute educational landscape videos",
   "captions_status": "timed_captions_uploaded",
   "audio_finalization_pipeline": "local_kokoro_ready_for_future_episodes",
@@ -98,5 +98,7 @@
   "challenge_012_training_attempt_5_artifact": "artifacts/012-variable-speed-boat-balance/joint-walk-continuation-result.json",
   "challenge_012_reproducibility_audit": "Re-evaluation showed chaotic fall timing is sensitive to seven-decimal gain rounding; candidate metrics must be computed after twelve-decimal serialization before future claims",
   "challenge_012_reproducibility_artifact": "artifacts/012-variable-speed-boat-balance/candidate-reverification.json",
-  "next_step": "Resume joint walk-residual search from the reproducible attempt-5 candidate, preserve all harbor gates, serialize gains at twelve decimals, and re-evaluate the serialized candidate before any claim; keep surge held out. Publish Episode 004 immediately when browser upload control is available and record its public URL."
+  "challenge_012_training_attempt_6": "Twelve-decimal post-serialization evaluation passes all three harbor gates and improves chop survival to 6.18-8.04 seconds, but chop still fails; held-out surge was not touched",
+  "challenge_012_training_attempt_6_artifact": "artifacts/012-variable-speed-boat-balance/joint-walk-refinement-result.json",
+  "next_step": "Diagnose the exact chop failure mode and trajectory for attempt 6 before choosing attempt 7; keep surge held out. Publish Episode 004 immediately when browser upload control is available and record its public URL."
 }

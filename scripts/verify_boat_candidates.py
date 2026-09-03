@@ -25,6 +25,7 @@ OUT_DIR = ROOT / "artifacts" / "012-variable-speed-boat-balance"
 CANDIDATES = (
     (4, OUT_DIR / "joint-walk-training-result.json"),
     (5, OUT_DIR / "joint-walk-continuation-result.json"),
+    (6, OUT_DIR / "joint-walk-refinement-result.json"),
 )
 
 
