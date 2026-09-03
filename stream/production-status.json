@@ -4,6 +4,8 @@
   "skills_ledger_policy": "Read and update the ledger before selecting work.",
   "daily_video_target": 3,
   "video_quality_profile": "stream/video-quality-profile.json",
+  "landscape_shooting_style": "stream/DUAL-VIEW-STYLE.md",
+  "landscape_shooting_reference": "https://x.com/AlexBodner_/status/2094806087228662270",
   "minimum_video_resolution": "YouTube: 2560x1440 landscape; X clips: 1440x2560 vertical",
   "youtube_minimum_duration_seconds": 180,
   "youtube_shorts_allowed": false,
@@ -59,6 +61,6 @@
   "youtube_publish_policy": "Publish immediately after every engineering, quality, factual-accuracy, and privacy gate passes; never publish incomplete or sub-3-minute YouTube videos.",
   "challenge_006_result": "26 roll-to-stand handoff timings searched; 0.82 s passed all three perturbed seeds with 330.1–344.1 degrees cumulative body rotation, full inversion, final upright score 1.0, and 0.104–0.119 m displacement",
   "challenge_006_motion_evidence": "stream/episode-004/roll-evidence-3-seeds.mp4",
-  "challenge_006_motion_evidence_quality": "2560x1440 at 60 fps, H.264 High, CRF 16; all three evaluation seeds shown",
+  "challenge_006_motion_evidence_quality": "2560x1440 at 60 fps, H.264 High, CRF 16; all three evaluation seeds shown with overview and physical head-camera POV",
   "next_step": "Build Challenge 006 into a narrated educational landscape episode of at least three minutes, run final quality/privacy gates, and publish immediately. Retry the requested Episode 003 X reply clips after Chrome extension file-upload permission is enabled."
 }

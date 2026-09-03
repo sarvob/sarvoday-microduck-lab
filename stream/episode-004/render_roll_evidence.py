@@ -53,27 +53,60 @@ def writer(path: Path) -> subprocess.Popen:
     return subprocess.Popen(command, stdin=subprocess.PIPE)
 
 
-def annotate(frame: np.ndarray, seed: int, phase: str, elapsed: float,
+def annotate(frame: np.ndarray, pov: np.ndarray, seed: int, phase: str, elapsed: float,
              upright: float, displacement: float) -> np.ndarray:
     image = Image.fromarray(frame)
     draw = ImageDraw.Draw(image, "RGBA")
-    draw.rounded_rectangle((70, 58, 2490, 236), radius=28, fill=(12, 21, 29, 218))
-    draw.text((118, 88), "CONTROLLED ROLL · MOTION EVIDENCE", font=font(48, True),
-              fill=(242, 246, 248, 255))
-    draw.text((118, 158), f"Seed {seed}   |   {phase}   |   t = {elapsed:0.2f} s",
-              font=font(31), fill=(161, 211, 221, 255))
-    draw.rounded_rectangle((1640, 92, 2440, 206), radius=22, fill=(24, 39, 50, 235))
-    draw.text((1690, 116), f"upright {upright:+0.2f}    drift {displacement:0.3f} m",
-              font=font(30, True), fill=(255, 201, 108, 255))
+
+    # A restrained two-camera composition: overview fills the canvas while the
+    # physical head camera remains readable as a clean picture-in-picture view.
+    inset_box = (1600, 58, 2494, 561)
+    draw.rounded_rectangle((1582, 40, 2512, 579), radius=30, fill=(7, 13, 18, 105))
+    inset = Image.fromarray(pov).resize((880, 495), Image.Resampling.LANCZOS)
+    mask = Image.new("L", inset.size, 0)
+    ImageDraw.Draw(mask).rounded_rectangle((0, 0, 879, 494), radius=24, fill=255)
+    image.paste(inset, inset_box[:2], mask)
+    draw = ImageDraw.Draw(image, "RGBA")
+    draw.rounded_rectangle(inset_box, radius=25, outline=(235, 241, 244, 230), width=5)
+    draw.rounded_rectangle((1630, 84, 1848, 138), radius=15, fill=(8, 15, 21, 198))
+    draw.text((1660, 94), "ROBOT POV", font=font(25, True), fill=(240, 246, 247, 255))
+
+    draw.rounded_rectangle((68, 1190, 1188, 1365), radius=28, fill=(10, 18, 24, 210))
+    draw.text((112, 1220), "CONTROLLED ROLL", font=font(43, True),
+              fill=(244, 248, 249, 255))
+    draw.text((112, 1287), f"SEED {seed:03d}  ·  {phase}  ·  {elapsed:0.2f} s",
+              font=font(29), fill=(166, 215, 223, 255))
+
+    draw.rounded_rectangle((1680, 1240, 2492, 1365), radius=26, fill=(10, 18, 24, 210))
+    draw.text((1722, 1279), f"UPRIGHT  {upright:+0.2f}     DRIFT  {displacement:0.3f} m",
+              font=font(29, True), fill=(255, 202, 109, 255))
+    draw.rounded_rectangle((68, 54, 274, 108), radius=15, fill=(10, 18, 24, 190))
+    draw.text((98, 65), "OVERVIEW", font=font(24, True), fill=(240, 246, 247, 255))
     return np.asarray(image)
 
 
 def render_seed(output: subprocess.Popen, seed: int, roll_steps: int,
                 joint_noise: float) -> None:
     sim = Microduck(render=False)
+    sim.model.geom("ball_geom").rgba[3] = 0.0
     sim.model.vis.global_.offwidth = WIDTH
     sim.model.vis.global_.offheight = HEIGHT
+    # The authored head camera sits inside the cosmetic shell. A slightly
+    # farther near plane clips that shell while leaving the overview unchanged.
+    sim.model.vis.map.znear = 0.12
     sim.renderer = sim.mj.Renderer(sim.model, height=HEIGHT, width=WIDTH)
+    sim.cam.distance = 1.55
+    sim.cam.elevation = -48.0
+    pov_width, pov_height = 880, 495
+    pov_renderer = sim.mj.Renderer(sim.model, height=pov_height, width=pov_width)
+    pov_camera = sim.mj.MjvCamera()
+    pov_camera.type = sim.mj.mjtCamera.mjCAMERA_FIXED
+    pov_camera.fixedcamid = sim.mj.mj_name2id(
+        sim.model, sim.mj.mjtObj.mjOBJ_CAMERA, "head_camera")
+    # The source render-camera faces inward. Point its -Z optical axis through
+    # the beak and move it just beyond the cosmetic shell.
+    sim.model.cam_quat[pov_camera.fixedcamid] = [0.707107, 0.0, 0.0, -0.707107]
+    sim.model.cam_pos[pov_camera.fixedcamid, 2] = -0.095
     sim.reset()
     rng = np.random.default_rng(seed)
     sim.data.qpos[sim.qadr] += rng.normal(0.0, joint_noise, len(sim.qadr))
@@ -94,13 +127,15 @@ def render_seed(output: subprocess.Popen, seed: int, roll_steps: int,
             origin = start_xy if start_xy is not None else sim.data.xpos[sim.trunk, :2]
             displacement = float(np.linalg.norm(sim.data.xpos[sim.trunk, :2] - origin))
             upright = -float(sim.proj_gravity()[2])
-            frame = annotate(sim.frame(), seed, phase, step / SOURCE_FPS,
+            pov_renderer.update_scene(sim.data, camera=pov_camera, scene_option=sim.opt)
+            frame = annotate(sim.frame(), pov_renderer.render(), seed, phase, step / SOURCE_FPS,
                              upright, displacement)
             assert output.stdin is not None
             output.stdin.write(frame.tobytes())
     finally:
         if sim.renderer is not None:
             sim.renderer.close()
+        pov_renderer.close()
 
 
 def main() -> None:
