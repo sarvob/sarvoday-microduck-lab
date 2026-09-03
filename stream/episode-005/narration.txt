@@ -1,0 +1,25 @@
+Can a tiny robot balance on a moving boat? This is Challenge Twelve in the Sarvoday Robotics Microduck Lab. The answer so far is precise: yes in harbor motion, no in rough chop, and the difference tells us what to build next.
+
+This is a MuJoCo simulation running control at fifty hertz. The deck is one point six meters long and zero point eight meters wide. It translates forward while rolling and pitching. Every run begins with a small, deterministic perturbation to the robot's joints. The overview follows the boat, while the inset is the physical camera mounted in the robot's head.
+
+The task is stricter than simply avoiding a fall. Microduck must survive for twenty seconds, stay upright, keep its feet in contact with the deck at least ninety-five percent of the time, remain within thirty centimeters of its starting position, never touch the floor, and never leave the usable deck boundary.
+
+We train on two disclosed motion profiles. Harbor is the gentle case: three degrees of roll, two degrees of pitch, and speed varying from about point one to point two six meters per second. Chop is much harder: seven degrees of roll, five degrees of pitch, and faster speed variation. A third profile, surge, remains held out. We do not test it until the training profiles pass.
+
+The first baseline used Microduck's official standing policy without modification. It lasted only about seven point three seconds in harbor. A static stance can reject small disturbances, but it cannot actively recenter when the deck moves underneath the feet.
+
+Seven controller experiments followed. The official joint-level standing and walking networks stayed frozen. We added only a small, disclosed layer above them: an eight-parameter joint residual based on deck angle, angular rate, relative position, and relative velocity; plus four proportional-derivative gains that ask the frozen walking policy to step back toward the center.
+
+That architectural change solved the harbor profile. Here is seed twenty-nine. The controller takes small corrective steps while the deck rolls, pitches, and accelerates. It completes all twenty seconds. Now seed eighty-three, with a different joint perturbation. Again, twenty seconds. And seed one ninety-seven does the same.
+
+The numbers matter. Across the three harbor seeds, minimum upright score stays above point nine nine. Final upright score is above point nine nine eight. Deck contact is between ninety-five and ninety-five point nine percent. Maximum relative displacement is between nineteen point one and twenty point five centimeters. Every harbor gate passes, three out of three.
+
+But a good progress report must show the boundary, not hide it. In chop, the same controller fails all three seeds. The longest run reaches eight point zero four seconds. Another reaches seven point nine. The weakest exits at six point one eight seconds. These are deck exits, not direct floor contacts.
+
+Watch the metrics during the rough-water run. Contact quality falls below the required ninety-five percent. Orientation deteriorates, and drift grows beyond the permitted region. The walking policy is being asked to recenter, but the combined motion outruns useful foot placement.
+
+Attempt seven tested an intuitive idea: add anticipatory feed-forward from roll, pitch, and their rates. The search kept those new gains at zero. In other words, the added signals did not improve the measured result, so that attempt was rejected. More inputs did not create a better controller.
+
+The next experiment will instrument command saturation and contact timing. We need to know whether the high-level command is clipping, whether the feet are landing too late, or whether the underlying walking policy lacks the required lateral recovery step. That evidence will decide between a better foot-placement state machine and a different learned recovery policy.
+
+So the honest result is this: harbor motion is verified across three perturbed starts. Rough chop remains unsolved. Surge remains untouched. The code, full challenge specification, learned parameters, and machine-readable evaluations are linked below. If you want robotics learning to be open, reproducible, and useful, subscribe and build the next experiment with us.
