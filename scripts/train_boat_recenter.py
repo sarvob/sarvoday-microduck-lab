@@ -50,7 +50,8 @@ def recenter_command(gains: np.ndarray, position: np.ndarray,
 
 
 def rollout(sim: Microduck, profile: dict, seed: int, residual_weights: np.ndarray,
-            recenter_gains: np.ndarray, spec: dict) -> dict:
+            recenter_gains: np.ndarray, spec: dict,
+            walk_threshold_m: float | None = None) -> dict:
     sim.reset()
     rng = np.random.default_rng(seed)
     sim.data.qpos[sim.qadr] += rng.normal(
@@ -77,6 +78,9 @@ def rollout(sim: Microduck, profile: dict, seed: int, residual_weights: np.ndarr
     minimum_upright = 1.0
     maximum_drift = 0.0
     failed = False
+    walking = walk_threshold_m is None
+    walking_steps = 0
+    policy_switches = 0
 
     for step in range(total_steps):
         t = step * CTRL_DT
@@ -98,7 +102,19 @@ def rollout(sim: Microduck, profile: dict, seed: int, residual_weights: np.ndarr
             residual_weights, roll, apparent_pitch, roll_rate,
             apparent_pitch_rate, relative_position, relative_velocity, limit)
         command = recenter_command(recenter_gains, relative_position, relative_velocity)
-        control_step(sim, residual, mode="walk", command3=command)
+        if walk_threshold_m is not None:
+            drift_before_control = float(np.linalg.norm(relative_position))
+            next_walking = (
+                drift_before_control > walk_threshold_m
+                if not walking
+                else drift_before_control > 0.6 * walk_threshold_m
+            )
+            policy_switches += int(next_walking != walking)
+            walking = next_walking
+        walking_steps += int(walking)
+        control_step(
+            sim, residual, mode="walk" if walking else "stand",
+            command3=command if walking else None)
 
         previous_roll, previous_pitch = roll, pitch
         previous_speed, previous_apparent_pitch = speed, apparent_pitch
@@ -132,6 +148,8 @@ def rollout(sim: Microduck, profile: dict, seed: int, residual_weights: np.ndarr
         "minimum_upright_score": round(minimum_upright, 4),
         "maximum_relative_deck_displacement_m": round(maximum_drift, 4),
         "failed": bool(failed),
+        "walking_ratio": round(walking_steps / max(completed_steps, 1), 4),
+        "policy_switches": policy_switches,
         "score": round(score, 5),
     }
 

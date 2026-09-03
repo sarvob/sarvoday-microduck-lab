@@ -1,0 +1,135 @@
+{
+  "challenge": "012-variable-speed-boat-balance",
+  "attempt": 3,
+  "architecture": "drift-gated frozen walk policy + frozen attempt-1 residual",
+  "held_out_profile_touched": false,
+  "training_seed": 1207,
+  "recenter_gains": [
+    1.513367,
+    0.3244677,
+    1.3477983,
+    0.0803254
+  ],
+  "walk_threshold_m": 0.0666191,
+  "walk_release_threshold_m": 0.0399715,
+  "history": [
+    {
+      "generation": 1,
+      "best_score": 183.23518,
+      "worst_training_survival_s": 5.56,
+      "walk_threshold_m": 0.09158
+    },
+    {
+      "generation": 2,
+      "best_score": 184.47285,
+      "worst_training_survival_s": 5.64,
+      "walk_threshold_m": 0.11152
+    },
+    {
+      "generation": 3,
+      "best_score": 184.47285,
+      "worst_training_survival_s": 5.64,
+      "walk_threshold_m": 0.11152
+    },
+    {
+      "generation": 4,
+      "best_score": 188.01632,
+      "worst_training_survival_s": 5.76,
+      "walk_threshold_m": 0.06662
+    },
+    {
+      "generation": 5,
+      "best_score": 188.01632,
+      "worst_training_survival_s": 5.76,
+      "walk_threshold_m": 0.06662
+    },
+    {
+      "generation": 6,
+      "best_score": 188.01632,
+      "worst_training_survival_s": 5.76,
+      "walk_threshold_m": 0.06662
+    },
+    {
+      "generation": 7,
+      "best_score": 188.01632,
+      "worst_training_survival_s": 5.76,
+      "walk_threshold_m": 0.06662
+    }
+  ],
+  "training_score": 188.01632,
+  "training_evaluations": [
+    {
+      "profile": "harbor",
+      "seed": 29,
+      "survival_time_s": 20.0,
+      "deck_contact_ratio": 0.942,
+      "minimum_upright_score": 0.9953,
+      "maximum_relative_deck_displacement_m": 0.2239,
+      "failed": false,
+      "walking_ratio": 0.894,
+      "policy_switches": 1,
+      "score": 179.5094
+    },
+    {
+      "profile": "harbor",
+      "seed": 83,
+      "survival_time_s": 20.0,
+      "deck_contact_ratio": 0.931,
+      "minimum_upright_score": 0.9917,
+      "maximum_relative_deck_displacement_m": 0.242,
+      "failed": false,
+      "walking_ratio": 0.891,
+      "policy_switches": 1,
+      "score": 179.18875
+    },
+    {
+      "profile": "harbor",
+      "seed": 197,
+      "survival_time_s": 20.0,
+      "deck_contact_ratio": 0.926,
+      "minimum_upright_score": 0.9945,
+      "maximum_relative_deck_displacement_m": 0.2623,
+      "failed": false,
+      "walking_ratio": 0.891,
+      "policy_switches": 1,
+      "score": 178.98763
+    },
+    {
+      "profile": "chop",
+      "seed": 29,
+      "survival_time_s": 5.76,
+      "deck_contact_ratio": 0.7674,
+      "minimum_upright_score": 0.8786,
+      "maximum_relative_deck_displacement_m": 0.3714,
+      "failed": true,
+      "walking_ratio": 0.6979,
+      "policy_switches": 1,
+      "score": 61.09402
+    },
+    {
+      "profile": "chop",
+      "seed": 83,
+      "survival_time_s": 5.82,
+      "deck_contact_ratio": 0.7629,
+      "minimum_upright_score": -0.2421,
+      "maximum_relative_deck_displacement_m": 0.7067,
+      "failed": true,
+      "walking_ratio": 0.7045,
+      "policy_switches": 1,
+      "score": 54.99865
+    },
+    {
+      "profile": "chop",
+      "seed": 197,
+      "survival_time_s": 6.18,
+      "deck_contact_ratio": 0.7864,
+      "minimum_upright_score": 0.2467,
+      "maximum_relative_deck_displacement_m": 0.6964,
+      "failed": true,
+      "walking_ratio": 0.7184,
+      "policy_switches": 1,
+      "score": 60.31949
+    }
+  ],
+  "training_success": false
+}

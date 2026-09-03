@@ -23,7 +23,7 @@
     "006-controlled-roll",
     "012-variable-speed-boat-balance"
   ],
-  "technical_status": "challenge_012_attempt_2_failed; always-on walk recentering preserves harbor but destabilizes chop; gated recentering selected for attempt 3",
+  "technical_status": "challenge_012_attempt_3_failed; drift gating preserves harbor but still switches too early under chop; joint walk-residual training selected for attempt 4",
   "editorial_status": "episode_003_short_drafts_rejected_for_youtube; rebuilding as 3-minute educational landscape videos",
   "captions_status": "timed_captions_uploaded",
   "audio_finalization_pipeline": "local_kokoro_ready_for_future_episodes",
@@ -90,5 +90,7 @@
   "challenge_012_architecture_v2": "Use the shipped frozen walk policy for a disclosed deck-relative recenter command, combined with a learned stance residual; train only on harbor and chop",
   "challenge_012_training_attempt_2": "Always-on frozen walk-policy recentering passed 20 seconds on all harbor seeds with 0.211-0.240 m drift, but reduced chop survival to 5.68-5.86 seconds; held-out surge was not touched",
   "challenge_012_training_attempt_2_artifact": "artifacts/012-variable-speed-boat-balance/recenter-training-result.json",
-  "next_step": "Implement gated recentering that retains the more wave-tolerant stand policy until deck-relative drift requires a corrective step; train on harbor and chop only and preserve surge as held out. Publish Episode 004 immediately when browser upload control is available and record its public URL."
+  "challenge_012_training_attempt_3": "A learned 0.0666 m drift gate preserved all 20-second harbor runs, but chop activated the walk policy for 69.8-71.8 percent of the rollout and still failed at 5.76-6.18 seconds; held-out surge was not touched",
+  "challenge_012_training_attempt_3_artifact": "artifacts/012-variable-speed-boat-balance/gated-recenter-training-result.json",
+  "next_step": "Train the wave-stabilizing residual jointly with the frozen walk policy and recenter gains instead of reusing the stand-specific attempt-1 residual; use harbor and chop only and preserve surge as held out. Publish Episode 004 immediately when browser upload control is available and record its public URL."
 }
