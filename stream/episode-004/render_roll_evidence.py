@@ -23,9 +23,9 @@ from duck import Microduck  # noqa: E402
 SOURCE_FPS = 50
 DELIVERY_FPS = 60
 WIDTH, HEIGHT = 2560, 1440
-PRE_ROLL_STEPS = 35
+SETTLE_STEPS = 50
 RECOVERY_STEPS = 100
-POST_ROLL_STEPS = 35
+POST_ROLL_STEPS = 0
 
 
 def font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
@@ -53,7 +53,8 @@ def writer(path: Path) -> subprocess.Popen:
     return subprocess.Popen(command, stdin=subprocess.PIPE)
 
 
-def annotate(frame: np.ndarray, pov: np.ndarray, seed: int, phase: str, elapsed: float,
+def annotate(frame: np.ndarray, pov: np.ndarray, run_label: str, seed: int,
+             phase: str, elapsed: float,
              upright: float, displacement: float) -> np.ndarray:
     image = Image.fromarray(frame)
     draw = ImageDraw.Draw(image, "RGBA")
@@ -72,7 +73,7 @@ def annotate(frame: np.ndarray, pov: np.ndarray, seed: int, phase: str, elapsed:
     draw.text((1660, 94), "ROBOT POV", font=font(25, True), fill=(240, 246, 247, 255))
 
     draw.rounded_rectangle((68, 1190, 1188, 1365), radius=28, fill=(10, 18, 24, 210))
-    draw.text((112, 1220), "CONTROLLED ROLL", font=font(43, True),
+    draw.text((112, 1220), run_label.upper(), font=font(43, True),
               fill=(244, 248, 249, 255))
     draw.text((112, 1287), f"SEED {seed:03d}  ·  {phase}  ·  {elapsed:0.2f} s",
               font=font(29), fill=(166, 215, 223, 255))
@@ -86,7 +87,8 @@ def annotate(frame: np.ndarray, pov: np.ndarray, seed: int, phase: str, elapsed:
 
 
 def render_seed(output: subprocess.Popen, seed: int, roll_steps: int,
-                joint_noise: float) -> None:
+                joint_noise: float, run_label: str, settle_steps: int,
+                post_roll_steps: int) -> None:
     sim = Microduck(render=False)
     sim.model.geom("ball_geom").rgba[3] = 0.0
     sim.model.vis.global_.offwidth = WIDTH
@@ -113,23 +115,23 @@ def render_seed(output: subprocess.Popen, seed: int, roll_steps: int,
     sim.mj.mj_forward(sim.model, sim.data)
     start_xy = None
     try:
-        total = PRE_ROLL_STEPS + roll_steps + RECOVERY_STEPS + POST_ROLL_STEPS
+        total = settle_steps + roll_steps + RECOVERY_STEPS + post_roll_steps
         for step in range(total):
-            if step < PRE_ROLL_STEPS:
+            if step < settle_steps:
                 phase, mode = "SETTLE", "stand"
-            elif step < PRE_ROLL_STEPS + roll_steps:
+            elif step < settle_steps + roll_steps:
                 phase, mode = "ROULADE POLICY", "roll"
             else:
                 phase, mode = "STAND RECOVERY", "stand"
             sim.control_step(mode, [0.0, 0.0, 0.0])
-            if start_xy is None and step == PRE_ROLL_STEPS - 1:
+            if start_xy is None and step == settle_steps - 1:
                 start_xy = sim.data.xpos[sim.trunk, :2].copy()
             origin = start_xy if start_xy is not None else sim.data.xpos[sim.trunk, :2]
             displacement = float(np.linalg.norm(sim.data.xpos[sim.trunk, :2] - origin))
             upright = -float(sim.proj_gravity()[2])
             pov_renderer.update_scene(sim.data, camera=pov_camera, scene_option=sim.opt)
-            frame = annotate(sim.frame(), pov_renderer.render(), seed, phase, step / SOURCE_FPS,
-                             upright, displacement)
+            frame = annotate(sim.frame(), pov_renderer.render(), run_label, seed,
+                             phase, step / SOURCE_FPS, upright, displacement)
             assert output.stdin is not None
             output.stdin.write(frame.tobytes())
     finally:
@@ -141,16 +143,22 @@ def render_seed(output: subprocess.Popen, seed: int, roll_steps: int,
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--seed", type=int, action="append", dest="seeds")
+    parser.add_argument("--roll-steps", type=int)
+    parser.add_argument("--settle-steps", type=int, default=SETTLE_STEPS)
+    parser.add_argument("--post-roll-steps", type=int, default=POST_ROLL_STEPS)
+    parser.add_argument("--run-label", default="Controlled roll")
     parser.add_argument("--output", type=Path, default=HERE / "roll-evidence-3-seeds.mp4")
     args = parser.parse_args()
     policy = json.loads((ROOT / "artifacts/006-controlled-roll/policy.json").read_text())
     spec = json.loads((ROOT / "challenges/006-controlled-roll/spec.json").read_text())
     seeds = args.seeds or policy["evaluation_seeds"]
+    roll_steps = args.roll_steps if args.roll_steps is not None else policy["roll_steps"]
     output = writer(args.output)
     try:
         for seed in seeds:
-            render_seed(output, seed, policy["roll_steps"],
-                        spec["training"]["initial_joint_noise_rad"])
+            render_seed(output, seed, roll_steps,
+                        spec["training"]["initial_joint_noise_rad"], args.run_label,
+                        args.settle_steps, args.post_roll_steps)
     finally:
         if output.stdin is not None:
             output.stdin.close()
