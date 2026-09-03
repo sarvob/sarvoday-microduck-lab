@@ -91,6 +91,18 @@ class ChallengeContractTest(unittest.TestCase):
         self.assertIn("remains frozen", spec["disclosure"].lower())
         self.assertIn("handoff", spec["disclosure"].lower())
 
+    def test_challenge_006_trained_handoff_passes_every_seed(self):
+        result = json.loads(
+            (ROOT / "artifacts" / "006-controlled-roll" / "result.json").read_text(
+                encoding="utf-8"))
+        self.assertTrue(result["success"])
+        self.assertEqual(result["candidate_count"], 26)
+        self.assertEqual(result["best"]["roll_steps"], 41)
+        self.assertEqual(result["best"]["passing_seeds"], 3)
+        self.assertTrue(all(
+            row["horizontal_displacement_m"] <= 0.2
+            for row in result["best"]["evaluations"]))
+
 
 if __name__ == "__main__":
     unittest.main()

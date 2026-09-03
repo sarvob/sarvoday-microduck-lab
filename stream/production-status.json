@@ -1,5 +1,5 @@
 {
-  "active_episode": "episode-003",
+  "active_episode": "episode-004",
   "skills_ledger": "https://docs.google.com/spreadsheets/d/1Tsl9Vt0ISARTrpa3D02ovOulXVu7AdsPh3YLR0cuYQE/edit",
   "skills_ledger_policy": "Read and update the ledger before selecting work.",
   "daily_video_target": 3,
@@ -7,7 +7,7 @@
   "minimum_video_resolution": "YouTube: 2560x1440 landscape; X clips: 1440x2560 vertical",
   "youtube_minimum_duration_seconds": 180,
   "youtube_shorts_allowed": false,
-  "daily_created_count": 1,
+  "daily_created_count": 2,
   "daily_ready_count": 1,
   "daily_published_count": 2,
   "daily_count_date": "2026-09-02",
@@ -20,7 +20,7 @@
     "005-duck-quadruped-jump",
     "006-controlled-roll"
   ],
-  "technical_status": "challenge_006_timing_search_passed; evidence_video_pending",
+  "technical_status": "challenge_006_timing_search_passed; native_motion_evidence_rendered",
   "editorial_status": "episode_003_short_drafts_rejected_for_youtube; rebuilding as 3-minute educational landscape videos",
   "captions_status": "timed_captions_uploaded",
   "audio_finalization_pipeline": "local_kokoro_ready_for_future_episodes",
@@ -58,5 +58,7 @@
   "youtube_auto_publish_authorized": true,
   "youtube_publish_policy": "Publish immediately after every engineering, quality, factual-accuracy, and privacy gate passes; never publish incomplete or sub-3-minute YouTube videos.",
   "challenge_006_result": "26 roll-to-stand handoff timings searched; 0.82 s passed all three perturbed seeds with 330.1–344.1 degrees cumulative body rotation, full inversion, final upright score 1.0, and 0.104–0.119 m displacement",
-  "next_step": "Render moving evidence for Challenge 006 and build its educational landscape episode. Retry the requested Episode 003 X reply clips after Chrome extension file-upload permission is enabled."
+  "challenge_006_motion_evidence": "stream/episode-004/roll-evidence-3-seeds.mp4",
+  "challenge_006_motion_evidence_quality": "2560x1440 at 60 fps, H.264 High, CRF 16; all three evaluation seeds shown",
+  "next_step": "Build Challenge 006 into a narrated educational landscape episode of at least three minutes, run final quality/privacy gates, and publish immediately. Retry the requested Episode 003 X reply clips after Chrome extension file-upload permission is enabled."
 }
