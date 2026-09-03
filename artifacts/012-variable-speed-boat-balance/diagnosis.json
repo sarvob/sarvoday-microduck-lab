@@ -1,0 +1,93 @@
+{
+  "challenge": "012-variable-speed-boat-balance",
+  "held_out_profile_touched": false,
+  "diagnostic_seed": 29,
+  "component_rollouts": [
+    {
+      "profile": "harbor_translation_only",
+      "seed": 29,
+      "survival_time_s": 20.0,
+      "deck_contact_ratio": 1.0,
+      "minimum_upright_score": 1.0,
+      "maximum_relative_deck_displacement_m": 0.0082,
+      "failed": false,
+      "controller": "frozen_policy"
+    },
+    {
+      "profile": "harbor_translation_only",
+      "seed": 29,
+      "survival_time_s": 20.0,
+      "deck_contact_ratio": 1.0,
+      "minimum_upright_score": 1.0,
+      "maximum_relative_deck_displacement_m": 0.0081,
+      "failed": false,
+      "controller": "residual_attempt_1"
+    },
+    {
+      "profile": "harbor_waves_only",
+      "seed": 29,
+      "survival_time_s": 20.0,
+      "deck_contact_ratio": 0.952,
+      "minimum_upright_score": 0.9983,
+      "maximum_relative_deck_displacement_m": 0.5852,
+      "failed": false,
+      "controller": "frozen_policy"
+    },
+    {
+      "profile": "harbor_waves_only",
+      "seed": 29,
+      "survival_time_s": 16.06,
+      "deck_contact_ratio": 0.9153,
+      "minimum_upright_score": 0.6616,
+      "maximum_relative_deck_displacement_m": 0.3269,
+      "failed": true,
+      "controller": "residual_attempt_1"
+    },
+    {
+      "profile": "chop_translation_only",
+      "seed": 29,
+      "survival_time_s": 19.14,
+      "deck_contact_ratio": 0.9478,
+      "minimum_upright_score": 0.0655,
+      "maximum_relative_deck_displacement_m": 0.6935,
+      "failed": true,
+      "controller": "frozen_policy"
+    },
+    {
+      "profile": "chop_translation_only",
+      "seed": 29,
+      "survival_time_s": 18.88,
+      "deck_contact_ratio": 0.9492,
+      "minimum_upright_score": 0.0585,
+      "maximum_relative_deck_displacement_m": 0.6859,
+      "failed": true,
+      "controller": "residual_attempt_1"
+    },
+    {
+      "profile": "chop_waves_only",
+      "seed": 29,
+      "survival_time_s": 5.26,
+      "deck_contact_ratio": 0.7947,
+      "minimum_upright_score": 0.3864,
+      "maximum_relative_deck_displacement_m": 0.4781,
+      "failed": true,
+      "controller": "frozen_policy"
+    },
+    {
+      "profile": "chop_waves_only",
+      "seed": 29,
+      "survival_time_s": 8.62,
+      "deck_contact_ratio": 0.6775,
+      "minimum_upright_score": 0.1786,
+      "maximum_relative_deck_displacement_m": 0.3471,
+      "failed": true,
+      "controller": "residual_attempt_1"
+    }
+  ],
+  "findings": [
+    "Harbor translation alone is stable for 20 seconds, so constant deck transport and contact modeling are viable.",
+    "Chop waves are the dominant short-horizon disturbance; attempt 1 improves wave-only survival from 5.26 to 8.62 seconds.",
+    "Both controllers accumulate deck-relative drift, and a pose-only stance residual cannot deliberately step back toward deck center."
+  ],
+  "architecture_decision": "Keep the official locomotion policies frozen; add a disclosed deck-relative recenter command through the shipped walk policy, then learn the residual and recenter gains on harbor and chop only."
+}

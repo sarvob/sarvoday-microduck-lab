@@ -23,7 +23,7 @@
     "006-controlled-roll",
     "012-variable-speed-boat-balance"
   ],
-  "technical_status": "challenge_012_residual_attempt_1_failed; controller diagnosis pending",
+  "technical_status": "challenge_012_residual_attempt_1_failed; component diagnosis complete; recentering architecture selected",
   "editorial_status": "episode_003_short_drafts_rejected_for_youtube; rebuilding as 3-minute educational landscape videos",
   "captions_status": "timed_captions_uploaded",
   "audio_finalization_pipeline": "local_kokoro_ready_for_future_episodes",
@@ -85,5 +85,8 @@
   "challenge_012_baseline_artifact": "artifacts/012-variable-speed-boat-balance/baseline.json",
   "challenge_012_training_attempt_1": "Fourteen-generation cross-entropy search improved harbor survival to 7.48-7.74 s and chop to 5.76-6.50 s, but failed all six training rollouts and generalized poorly to held-out surge at 2.74-2.98 s",
   "challenge_012_training_result": "artifacts/012-variable-speed-boat-balance/training-result.json",
-  "next_step": "Diagnose the failed residual architecture, especially longitudinal deck tracking and the held-out surge regression; revise the controller or objective before retraining. Publish Episode 004 immediately when browser upload control is available and record its public URL."
+  "challenge_012_diagnosis": "Translation-only harbor passes 20 s, while chop wave-only survival improves from 5.26 s to 8.62 s with attempt 1; deck-relative drift remains uncontrolled because a stance residual cannot deliberately recenter",
+  "challenge_012_diagnosis_artifact": "artifacts/012-variable-speed-boat-balance/diagnosis.json",
+  "challenge_012_architecture_v2": "Use the shipped frozen walk policy for a disclosed deck-relative recenter command, combined with a learned stance residual; train only on harbor and chop",
+  "next_step": "Implement controller v2 with frozen-policy recenter stepping, train on harbor and chop, and preserve surge as held out. Publish Episode 004 immediately when browser upload control is available and record its public URL."
 }
