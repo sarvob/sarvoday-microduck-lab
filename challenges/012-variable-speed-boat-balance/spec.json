@@ -1,0 +1,70 @@
+{
+  "id": "012-variable-speed-boat-balance",
+  "title": "Balance on a variable-speed boat",
+  "reference": "https://x.com/cg_ftLab/status/2095161708964901211",
+  "goal": "Keep Microduck upright on a moving boat deck for 20 seconds while speed, pitch, and roll vary across three deterministic wave profiles.",
+  "environment": {
+    "simulator": "MuJoCo",
+    "control_rate_hz": 50,
+    "deck_size_m": [1.6, 0.8],
+    "evaluation_duration_s": 20.0,
+    "profiles": [
+      {
+        "name": "harbor",
+        "forward_speed_mps": {"base": 0.18, "amplitude": 0.08, "period_s": 6.0},
+        "roll": {"amplitude_deg": 3.0, "period_s": 4.0},
+        "pitch": {"amplitude_deg": 2.0, "period_s": 3.3}
+      },
+      {
+        "name": "chop",
+        "forward_speed_mps": {"base": 0.35, "amplitude": 0.18, "period_s": 4.0},
+        "roll": {"amplitude_deg": 7.0, "period_s": 2.4},
+        "pitch": {"amplitude_deg": 5.0, "period_s": 1.9}
+      },
+      {
+        "name": "surge",
+        "forward_speed_mps": {"base": 0.55, "amplitude": 0.30, "period_s": 3.0},
+        "roll": {"amplitude_deg": 12.0, "period_s": 1.6},
+        "pitch": {"amplitude_deg": 8.0, "period_s": 1.3}
+      }
+    ]
+  },
+  "baseline": {
+    "controller": "official shipped Microduck standing policy",
+    "policy_frozen": true
+  },
+  "training": {
+    "algorithm": "cross-entropy search over deck-attitude residual gains",
+    "learned_parameters": [
+      "hip_roll_angle_gain",
+      "ankle_roll_angle_gain",
+      "hip_pitch_angle_gain",
+      "ankle_pitch_angle_gain",
+      "hip_roll_rate_gain",
+      "ankle_roll_rate_gain",
+      "hip_pitch_rate_gain",
+      "ankle_pitch_rate_gain"
+    ],
+    "maximum_joint_residual_rad": 0.25,
+    "training_profiles": ["harbor", "chop"],
+    "held_out_profile": "surge",
+    "seeds": [29, 83, 197],
+    "initial_joint_noise_rad": 0.01
+  },
+  "success": {
+    "required_profiles": 3,
+    "minimum_duration_per_profile_s": 20.0,
+    "minimum_upright_score": 0.5,
+    "minimum_final_upright_score": 0.9,
+    "minimum_deck_contact_ratio": 0.95,
+    "maximum_relative_deck_displacement_m": 0.3,
+    "must_avoid_floor_contact": true,
+    "must_remain_inside_deck_bounds": true
+  },
+  "video": {
+    "overview": "elevated deck-follow camera",
+    "inset": "physical robot head-camera POV",
+    "required_overlays": ["boat speed", "deck pitch", "deck roll", "upright score", "relative drift"]
+  },
+  "disclosure": "The official joint-level standing network remains frozen. The learned component is an eight-parameter residual that uses measured deck angle and angular rate. The boat motion is deterministic and disclosed; evaluation includes a held-out surge profile."
+}

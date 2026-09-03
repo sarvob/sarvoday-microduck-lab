@@ -103,6 +103,22 @@ class ChallengeContractTest(unittest.TestCase):
             row["horizontal_displacement_m"] <= 0.2
             for row in result["best"]["evaluations"]))
 
+    def test_challenge_012_defines_variable_speed_boat_balance(self):
+        path = ROOT / "challenges" / "012-variable-speed-boat-balance" / "spec.json"
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        profiles = spec["environment"]["profiles"]
+        success = spec["success"]
+        self.assertEqual(len(profiles), 3)
+        self.assertEqual(success["required_profiles"], 3)
+        self.assertGreaterEqual(success["minimum_duration_per_profile_s"], 20.0)
+        self.assertGreaterEqual(success["minimum_deck_contact_ratio"], 0.9)
+        self.assertLessEqual(success["maximum_relative_deck_displacement_m"], 0.35)
+        self.assertTrue(success["must_avoid_floor_contact"])
+        self.assertTrue(success["must_remain_inside_deck_bounds"])
+        self.assertTrue(spec["baseline"]["policy_frozen"])
+        self.assertEqual(len(spec["training"]["learned_parameters"]), 8)
+        self.assertIn("held-out", spec["disclosure"].lower())
+
 
 if __name__ == "__main__":
     unittest.main()

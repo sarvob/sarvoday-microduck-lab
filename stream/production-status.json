@@ -1,5 +1,5 @@
 {
-  "active_episode": "episode-004",
+  "active_episode": "episode-005",
   "skills_ledger": "https://docs.google.com/spreadsheets/d/1Tsl9Vt0ISARTrpa3D02ovOulXVu7AdsPh3YLR0cuYQE/edit",
   "skills_ledger_policy": "Read and update the ledger before selecting work.",
   "daily_video_target": 3,
@@ -20,9 +20,10 @@
     "003-ball-push",
     "004-duck-swing-team",
     "005-duck-quadruped-jump",
-    "006-controlled-roll"
+    "006-controlled-roll",
+    "012-variable-speed-boat-balance"
   ],
-  "technical_status": "challenge_006_timing_search_passed; native_motion_evidence_rendered",
+  "technical_status": "challenge_012_spec_defined; moving-deck baseline implementation pending",
   "editorial_status": "episode_003_short_drafts_rejected_for_youtube; rebuilding as 3-minute educational landscape videos",
   "captions_status": "timed_captions_uploaded",
   "audio_finalization_pipeline": "local_kokoro_ready_for_future_episodes",
@@ -36,7 +37,7 @@
   "x_reply_target": "https://x.com/HannesVonEssen/status/2095193921060049010",
   "episode_002_status": "ready_for_x_reply",
   "episode_002_video": "stream/episode-002/x-reply-60s.mp4",
-  "active_challenge": "006-controlled-roll",
+  "active_challenge": "012-variable-speed-boat-balance",
   "challenge_005_reference": "https://x.com/jonathanhawkins/status/2094886898384924723?s=20",
   "challenge_005_scene": "validated: Microduck + pinned Unitree Go1, 0.60 m horizontal and 0.417 m vertical target displacement",
   "challenge_005_preview": "artifacts/005-duck-quadruped-jump/scene-validation.png",
@@ -76,5 +77,9 @@
   "episode_004_motion_coverage": "184.2 s unique simulator footage (71.6 percent of runtime); no duplicate footage or empty runtime padding",
   "episode_004_youtube_status": "ready_to_publish; final browser upload control unavailable in the current automation run",
   "episode_004_editorial_status": "Final 4:17 educational landscape episode passed engineering, encoding, playback, audio, factual, visual, and privacy gates",
-  "next_step": "Publish Episode 004 immediately when browser upload control is available, record its public URL, then promote Challenge 012 from Next. Retry the requested Episode 003 X reply clips after Chrome extension file-upload permission is enabled."
+  "challenge_012_reference": "https://x.com/cg_ftLab/status/2095161708964901211",
+  "challenge_012_goal": "Stay upright for 20 seconds across harbor, chop, and held-out surge profiles while boat speed, pitch, and roll vary",
+  "challenge_012_learning_scope": "Official stand policy frozen; learn eight deck-attitude residual gains with a 0.25 rad joint correction limit",
+  "challenge_012_status": "Machine-readable environment, training, evaluation, video, and success contracts defined",
+  "next_step": "Implement the Challenge 012 kinematic boat deck and baseline evaluator, then measure the frozen stand policy before training. Publish Episode 004 immediately when browser upload control is available and record its public URL."
 }
