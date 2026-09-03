@@ -24,7 +24,7 @@ Target: 3:45–4:30 educational landscape video, 2560×1440 at 60 fps.
 
 ## Remaining production work
 
-1. Render the 0.84 s boundary failure in the same dual-view layout.
-2. Build the animated timing-sweep, gate, and result graphics.
-3. Assemble against the narration, then run full playback, audio, privacy, and
+1. Assemble the verified success, 0.84 s boundary-failure, and animated
+   timing-sweep evidence against the narration.
+2. Run full playback, audio, privacy, and
    encoding checks before immediate public upload.

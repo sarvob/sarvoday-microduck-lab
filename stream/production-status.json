@@ -66,6 +66,8 @@
   "episode_004_narration_duration_seconds": 257.336,
   "episode_004_boundary_failure_video": "stream/episode-004/roll-failure-0.84s-seed-23.mp4",
   "episode_004_boundary_failure_result": "42 steps / 0.84 s fails seed 23: 651.4 degrees cumulative rotation and final 0.5 s mean upright score 0.8182 below the 0.9 gate",
-  "episode_004_editorial_status": "Dual-view success and boundary-failure footage, 4:17 narration, production plan, and YouTube metadata ready; timing-sweep graphics and final assembly pending",
-  "next_step": "Build the Challenge 006 timing-sweep graphics, assemble the 4:17 educational episode, run final quality/privacy gates, and publish immediately. Retry the requested Episode 003 X reply clips after Chrome extension file-upload permission is enabled."
+  "episode_004_timing_sweep_video": "stream/episode-004/timing-sweep.mp4",
+  "episode_004_timing_sweep_quality": "14.0 s, 2560x1440 at 60 fps, H.264 High, yuv420p, CRF 16; all 26 candidates shown with 0.82 s selection and 0.84 s failure boundary",
+  "episode_004_editorial_status": "Dual-view success and boundary-failure footage, animated timing sweep, 4:17 narration, production plan, and YouTube metadata ready; final assembly pending",
+  "next_step": "Assemble the 4:17 educational episode from verified motion evidence, timing-sweep graphics, and narration; run final quality/privacy gates; publish immediately. Retry the requested Episode 003 X reply clips after Chrome extension file-upload permission is enabled."
 }
