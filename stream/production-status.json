@@ -69,7 +69,8 @@
   "episode_004_timing_sweep_video": "stream/episode-004/timing-sweep.mp4",
   "episode_004_timing_sweep_quality": "14.0 s, 2560x1440 at 60 fps, H.264 High, yuv420p, CRF 16; all 26 candidates shown with 0.82 s selection and 0.84 s failure boundary",
   "episode_004_search_montage": "stream/episode-004/search-evaluation-montage.mp4",
-  "episode_004_search_montage_status": "Rendering 26 timing candidates across all 3 evaluation seeds; unique motion coverage for final assembly",
-  "episode_004_editorial_status": "Dual-view success and boundary-failure footage, animated timing sweep, 4:17 narration, production plan, and YouTube metadata ready; unique search-evaluation montage rendering before final assembly",
-  "next_step": "Verify the search-evaluation montage, assemble the 4:17 educational episode, run final quality/privacy gates, and publish immediately. Retry the requested Episode 003 X reply clips after Chrome extension file-upload permission is enabled."
+  "episode_004_search_montage_status": "Verified: all 26 timing candidates across all 3 evaluation seeds, 167.7 s unique motion coverage",
+  "episode_004_search_montage_quality": "2560x1440 at 60 fps, H.264 High, yuv420p, CRF 16; 10,062 frames; representative early, middle, and late frames visually inspected",
+  "episode_004_editorial_status": "All source assets verified: 167.7 s search montage, dual-view success and boundary failure, animated timing sweep, 4:17 narration, production plan, and YouTube metadata; final assembly pending",
+  "next_step": "Assemble the 4:17 educational episode from the verified assets, run final quality/privacy gates, and publish immediately. Retry the requested Episode 003 X reply clips after Chrome extension file-upload permission is enabled."
 }
