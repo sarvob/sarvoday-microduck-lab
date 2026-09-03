@@ -88,7 +88,8 @@ def annotate(frame: np.ndarray, pov: np.ndarray, run_label: str, seed: int,
 
 def render_seed(output: subprocess.Popen, seed: int, roll_steps: int,
                 joint_noise: float, run_label: str, settle_steps: int,
-                post_roll_steps: int) -> None:
+                post_roll_steps: int, recovery_steps: int = RECOVERY_STEPS,
+                skip_settle_output: bool = False) -> None:
     sim = Microduck(render=False)
     sim.model.geom("ball_geom").rgba[3] = 0.0
     sim.model.vis.global_.offwidth = WIDTH
@@ -115,7 +116,7 @@ def render_seed(output: subprocess.Popen, seed: int, roll_steps: int,
     sim.mj.mj_forward(sim.model, sim.data)
     start_xy = None
     try:
-        total = settle_steps + roll_steps + RECOVERY_STEPS + post_roll_steps
+        total = settle_steps + roll_steps + recovery_steps + post_roll_steps
         for step in range(total):
             if step < settle_steps:
                 phase, mode = "SETTLE", "stand"
@@ -130,10 +131,11 @@ def render_seed(output: subprocess.Popen, seed: int, roll_steps: int,
             displacement = float(np.linalg.norm(sim.data.xpos[sim.trunk, :2] - origin))
             upright = -float(sim.proj_gravity()[2])
             pov_renderer.update_scene(sim.data, camera=pov_camera, scene_option=sim.opt)
-            frame = annotate(sim.frame(), pov_renderer.render(), run_label, seed,
-                             phase, step / SOURCE_FPS, upright, displacement)
-            assert output.stdin is not None
-            output.stdin.write(frame.tobytes())
+            if not skip_settle_output or step >= settle_steps:
+                frame = annotate(sim.frame(), pov_renderer.render(), run_label, seed,
+                                 phase, step / SOURCE_FPS, upright, displacement)
+                assert output.stdin is not None
+                output.stdin.write(frame.tobytes())
     finally:
         if sim.renderer is not None:
             sim.renderer.close()
@@ -145,7 +147,9 @@ def main() -> None:
     parser.add_argument("--seed", type=int, action="append", dest="seeds")
     parser.add_argument("--roll-steps", type=int)
     parser.add_argument("--settle-steps", type=int, default=SETTLE_STEPS)
+    parser.add_argument("--recovery-steps", type=int, default=RECOVERY_STEPS)
     parser.add_argument("--post-roll-steps", type=int, default=POST_ROLL_STEPS)
+    parser.add_argument("--skip-settle-output", action="store_true")
     parser.add_argument("--run-label", default="Controlled roll")
     parser.add_argument("--output", type=Path, default=HERE / "roll-evidence-3-seeds.mp4")
     args = parser.parse_args()
@@ -158,7 +162,8 @@ def main() -> None:
         for seed in seeds:
             render_seed(output, seed, roll_steps,
                         spec["training"]["initial_joint_noise_rad"], args.run_label,
-                        args.settle_steps, args.post_roll_steps)
+                        args.settle_steps, args.post_roll_steps, args.recovery_steps,
+                        args.skip_settle_output)
     finally:
         if output.stdin is not None:
             output.stdin.close()

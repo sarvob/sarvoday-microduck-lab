@@ -68,6 +68,8 @@
   "episode_004_boundary_failure_result": "42 steps / 0.84 s fails seed 23: 651.4 degrees cumulative rotation and final 0.5 s mean upright score 0.8182 below the 0.9 gate",
   "episode_004_timing_sweep_video": "stream/episode-004/timing-sweep.mp4",
   "episode_004_timing_sweep_quality": "14.0 s, 2560x1440 at 60 fps, H.264 High, yuv420p, CRF 16; all 26 candidates shown with 0.82 s selection and 0.84 s failure boundary",
-  "episode_004_editorial_status": "Dual-view success and boundary-failure footage, animated timing sweep, 4:17 narration, production plan, and YouTube metadata ready; final assembly pending",
-  "next_step": "Assemble the 4:17 educational episode from verified motion evidence, timing-sweep graphics, and narration; run final quality/privacy gates; publish immediately. Retry the requested Episode 003 X reply clips after Chrome extension file-upload permission is enabled."
+  "episode_004_search_montage": "stream/episode-004/search-evaluation-montage.mp4",
+  "episode_004_search_montage_status": "Rendering 26 timing candidates across all 3 evaluation seeds; unique motion coverage for final assembly",
+  "episode_004_editorial_status": "Dual-view success and boundary-failure footage, animated timing sweep, 4:17 narration, production plan, and YouTube metadata ready; unique search-evaluation montage rendering before final assembly",
+  "next_step": "Verify the search-evaluation montage, assemble the 4:17 educational episode, run final quality/privacy gates, and publish immediately. Retry the requested Episode 003 X reply clips after Chrome extension file-upload permission is enabled."
 }

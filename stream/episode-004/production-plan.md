@@ -25,6 +25,7 @@ Target: 3:45–4:30 educational landscape video, 2560×1440 at 60 fps.
 ## Remaining production work
 
 1. Assemble the verified success, 0.84 s boundary-failure, and animated
-   timing-sweep evidence against the narration.
+   timing-sweep evidence against the narration. Use the unique 26-timing ×
+   3-seed search montage for motion-rich explanation without duplicate footage.
 2. Run full playback, audio, privacy, and
    encoding checks before immediate public upload.
