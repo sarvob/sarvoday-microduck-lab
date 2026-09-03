@@ -35,16 +35,16 @@
     "policy_frozen": true
   },
   "training": {
-    "algorithm": "cross-entropy search over deck-attitude residual gains",
+    "algorithm": "cross-entropy search over deck-state residual gains",
     "learned_parameters": [
-      "hip_roll_angle_gain",
-      "ankle_roll_angle_gain",
-      "hip_pitch_angle_gain",
-      "ankle_pitch_angle_gain",
-      "hip_roll_rate_gain",
-      "ankle_roll_rate_gain",
-      "hip_pitch_rate_gain",
-      "ankle_pitch_rate_gain"
+      "roll_angle_gain",
+      "roll_rate_gain",
+      "lateral_position_gain",
+      "lateral_velocity_gain",
+      "apparent_pitch_gain",
+      "apparent_pitch_rate_gain",
+      "longitudinal_position_gain",
+      "longitudinal_velocity_gain"
     ],
     "maximum_joint_residual_rad": 0.25,
     "training_profiles": ["harbor", "chop"],
@@ -67,5 +67,5 @@
     "inset": "physical robot head-camera POV",
     "required_overlays": ["boat speed", "deck pitch", "deck roll", "upright score", "relative drift"]
   },
-  "disclosure": "The official joint-level standing network remains frozen. The learned component is an eight-parameter residual that uses measured deck angle and angular rate. The boat motion is deterministic and disclosed; evaluation includes a held-out surge profile."
+  "disclosure": "The official joint-level standing network remains frozen. The learned component is an eight-parameter stance residual using deck roll, apparent pitch including forward acceleration, angular rates, and simulated deck-relative position and velocity. The boat motion is deterministic and disclosed; evaluation includes a held-out surge profile."
 }

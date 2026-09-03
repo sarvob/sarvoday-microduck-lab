@@ -1,0 +1,184 @@
+{
+  "challenge": "012-variable-speed-boat-balance",
+  "algorithm": "cross-entropy search over deck-attitude residual gains",
+  "training_seed": 1205,
+  "weights": [
+    0.4870485,
+    -0.0612794,
+    -0.5968385,
+    0.8510078,
+    -0.0858444,
+    0.0893094,
+    -0.6315758,
+    0.0900973
+  ],
+  "maximum_joint_residual_rad": 0.25,
+  "training_score": 135.32449,
+  "history": [
+    {
+      "generation": 1,
+      "best_score": 117.72778,
+      "worst_training_survival_s": 4.54
+    },
+    {
+      "generation": 2,
+      "best_score": 125.64166,
+      "worst_training_survival_s": 3.98
+    },
+    {
+      "generation": 3,
+      "best_score": 125.64166,
+      "worst_training_survival_s": 3.98
+    },
+    {
+      "generation": 4,
+      "best_score": 125.64166,
+      "worst_training_survival_s": 3.98
+    },
+    {
+      "generation": 5,
+      "best_score": 125.64166,
+      "worst_training_survival_s": 3.98
+    },
+    {
+      "generation": 6,
+      "best_score": 125.64166,
+      "worst_training_survival_s": 3.98
+    },
+    {
+      "generation": 7,
+      "best_score": 126.07048,
+      "worst_training_survival_s": 4.36
+    },
+    {
+      "generation": 8,
+      "best_score": 126.07048,
+      "worst_training_survival_s": 4.36
+    },
+    {
+      "generation": 9,
+      "best_score": 135.32449,
+      "worst_training_survival_s": 5.76
+    },
+    {
+      "generation": 10,
+      "best_score": 135.32449,
+      "worst_training_survival_s": 5.76
+    },
+    {
+      "generation": 11,
+      "best_score": 135.32449,
+      "worst_training_survival_s": 5.76
+    },
+    {
+      "generation": 12,
+      "best_score": 135.32449,
+      "worst_training_survival_s": 5.76
+    },
+    {
+      "generation": 13,
+      "best_score": 135.32449,
+      "worst_training_survival_s": 5.76
+    },
+    {
+      "generation": 14,
+      "best_score": 135.32449,
+      "worst_training_survival_s": 5.76
+    }
+  ],
+  "training_evaluations": [
+    {
+      "profile": "harbor",
+      "seed": 29,
+      "survival_time_s": 7.74,
+      "deck_contact_ratio": 0.9251,
+      "minimum_upright_score": 0.529,
+      "maximum_relative_deck_displacement_m": 0.6699,
+      "failed": true,
+      "score": 76.59832
+    },
+    {
+      "profile": "harbor",
+      "seed": 83,
+      "survival_time_s": 7.48,
+      "deck_contact_ratio": 0.9198,
+      "minimum_upright_score": 0.5368,
+      "maximum_relative_deck_displacement_m": 0.6651,
+      "failed": true,
+      "score": 74.48346
+    },
+    {
+      "profile": "harbor",
+      "seed": 197,
+      "survival_time_s": 7.56,
+      "deck_contact_ratio": 0.9153,
+      "minimum_upright_score": 0.5411,
+      "maximum_relative_deck_displacement_m": 0.6727,
+      "failed": true,
+      "score": 75.01478
+    },
+    {
+      "profile": "chop",
+      "seed": 29,
+      "survival_time_s": 5.76,
+      "deck_contact_ratio": 0.7639,
+      "minimum_upright_score": -0.1781,
+      "maximum_relative_deck_displacement_m": 0.6719,
+      "failed": true,
+      "score": 55.01634
+    },
+    {
+      "profile": "chop",
+      "seed": 83,
+      "survival_time_s": 6.5,
+      "deck_contact_ratio": 0.6985,
+      "minimum_upright_score": -0.6736,
+      "maximum_relative_deck_displacement_m": 0.6226,
+      "failed": true,
+      "score": 58.07258
+    },
+    {
+      "profile": "chop",
+      "seed": 197,
+      "survival_time_s": 6.12,
+      "deck_contact_ratio": 0.7582,
+      "minimum_upright_score": -0.0866,
+      "maximum_relative_deck_displacement_m": 0.6916,
+      "failed": true,
+      "score": 58.04148
+    }
+  ],
+  "held_out_evaluations": [
+    {
+      "profile": "surge",
+      "seed": 29,
+      "survival_time_s": 2.74,
+      "deck_contact_ratio": 0.781,
+      "minimum_upright_score": -0.3764,
+      "maximum_relative_deck_displacement_m": 0.5343,
+      "failed": true,
+      "score": 31.19688
+    },
+    {
+      "profile": "surge",
+      "seed": 83,
+      "survival_time_s": 2.98,
+      "deck_contact_ratio": 0.7651,
+      "minimum_upright_score": 0.3124,
+      "maximum_relative_deck_displacement_m": 0.4855,
+      "failed": true,
+      "score": 35.87828
+    },
+    {
+      "profile": "surge",
+      "seed": 197,
+      "survival_time_s": 2.78,
+      "deck_contact_ratio": 0.7842,
+      "minimum_upright_score": -0.3402,
+      "maximum_relative_deck_displacement_m": 0.5725,
+      "failed": true,
+      "score": 31.48991
+    }
+  ],
+  "success": false
+}

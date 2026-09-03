@@ -23,7 +23,7 @@
     "006-controlled-roll",
     "012-variable-speed-boat-balance"
   ],
-  "technical_status": "challenge_012_frozen_stand_baseline_measured; residual training pending",
+  "technical_status": "challenge_012_residual_attempt_1_failed; controller diagnosis pending",
   "editorial_status": "episode_003_short_drafts_rejected_for_youtube; rebuilding as 3-minute educational landscape videos",
   "captions_status": "timed_captions_uploaded",
   "audio_finalization_pipeline": "local_kokoro_ready_for_future_episodes",
@@ -83,5 +83,7 @@
   "challenge_012_status": "Dynamic free-joint boat deck and reproducible nine-rollout baseline implemented; frozen stand policy fails the 20-second gate",
   "challenge_012_baseline": "Harbor survives 7.30-7.34 s, chop 4.08-4.48 s, and held-out surge 2.84-3.32 s before floor contact or deck exit; 0/9 pass",
   "challenge_012_baseline_artifact": "artifacts/012-variable-speed-boat-balance/baseline.json",
-  "next_step": "Implement and train the eight-gain deck-attitude residual against harbor and chop, then evaluate once on the held-out surge profile. Publish Episode 004 immediately when browser upload control is available and record its public URL."
+  "challenge_012_training_attempt_1": "Fourteen-generation cross-entropy search improved harbor survival to 7.48-7.74 s and chop to 5.76-6.50 s, but failed all six training rollouts and generalized poorly to held-out surge at 2.74-2.98 s",
+  "challenge_012_training_result": "artifacts/012-variable-speed-boat-balance/training-result.json",
+  "next_step": "Diagnose the failed residual architecture, especially longitudinal deck tracking and the held-out surge regression; revise the controller or objective before retraining. Publish Episode 004 immediately when browser upload control is available and record its public URL."
 }
