@@ -1,0 +1,16 @@
+Before we finish, here is a practical way to inspect a controller handoff. Watch
+three signals together: body rotation, projected gravity, and displacement.
+During the successful zero point eight two second run, the roll policy carries
+the trunk through inversion, then the standing policy receives a pose it can
+recover. The motion damps instead of accelerating into another turn.
+
+Now compare the zero point eight four second run. The difference is only one
+fifty-hertz control step, but the trunk has already crossed the useful capture
+region. The standing controller begins from the wrong angular state, so it
+cannot remove momentum before the body rotates again.
+
+This is why we keep the failed boundary case. A polished success clip shows
+what happened; a nearby failure helps explain why. When reproducing this work,
+keep the policies frozen, use the published seeds, verify all four physical
+gates, and report the first failing candidate beside the selected one. That
+makes the result easier to audit, teach, and improve.

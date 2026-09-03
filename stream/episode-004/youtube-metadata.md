@@ -9,6 +9,9 @@ handoff. We search 26 transition timings for Microduck's official roulade and
 stand policies, evaluate three perturbed starting poses, and explain why
 controller transitions are a robotics problem of their own.
 
+The final section gives a practical visual checklist for comparing the selected
+0.82-second handoff with the first failing 0.84-second boundary case.
+
 Code and measured results:
 https://github.com/sarvob/sarvoday-microduck-lab/tree/main/artifacts/006-controlled-roll
 

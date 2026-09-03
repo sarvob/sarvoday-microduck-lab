@@ -24,7 +24,8 @@ Target: 3:45–4:30 educational landscape video, 2560×1440 at 60 fps.
 
 ## Production result
 
-- Final runtime: 4:17 (257.333 seconds).
+- Final runtime: 5:21 (321.539 seconds), including a narrated visual analysis
+  of the selected 0.82-second handoff versus the 0.84-second boundary failure.
 - Delivery: 2560×1440 at 60 fps, H.264 High, yuv420p, AAC 48 kHz.
 - Motion coverage: 184.2 seconds of unique simulator footage (71.6%).
 - Audio: −16.0 dB mean, −1.5 dB peak.
