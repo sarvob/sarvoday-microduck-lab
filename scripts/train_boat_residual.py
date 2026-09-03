@@ -62,7 +62,16 @@ def residual_vector(weights: np.ndarray, roll: float, apparent_pitch: float,
     return np.clip(residual, -limit, limit)
 
 
-def control_step(sim: Microduck, residual: np.ndarray) -> None:
+def control_step(sim: Microduck, residual: np.ndarray, mode: str = "stand",
+                 command3: np.ndarray | None = None) -> None:
+    """Advance a frozen official policy with an optional joint residual.
+
+    ``mode`` is deliberately limited to the shipped stand and walk networks.
+    The higher-level recenter controller can therefore ask the frozen walk
+    policy for velocity without replacing or fine-tuning its joint policy.
+    """
+    if mode not in ("stand", "walk"):
+        raise ValueError(f"unsupported boat-balance mode: {mode}")
     obs = np.zeros(OBS_SIZE, dtype=np.float32)
     offset = 0
     obs[offset:offset + 3] = sim.data.sensordata[sim.gyro:sim.gyro + 3]
@@ -77,9 +86,11 @@ def control_step(sim: Microduck, residual: np.ndarray) -> None:
     offset += NUM_JOINTS
     sim.head_smooth += HEAD_ALPHA * (sim.head_target - sim.head_smooth)
     command = np.zeros(CMD_SIZE, dtype=np.float32)
+    if mode == "walk" and command3 is not None:
+        command[:3] = command3
     command[3:7] = sim.head_smooth
     obs[offset:offset + CMD_SIZE] = command
-    base = sim.sessions["stand"].run(None, {"obs": obs.reshape(1, -1)})[0][0]
+    base = sim.sessions[mode].run(None, {"obs": obs.reshape(1, -1)})[0][0]
     action = np.clip(base + residual, -1.5, 1.5).astype(np.float32)
     sim.last_action = action
     sim.data.ctrl[:NUM_JOINTS] = DEFAULT_POSE + action * ACTION_SCALE
