@@ -1,0 +1,183 @@
+{
+  "challenge": "012-variable-speed-boat-balance",
+  "purpose": "reproducibility check of rounded parameters in public artifacts",
+  "held_out_profile_touched": false,
+  "candidates": [
+    {
+      "attempt": 4,
+      "source": "artifacts/012-variable-speed-boat-balance/joint-walk-training-result.json",
+      "evaluated_serialized_parameters": true,
+      "held_out_profile_touched": false,
+      "training_evaluations": [
+        {
+          "profile": "harbor",
+          "seed": 29,
+          "survival_time_s": 20.0,
+          "deck_contact_ratio": 0.948,
+          "minimum_upright_score": 0.9931,
+          "final_upright_score": 0.9985,
+          "maximum_relative_deck_displacement_m": 0.211,
+          "failed": false,
+          "walking_ratio": 1.0,
+          "policy_switches": 0,
+          "score": 179.57571
+        },
+        {
+          "profile": "harbor",
+          "seed": 83,
+          "survival_time_s": 20.0,
+          "deck_contact_ratio": 0.952,
+          "minimum_upright_score": 0.9935,
+          "final_upright_score": 0.9985,
+          "maximum_relative_deck_displacement_m": 0.1918,
+          "failed": false,
+          "walking_ratio": 1.0,
+          "policy_switches": 0,
+          "score": 179.76472
+        },
+        {
+          "profile": "harbor",
+          "seed": 197,
+          "survival_time_s": 20.0,
+          "deck_contact_ratio": 0.939,
+          "minimum_upright_score": 0.9933,
+          "final_upright_score": 0.9985,
+          "maximum_relative_deck_displacement_m": 0.2124,
+          "failed": false,
+          "walking_ratio": 1.0,
+          "policy_switches": 0,
+          "score": 179.40614
+        },
+        {
+          "profile": "chop",
+          "seed": 29,
+          "survival_time_s": 6.72,
+          "deck_contact_ratio": 0.7381,
+          "minimum_upright_score": -0.134,
+          "final_upright_score": 0.1186,
+          "maximum_relative_deck_displacement_m": 0.6917,
+          "failed": true,
+          "walking_ratio": 1.0,
+          "policy_switches": 0,
+          "score": 62.16478
+        },
+        {
+          "profile": "chop",
+          "seed": 83,
+          "survival_time_s": 7.52,
+          "deck_contact_ratio": 0.7021,
+          "minimum_upright_score": -0.443,
+          "final_upright_score": 0.357,
+          "maximum_relative_deck_displacement_m": 0.6903,
+          "failed": true,
+          "walking_ratio": 1.0,
+          "policy_switches": 0,
+          "score": 66.6896
+        },
+        {
+          "profile": "chop",
+          "seed": 197,
+          "survival_time_s": 8.02,
+          "deck_contact_ratio": 0.7282,
+          "minimum_upright_score": -0.1278,
+          "final_upright_score": 0.0267,
+          "maximum_relative_deck_displacement_m": 0.6964,
+          "failed": true,
+          "walking_ratio": 1.0,
+          "policy_switches": 0,
+          "score": 72.38318
+        }
+      ],
+      "training_gates_passed": 1,
+      "worst_chop_survival_s": 6.72
+    },
+    {
+      "attempt": 5,
+      "source": "artifacts/012-variable-speed-boat-balance/joint-walk-continuation-result.json",
+      "evaluated_serialized_parameters": true,
+      "held_out_profile_touched": false,
+      "training_evaluations": [
+        {
+          "profile": "harbor",
+          "seed": 29,
+          "survival_time_s": 20.0,
+          "deck_contact_ratio": 0.964,
+          "minimum_upright_score": 0.9933,
+          "final_upright_score": 0.9988,
+          "maximum_relative_deck_displacement_m": 0.1828,
+          "failed": false,
+          "walking_ratio": 1.0,
+          "policy_switches": 0,
+          "score": 180.02696
+        },
+        {
+          "profile": "harbor",
+          "seed": 83,
+          "survival_time_s": 20.0,
+          "deck_contact_ratio": 0.958,
+          "minimum_upright_score": 0.9929,
+          "final_upright_score": 0.9982,
+          "maximum_relative_deck_displacement_m": 0.1967,
+          "failed": false,
+          "walking_ratio": 1.0,
+          "policy_switches": 0,
+          "score": 179.83374
+        },
+        {
+          "profile": "harbor",
+          "seed": 197,
+          "survival_time_s": 20.0,
+          "deck_contact_ratio": 0.955,
+          "minimum_upright_score": 0.9929,
+          "final_upright_score": 0.9988,
+          "maximum_relative_deck_displacement_m": 0.187,
+          "failed": false,
+          "walking_ratio": 1.0,
+          "policy_switches": 0,
+          "score": 179.83797
+        },
+        {
+          "profile": "chop",
+          "seed": 29,
+          "survival_time_s": 6.2,
+          "deck_contact_ratio": 0.7903,
+          "minimum_upright_score": -0.0902,
+          "final_upright_score": 0.1115,
+          "maximum_relative_deck_displacement_m": 0.6848,
+          "failed": true,
+          "walking_ratio": 1.0,
+          "policy_switches": 0,
+          "score": 59.15475
+        },
+        {
+          "profile": "chop",
+          "seed": 83,
+          "survival_time_s": 5.56,
+          "deck_contact_ratio": 0.741,
+          "minimum_upright_score": -0.3667,
+          "final_upright_score": 0.4453,
+          "maximum_relative_deck_displacement_m": 0.7002,
+          "failed": true,
+          "walking_ratio": 1.0,
+          "policy_switches": 0,
+          "score": 51.94882
+        },
+        {
+          "profile": "chop",
+          "seed": 197,
+          "survival_time_s": 6.04,
+          "deck_contact_ratio": 0.7682,
+          "minimum_upright_score": 0.4261,
+          "final_upright_score": 0.855,
+          "maximum_relative_deck_displacement_m": 0.4652,
+          "failed": true,
+          "walking_ratio": 1.0,
+          "policy_switches": 0,
+          "score": 60.85924
+        }
+      ],
+      "training_gates_passed": 3,
+      "worst_chop_survival_s": 5.56
+    }
+  ]
+}

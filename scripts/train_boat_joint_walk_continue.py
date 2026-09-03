@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Attempt 4: jointly search walk-specific residual and recenter gains.
+"""Attempt 5: continue joint walk search with a chop-focused objective.
 
-The official Microduck walking network remains frozen. Search is limited to an
-eight-gain joint residual and a four-gain deck-centre velocity command. Harbor
-and chop are the only training profiles; surge stays sealed until the declared
-training gates pass.
+This resumes from attempt 4. The three harbor gates are protected with a large
+score term while worst-case chop survival drives improvement. The official walk
+network is frozen and the held-out surge profile is never evaluated here.
 """
 
 from __future__ import annotations
@@ -22,40 +21,31 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from duck import Microduck  # noqa: E402
 from evaluate_boat_balance import add_boat_deck  # noqa: E402
+from train_boat_joint_walk import passes_gate  # noqa: E402
 from train_boat_recenter import rollout  # noqa: E402
 
 
 SPEC_PATH = ROOT / "challenges" / "012-variable-speed-boat-balance" / "spec.json"
-ATTEMPT1_PATH = ROOT / "artifacts" / "012-variable-speed-boat-balance" / "training-result.json"
-ATTEMPT2_PATH = ROOT / "artifacts" / "012-variable-speed-boat-balance" / "recenter-training-result.json"
-OUT_PATH = ROOT / "artifacts" / "012-variable-speed-boat-balance" / "joint-walk-training-result.json"
-
-
-def passes_gate(row: dict, gate: dict) -> bool:
-    return bool(
-        not row["failed"]
-        and row["survival_time_s"] >= gate["minimum_duration_per_profile_s"]
-        and row["minimum_upright_score"] >= gate["minimum_upright_score"]
-        and row["final_upright_score"] >= gate["minimum_final_upright_score"]
-        and row["deck_contact_ratio"] >= gate["minimum_deck_contact_ratio"]
-        and row["maximum_relative_deck_displacement_m"]
-        <= gate["maximum_relative_deck_displacement_m"]
-    )
+START_PATH = ROOT / "artifacts" / "012-variable-speed-boat-balance" / "joint-walk-training-result.json"
+OUT_PATH = ROOT / "artifacts" / "012-variable-speed-boat-balance" / "joint-walk-continuation-result.json"
 
 
 def evaluate(sim: Microduck, profiles: list[dict], seeds: list[int],
              parameters: np.ndarray, spec: dict) -> tuple[float, list[dict]]:
-    residual, recenter = parameters[:8], parameters[8:]
     rows = [
-        rollout(sim, profile, seed, residual, recenter, spec)
+        rollout(sim, profile, seed, parameters[:8], parameters[8:], spec)
         for profile in profiles for seed in seeds
     ]
-    worst_survival = min(row["survival_time_s"] for row in rows)
-    gate_bonus = 15.0 * sum(passes_gate(row, spec["success"]) for row in rows)
-    regularization = 0.03 * float(np.sum(parameters ** 2))
+    harbor = [row for row in rows if row["profile"] == "harbor"]
+    chop = [row for row in rows if row["profile"] == "chop"]
+    harbor_passes = sum(passes_gate(row, spec["success"]) for row in harbor)
+    chop_passes = sum(passes_gate(row, spec["success"]) for row in chop)
+    chop_survival = [row["survival_time_s"] for row in chop]
     score = (
-        float(np.mean([row["score"] for row in rows]))
-        + 14.0 * worst_survival + gate_bonus - regularization
+        60.0 * harbor_passes + 90.0 * chop_passes
+        + 25.0 * min(chop_survival) + 4.0 * float(np.mean(chop_survival))
+        + 0.15 * float(np.mean([row["score"] for row in rows]))
+        - 0.02 * float(np.sum(parameters ** 2))
     )
     return score, rows
 
@@ -65,20 +55,23 @@ def main() -> int:
     profile_map = {row["name"]: row for row in spec["environment"]["profiles"]}
     profiles = [profile_map[name] for name in spec["training"]["training_profiles"]]
     assert spec["training"]["held_out_profile"] not in {p["name"] for p in profiles}
-    attempt1 = json.loads(ATTEMPT1_PATH.read_text(encoding="utf-8"))
-    attempt2 = json.loads(ATTEMPT2_PATH.read_text(encoding="utf-8"))
-    start = np.asarray(attempt1["weights"] + attempt2["recenter_gains"], dtype=float)
+    start_result = json.loads(START_PATH.read_text(encoding="utf-8"))
+    start = np.asarray(
+        start_result["residual_weights"] + start_result["recenter_gains"],
+        dtype=float,
+    )
     sim = Microduck(render=False, xml_transform=add_boat_deck)
-    rng = np.random.default_rng(1208)
+    rng = np.random.default_rng(1209)
     mean = start.copy()
-    sigma = np.r_[np.full(8, 0.45), [0.35, 0.12, 0.35, 0.12]]
+    sigma = np.r_[np.full(8, 0.28), [0.24, 0.08, 0.24, 0.08]]
     low = np.r_[np.full(8, -2.5), np.zeros(4)]
     high = np.r_[np.full(8, 2.5), [3.0, 1.0, 3.0, 1.0]]
     best = start.copy()
-    best_score = -float("inf")
+    best_score, _ = evaluate(
+        sim, profiles, spec["training"]["seeds"], best, spec)
     history = []
 
-    for generation in range(8):
+    for generation in range(10):
         population = np.clip(rng.normal(mean, sigma, size=(24, 12)), low, high)
         population[0] = best
         scored = []
@@ -91,35 +84,40 @@ def main() -> int:
             best_score, best = scored[0]
         elite = np.asarray([parameters for _, parameters in scored[:6]])
         mean = elite.mean(axis=0)
-        sigma = np.maximum(elite.std(axis=0), 0.03)
+        sigma = np.maximum(elite.std(axis=0), 0.02)
         _, rows = evaluate(sim, profiles, spec["training"]["seeds"], best, spec)
+        chop = [row for row in rows if row["profile"] == "chop"]
         history.append({
             "generation": generation + 1,
             "best_score": round(best_score, 5),
-            "worst_training_survival_s": min(row["survival_time_s"] for row in rows),
-            "training_gates_passed": sum(
-                passes_gate(row, spec["success"]) for row in rows),
+            "harbor_gates_passed": sum(
+                passes_gate(row, spec["success"])
+                for row in rows if row["profile"] == "harbor"),
+            "chop_gates_passed": sum(passes_gate(row, spec["success"]) for row in chop),
+            "worst_chop_survival_s": min(row["survival_time_s"] for row in chop),
         })
         print(
             f"generation {generation + 1:02d}: "
-            f"worst={history[-1]['worst_training_survival_s']:0.2f}s "
-            f"gates={history[-1]['training_gates_passed']}/6",
+            f"harbor={history[-1]['harbor_gates_passed']}/3 "
+            f"chop={history[-1]['chop_gates_passed']}/3 "
+            f"worst_chop={history[-1]['worst_chop_survival_s']:0.2f}s",
             flush=True,
         )
 
     best = np.round(best, 12)
-    training_score, rows = evaluate(
+    final_score, rows = evaluate(
         sim, profiles, spec["training"]["seeds"], best, spec)
     result = {
         "challenge": spec["id"],
-        "attempt": 4,
+        "attempt": 5,
         "architecture": "frozen walk policy + jointly learned residual and recenter gains",
+        "objective": "preserve harbor gates, then maximize worst-case chop survival",
         "held_out_profile_touched": False,
-        "training_seed": 1208,
+        "training_seed": 1209,
         "residual_weights": [float(value) for value in best[:8]],
         "recenter_gains": [float(value) for value in best[8:]],
         "history": history,
-        "training_score": round(training_score, 5),
+        "training_score": round(final_score, 5),
         "training_evaluations": rows,
         "training_success": all(passes_gate(row, spec["success"]) for row in rows),
     }

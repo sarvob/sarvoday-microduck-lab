@@ -1,0 +1,178 @@
+{
+  "challenge": "012-variable-speed-boat-balance",
+  "attempt": 5,
+  "architecture": "frozen walk policy + jointly learned residual and recenter gains",
+  "objective": "preserve harbor gates, then maximize worst-case chop survival",
+  "held_out_profile_touched": false,
+  "training_seed": 1209,
+  "residual_weights": [
+    -0.0872987,
+    0.2828669,
+    -1.2909853,
+    0.6944587,
+    -0.6857961,
+    0.1631344,
+    -0.6793032,
+    0.1613205
+  ],
+  "recenter_gains": [
+    2.6886584,
+    0.2873627,
+    1.6534856,
+    0.1744358
+  ],
+  "history": [
+    {
+      "generation": 1,
+      "best_score": 328.75217,
+      "harbor_gates_passed": 3,
+      "chop_gates_passed": 0,
+      "worst_chop_survival_s": 4.48
+    },
+    {
+      "generation": 2,
+      "best_score": 360.92746,
+      "harbor_gates_passed": 3,
+      "chop_gates_passed": 0,
+      "worst_chop_survival_s": 5.54
+    },
+    {
+      "generation": 3,
+      "best_score": 360.92746,
+      "harbor_gates_passed": 3,
+      "chop_gates_passed": 0,
+      "worst_chop_survival_s": 5.54
+    },
+    {
+      "generation": 4,
+      "best_score": 363.84396,
+      "harbor_gates_passed": 3,
+      "chop_gates_passed": 0,
+      "worst_chop_survival_s": 5.6
+    },
+    {
+      "generation": 5,
+      "best_score": 365.67029,
+      "harbor_gates_passed": 3,
+      "chop_gates_passed": 0,
+      "worst_chop_survival_s": 5.74
+    },
+    {
+      "generation": 6,
+      "best_score": 365.67029,
+      "harbor_gates_passed": 3,
+      "chop_gates_passed": 0,
+      "worst_chop_survival_s": 5.74
+    },
+    {
+      "generation": 7,
+      "best_score": 370.95575,
+      "harbor_gates_passed": 3,
+      "chop_gates_passed": 0,
+      "worst_chop_survival_s": 5.86
+    },
+    {
+      "generation": 8,
+      "best_score": 375.23139,
+      "harbor_gates_passed": 3,
+      "chop_gates_passed": 0,
+      "worst_chop_survival_s": 6.02
+    },
+    {
+      "generation": 9,
+      "best_score": 375.23139,
+      "harbor_gates_passed": 3,
+      "chop_gates_passed": 0,
+      "worst_chop_survival_s": 6.02
+    },
+    {
+      "generation": 10,
+      "best_score": 384.75844,
+      "harbor_gates_passed": 3,
+      "chop_gates_passed": 0,
+      "worst_chop_survival_s": 6.32
+    }
+  ],
+  "training_score": 384.75844,
+  "training_evaluations": [
+    {
+      "profile": "harbor",
+      "seed": 29,
+      "survival_time_s": 20.0,
+      "deck_contact_ratio": 0.956,
+      "minimum_upright_score": 0.9929,
+      "final_upright_score": 0.9983,
+      "maximum_relative_deck_displacement_m": 0.1773,
+      "failed": false,
+      "walking_ratio": 1.0,
+      "policy_switches": 0,
+      "score": 179.91435
+    },
+    {
+      "profile": "harbor",
+      "seed": 83,
+      "survival_time_s": 20.0,
+      "deck_contact_ratio": 0.956,
+      "minimum_upright_score": 0.9931,
+      "final_upright_score": 0.999,
+      "maximum_relative_deck_displacement_m": 0.1865,
+      "failed": false,
+      "walking_ratio": 1.0,
+      "policy_switches": 0,
+      "score": 179.85984
+    },
+    {
+      "profile": "harbor",
+      "seed": 197,
+      "survival_time_s": 20.0,
+      "deck_contact_ratio": 0.951,
+      "minimum_upright_score": 0.9919,
+      "final_upright_score": 0.9985,
+      "maximum_relative_deck_displacement_m": 0.179,
+      "failed": false,
+      "walking_ratio": 1.0,
+      "policy_switches": 0,
+      "score": 179.81031
+    },
+    {
+      "profile": "chop",
+      "seed": 29,
+      "survival_time_s": 7.28,
+      "deck_contact_ratio": 0.7445,
+      "minimum_upright_score": -0.2376,
+      "final_upright_score": 0.3979,
+      "maximum_relative_deck_displacement_m": 0.6847,
+      "failed": true,
+      "walking_ratio": 1.0,
+      "policy_switches": 0,
+      "score": 66.38094
+    },
+    {
+      "profile": "chop",
+      "seed": 83,
+      "survival_time_s": 6.32,
+      "deck_contact_ratio": 0.7152,
+      "minimum_upright_score": -0.411,
+      "final_upright_score": 0.1767,
+      "maximum_relative_deck_displacement_m": 0.6883,
+      "failed": true,
+      "walking_ratio": 1.0,
+      "policy_switches": 0,
+      "score": 57.45786
+    },
+    {
+      "profile": "chop",
+      "seed": 197,
+      "survival_time_s": 7.92,
+      "deck_contact_ratio": 0.6919,
+      "minimum_upright_score": -0.4038,
+      "final_upright_score": 0.1793,
+      "maximum_relative_deck_displacement_m": 0.6965,
+      "failed": true,
+      "walking_ratio": 1.0,
+      "policy_switches": 0,
+      "score": 69.81861
+    }
+  ],
+  "training_success": false
+}
