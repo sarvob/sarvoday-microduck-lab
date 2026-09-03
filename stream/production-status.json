@@ -23,7 +23,7 @@
     "006-controlled-roll",
     "012-variable-speed-boat-balance"
   ],
-  "technical_status": "challenge_012_attempt_3_failed; drift gating preserves harbor but still switches too early under chop; joint walk-residual training selected for attempt 4",
+  "technical_status": "challenge_012_attempt_4_failed_but_improved; all harbor gates pass and worst chop survival rose to 6.98 seconds; continuation search selected",
   "editorial_status": "episode_003_short_drafts_rejected_for_youtube; rebuilding as 3-minute educational landscape videos",
   "captions_status": "timed_captions_uploaded",
   "audio_finalization_pipeline": "local_kokoro_ready_for_future_episodes",
@@ -79,7 +79,7 @@
   "episode_004_editorial_status": "Final 4:17 educational landscape episode passed engineering, encoding, playback, audio, factual, visual, and privacy gates",
   "challenge_012_reference": "https://x.com/cg_ftLab/status/2095161708964901211",
   "challenge_012_goal": "Stay upright for 20 seconds across harbor, chop, and held-out surge profiles while boat speed, pitch, and roll vary",
-  "challenge_012_learning_scope": "Official stand policy frozen; learn eight deck-attitude residual gains with a 0.25 rad joint correction limit",
+  "challenge_012_learning_scope": "Official stand and walk policies frozen; current search learns eight bounded deck-state residual gains plus four high-level recenter-command gains",
   "challenge_012_status": "Dynamic free-joint boat deck and reproducible nine-rollout baseline implemented; frozen stand policy fails the 20-second gate",
   "challenge_012_baseline": "Harbor survives 7.30-7.34 s, chop 4.08-4.48 s, and held-out surge 2.84-3.32 s before floor contact or deck exit; 0/9 pass",
   "challenge_012_baseline_artifact": "artifacts/012-variable-speed-boat-balance/baseline.json",
@@ -92,5 +92,7 @@
   "challenge_012_training_attempt_2_artifact": "artifacts/012-variable-speed-boat-balance/recenter-training-result.json",
   "challenge_012_training_attempt_3": "A learned 0.0666 m drift gate preserved all 20-second harbor runs, but chop activated the walk policy for 69.8-71.8 percent of the rollout and still failed at 5.76-6.18 seconds; held-out surge was not touched",
   "challenge_012_training_attempt_3_artifact": "artifacts/012-variable-speed-boat-balance/gated-recenter-training-result.json",
-  "next_step": "Train the wave-stabilizing residual jointly with the frozen walk policy and recenter gains instead of reusing the stand-specific attempt-1 residual; use harbor and chop only and preserve surge as held out. Publish Episode 004 immediately when browser upload control is available and record its public URL."
+  "challenge_012_training_attempt_4": "Joint walk-specific residual and recenter search passed every declared harbor gate and improved chop survival to 6.98-7.72 seconds, but chop still failed; held-out surge was not touched",
+  "challenge_012_training_attempt_4_artifact": "artifacts/012-variable-speed-boat-balance/joint-walk-training-result.json",
+  "next_step": "Continue joint walk-residual optimization from attempt 4 with a chop-focused objective while retaining the three harbor passes; train on harbor and chop only and preserve surge as held out. Publish Episode 004 immediately when browser upload control is available and record its public URL."
 }

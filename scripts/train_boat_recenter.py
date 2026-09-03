@@ -76,6 +76,7 @@ def rollout(sim: Microduck, profile: dict, seed: int, residual_weights: np.ndarr
     previous_roll = previous_pitch = previous_speed = previous_apparent_pitch = 0.0
     contact_steps = completed_steps = 0
     minimum_upright = 1.0
+    upright_samples = []
     maximum_drift = 0.0
     failed = False
     walking = walk_threshold_m is None
@@ -123,7 +124,9 @@ def rollout(sim: Microduck, profile: dict, seed: int, residual_weights: np.ndarr
         relative = sim.data.xpos[sim.trunk, :2] - sim.data.qpos[boat_q:boat_q + 2]
         drift = float(np.linalg.norm(relative - start_relative))
         maximum_drift = max(maximum_drift, drift)
-        minimum_upright = min(minimum_upright, -float(sim.proj_gravity()[2]))
+        upright = -float(sim.proj_gravity()[2])
+        upright_samples.append(upright)
+        minimum_upright = min(minimum_upright, upright)
         inside = (
             abs(float(relative[0])) <= DECK_HALF[0] - 0.12
             and abs(float(relative[1])) <= DECK_HALF[1] - 0.12
@@ -146,6 +149,7 @@ def rollout(sim: Microduck, profile: dict, seed: int, residual_weights: np.ndarr
         "survival_time_s": round(survival, 3),
         "deck_contact_ratio": round(contact_ratio, 4),
         "minimum_upright_score": round(minimum_upright, 4),
+        "final_upright_score": round(float(np.mean(upright_samples[-25:])), 4),
         "maximum_relative_deck_displacement_m": round(maximum_drift, 4),
         "failed": bool(failed),
         "walking_ratio": round(walking_steps / max(completed_steps, 1), 4),
