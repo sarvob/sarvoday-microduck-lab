@@ -17,9 +17,10 @@
     "002-two-marker-sprint",
     "003-ball-push",
     "004-duck-swing-team",
-    "005-duck-quadruped-jump"
+    "005-duck-quadruped-jump",
+    "006-controlled-roll"
   ],
-  "technical_status": "challenge_005_passed",
+  "technical_status": "challenge_006_timing_search_passed; evidence_video_pending",
   "editorial_status": "episode_003_short_drafts_rejected_for_youtube; rebuilding as 3-minute educational landscape videos",
   "captions_status": "timed_captions_uploaded",
   "audio_finalization_pipeline": "local_kokoro_ready_for_future_episodes",
@@ -33,7 +34,7 @@
   "x_reply_target": "https://x.com/HannesVonEssen/status/2095193921060049010",
   "episode_002_status": "ready_for_x_reply",
   "episode_002_video": "stream/episode-002/x-reply-60s.mp4",
-  "active_challenge": "005-duck-quadruped-jump",
+  "active_challenge": "006-controlled-roll",
   "challenge_005_reference": "https://x.com/jonathanhawkins/status/2094886898384924723?s=20",
   "challenge_005_scene": "validated: Microduck + pinned Unitree Go1, 0.60 m horizontal and 0.417 m vertical target displacement",
   "challenge_005_preview": "artifacts/005-duck-quadruped-jump/scene-validation.png",
@@ -52,5 +53,6 @@
     "stream/episode-003/episode-003-short-physics.mp4",
     "stream/episode-003/episode-003-short-result.mp4"
   ],
-  "next_step": "After action-time confirmation, publish the 4:38 educational YouTube episode and post the two vertical clips as a concise X reply thread to Hannes von Essen's original Microduck swing post; then record the public links in the ledger."
+  "challenge_006_result": "26 roll-to-stand handoff timings searched; 0.82 s passed all three perturbed seeds with 330.1–344.1 degrees cumulative body rotation, full inversion, final upright score 1.0, and 0.104–0.119 m displacement",
+  "next_step": "Render moving evidence for Challenge 006 and build its educational landscape episode. Episode 003 remains ready for action-time publication confirmation."
 }

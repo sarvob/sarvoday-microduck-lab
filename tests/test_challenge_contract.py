@@ -79,6 +79,18 @@ class ChallengeContractTest(unittest.TestCase):
         self.assertTrue(all(row["longest_hold_s"] >= 1.5 for row in result["evaluations"]))
         self.assertTrue(all(not row["ground_contact_after_pad"] for row in result["evaluations"]))
 
+    def test_challenge_006_defines_a_controlled_roll_and_handoff_search(self):
+        path = ROOT / "challenges" / "006-controlled-roll" / "spec.json"
+        spec = json.loads(path.read_text(encoding="utf-8"))
+        success = spec["success"]
+        self.assertGreaterEqual(success["minimum_cumulative_body_rotation_deg"], 300)
+        self.assertLessEqual(success["maximum_inverted_upright_score"], -0.8)
+        self.assertGreaterEqual(success["minimum_final_upright_score"], 0.9)
+        self.assertLessEqual(success["maximum_horizontal_displacement_m"], 0.25)
+        self.assertGreaterEqual(len(spec["training"]["seeds"]), 3)
+        self.assertIn("remains frozen", spec["disclosure"].lower())
+        self.assertIn("handoff", spec["disclosure"].lower())
+
 
 if __name__ == "__main__":
     unittest.main()

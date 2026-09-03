@@ -49,6 +49,10 @@ controller that pushes the swing; a third duck's applause is deterministic
 choreography synchronized to the swing peaks. The shipped result reaches a
 44.8-degree peak and sustains eight strong peaks in a 16-second evaluation.
 
+Challenge 006 tunes the high-level handoff from the official frozen roulade
+policy to the standing policy. It must invert, return upright, and finish within
+0.20 m of its starting point across three perturbed initial poses.
+
 Set a lesson in plain English. The duck **doesn't know how to do it**, tries
 a couple of hundred times, and gets better — while you watch the score climb.
 

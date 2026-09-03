@@ -1,0 +1,25 @@
+{
+  "id": "006-controlled-roll",
+  "title": "Controlled roll and recovery",
+  "goal": "Tune the transition timing around Microduck's official shipped roulade policy so the robot completes an inversion, returns upright, and stops close to where it started.",
+  "training": {
+    "algorithm": "deterministic grid search over roll-policy handoff timing",
+    "roll_duration_steps": {
+      "minimum": 35,
+      "maximum": 60,
+      "increment": 1,
+      "control_rate_hz": 50
+    },
+    "recovery_duration_steps": 100,
+    "seeds": [23, 79, 191],
+    "initial_joint_noise_rad": 0.01
+  },
+  "success": {
+    "minimum_cumulative_body_rotation_deg": 300.0,
+    "maximum_inverted_upright_score": -0.8,
+    "minimum_final_upright_score": 0.9,
+    "maximum_horizontal_displacement_m": 0.2,
+    "minimum_successful_seeds": 3
+  },
+  "disclosure": "The joint-level roulade network is the official shipped Microduck policy and remains frozen. The learned component is the high-level handoff time from roulade to the standing policy. Training searches 26 candidate timings and evaluation perturbs the initial joint pose across three fixed seeds."
+}

@@ -1,0 +1,11 @@
+{
+  "challenge": "006-controlled-roll",
+  "learned_component": "roll-to-stand handoff timing",
+  "roll_steps": 41,
+  "roll_duration_s": 0.82,
+  "evaluation_seeds": [
+    23,
+    79,
+    191
+  ]
+}
