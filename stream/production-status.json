@@ -4,12 +4,14 @@
   "skills_ledger_policy": "Read and update the ledger before selecting work.",
   "daily_video_target": 3,
   "video_quality_profile": "stream/video-quality-profile.json",
-  "minimum_video_resolution": "2560x1440 landscape; 1440x2560 vertical",
-  "daily_created_count": 0,
-  "daily_ready_count": 0,
+  "minimum_video_resolution": "YouTube: 2560x1440 landscape; X clips: 1440x2560 vertical",
+  "youtube_minimum_duration_seconds": 180,
+  "youtube_shorts_allowed": false,
+  "daily_created_count": 1,
+  "daily_ready_count": 1,
   "daily_published_count": 1,
   "daily_count_date": "2026-09-02",
-  "high_resolution_rendering_blocked": "Free disk is below the 20 GB safety threshold.",
+  "high_resolution_rendering_blocked": false,
   "technical_scope": [
     "001-spin-in-place",
     "002-two-marker-sprint",
@@ -18,7 +20,7 @@
     "005-duck-quadruped-jump"
   ],
   "technical_status": "challenge_005_passed",
-  "editorial_status": "episode_003_three_video_scripts_and_metadata_ready",
+  "editorial_status": "episode_003_short_drafts_rejected_for_youtube; rebuilding as 3-minute educational landscape videos",
   "captions_status": "timed_captions_uploaded",
   "audio_finalization_pipeline": "local_kokoro_ready_for_future_episodes",
   "youtube_status": "published",
@@ -39,6 +41,16 @@
   "challenge_005_assistance_policy": "single disclosed initial velocity; zero midair external force; learned landing and hold",
   "challenge_005_launch_calibration": "best initial velocity 1.2 m/s forward + 3.3 m/s vertical; both feet reached the pad with 0.218 m/s landing speed; stock stand held 0.96 s, below the 1.5 s gate",
   "challenge_005_result": "passed across seeds 17, 71, and 173: both feet landed, zero post-pad ground contact, and holds of 1.68 s, 1.64 s, and 1.64 s",
-  "episode_003_package": "one 2560x1440 landscape episode plus two 1440x2560 Shorts; scripts, structure, metadata, and quality gates ready",
-  "next_step": "After free disk reaches 20 GB, render the simulator natively for the three Episode 003 cuts, generate narration and captions, perform full QA, and prepare a named publishing batch for confirmation."
+  "episode_003_package": "Prior 95-second landscape and two vertical cuts are private YouTube drafts and must not be published. Rebuild YouTube output as educational landscape videos at least 180 seconds long; reserve vertical cuts for X replies.",
+  "episode_003_youtube_video": "stream/episode-003/episode-003-educational-4m.mp4",
+  "episode_003_youtube_duration_seconds": 278,
+  "episode_003_youtube_resolution": "2560x1440 at 60 fps",
+  "episode_003_youtube_draft_url": "https://youtu.be/RD62DgCWy4U",
+  "episode_003_youtube_status": "private draft ready for publication confirmation",
+  "episode_003_x_reply_target": "https://x.com/HannesVonEssen/status/2095193921060049010",
+  "episode_003_x_reply_clips": [
+    "stream/episode-003/episode-003-short-physics.mp4",
+    "stream/episode-003/episode-003-short-result.mp4"
+  ],
+  "next_step": "After action-time confirmation, publish the 4:38 educational YouTube episode and post the two vertical clips as a concise X reply thread to Hannes von Essen's original Microduck swing post; then record the public links in the ledger."
 }

@@ -7,3 +7,6 @@ __pycache__/
 _test_output/
 stream/tts/models/
 stream/tts/output/
+stream/episode-003/*.mp4
+stream/episode-003/*.wav
+stream/episode-003/*.jpg

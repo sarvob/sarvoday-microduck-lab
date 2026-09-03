@@ -1,0 +1,68 @@
+Can a small biped robot land on a quadruped and stay balanced? It looks like a
+simple jump. In simulation, it is really three problems: reaching the target,
+placing both feet, and rejecting the impact without falling. In this episode,
+we will build each part, show what failed, and evaluate the final controller on
+three launches it did not train on.
+
+The scene uses the open Microduck model and the pinned Unitree Go1 from the
+MuJoCo Menagerie. The landing target is sixty centimetres forward and forty-one
+point seven centimetres above the duck's starting position. We added a thin
+cyan pad only as a contact sensor and visual target. It does not pull the robot
+in, and the quadruped is fixed so this experiment isolates the biped's landing.
+
+Before training anything, we asked whether the stock Microduck behavior could
+physically reach that height. The shipped roll policy moved forward, but its
+trunk rose only seven point three seven centimetres. It was truly airborne for
+two hundredths of a second. The target requires forty-one point seven
+centimetres. Calling that an unassisted jump would be misleading, so we rejected
+the original claim instead of hiding the limitation.
+
+That measurement changes the question. We now apply one disclosed initial
+velocity: one point two metres per second forward and three point three metres
+per second upward. Think of it as a reproducible launch rig. It acts once, at
+the first instant. After that, there is no external force in flight. The robot
+must control its own pose, find the platform with both feet, recover upright,
+and remain there.
+
+We calibrated the launch with an eighty-one-point ballistic grid. Each
+candidate combined a forward and vertical velocity. The objective rewarded
+reaching the pad and penalized unnecessary speed. The best launch reached the
+target with a measured vertical landing speed of zero point two one eight
+metres per second. But reachability was not enough. With the stock stand
+controller, the duck held for only zero point nine six seconds, below our one
+point five second success gate.
+
+The learned component is deliberately small. We keep the proven neural stand
+policy frozen and add an eight-parameter residual: four symmetric posture terms
+for flight and four for the landing phase. Those terms adjust hip, knee, ankle,
+and stance width. A small controller is easier to inspect, faster to search,
+and harder to mistake for magic.
+
+Training uses cross-entropy search. In every generation, forty candidate
+residuals are tested. The best eight define the next distribution. Sixteen
+generations are enough for the score to rise from twenty-nine point three to
+thirty-nine point four. More importantly, the stable hold improves beyond the
+gate. The score is only a search tool; success is decided by explicit physical
+conditions.
+
+Those conditions are strict. Both feet must contact the Go1 pad at the same
+time. The torso must remain upright. The duck must hold for at least one point
+five seconds. And after reaching the pad, no part of the duck may touch the
+floor. A lucky single rollout does not count.
+
+Now we test three randomized launches. Seed seventeen changes the initial
+velocity slightly and holds for one point six eight seconds. Seed seventy-one
+lands with both feet and holds for one point six four seconds. Seed one hundred
+seventy-three introduces a different horizontal error and also holds for one
+point six four seconds. All three avoid later ground contact.
+
+What did we actually learn? First, feasibility checks should happen before
+long training runs. Second, assistance is acceptable only when it is disclosed
+and separated from the learned behavior. Third, repeatable evaluation matters
+more than a dramatic single clip. The result is not an autonomous jumping
+robot. It is a verified landing controller following a controlled launch.
+
+The complete controller weights, launch measurements, evaluation seeds, scene
+builder, and machine-readable results are public in the Sarvoday Robotics
+repository. The next challenge is harder: unpin the quadruped, make it move,
+and ask Microduck to land on a target that does not stay still.

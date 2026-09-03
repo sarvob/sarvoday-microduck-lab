@@ -1,9 +1,13 @@
 {
   "daily_publish_target": 3,
+  "youtube_minimum_duration_seconds": 180,
+  "youtube_format": "normal educational landscape video",
+  "youtube_shorts_allowed": false,
+  "short_vertical_usage": "X replies or explicitly requested non-YouTube social clips only",
   "daily_package": [
-    "landscape challenge or result episode",
-    "vertical training or experiment short",
-    "vertical lesson, failure analysis, or measured-result short"
+    "educational challenge and result episode",
+    "educational training or experiment episode",
+    "educational lesson, failure analysis, or evaluation episode"
   ],
   "landscape": {
     "width": 2560,
@@ -28,7 +32,9 @@
   "source_rules": {
     "native_resolution_required": true,
     "upscaled_720p_allowed": false,
-    "full_playback_qa_required": true
+    "full_playback_qa_required": true,
+    "moving_simulator_footage_required": true,
+    "runtime_padding_allowed": false
   },
   "minimum_free_disk_gb_for_rendering": 20
 }
