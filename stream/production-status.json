@@ -62,5 +62,8 @@
   "challenge_006_result": "26 roll-to-stand handoff timings searched; 0.82 s passed all three perturbed seeds with 330.1–344.1 degrees cumulative body rotation, full inversion, final upright score 1.0, and 0.104–0.119 m displacement",
   "challenge_006_motion_evidence": "stream/episode-004/roll-evidence-3-seeds.mp4",
   "challenge_006_motion_evidence_quality": "2560x1440 at 60 fps, H.264 High, CRF 16; all three evaluation seeds shown with overview and physical head-camera POV",
-  "next_step": "Build Challenge 006 into a narrated educational landscape episode of at least three minutes, run final quality/privacy gates, and publish immediately. Retry the requested Episode 003 X reply clips after Chrome extension file-upload permission is enabled."
+  "episode_004_narration": "stream/episode-004/narration.wav",
+  "episode_004_narration_duration_seconds": 257.336,
+  "episode_004_editorial_status": "4:17 narration, production plan, and YouTube metadata ready; boundary-failure footage and final assembly pending",
+  "next_step": "Render the 0.84 s Challenge 006 boundary failure, build the timing-sweep graphics, assemble the 4:17 educational episode, run final quality/privacy gates, and publish immediately. Retry the requested Episode 003 X reply clips after Chrome extension file-upload permission is enabled."
 }

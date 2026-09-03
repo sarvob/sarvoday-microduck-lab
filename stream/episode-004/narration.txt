@@ -1,0 +1,69 @@
+How long should a robot keep rolling before it asks its balance controller to
+take over? A few hundredths of a second can separate a clean recovery from a
+second uncontrolled rotation. In this episode, we turn that handoff into a
+measurable robotics problem, search the timing, and test the result with three
+perturbed starting poses.
+
+The robot is Microduck. We use the official roulade network shipped with its
+open simulator. That joint-level neural policy remains frozen. We are not
+retraining the motion or claiming a new rolling network. The component we learn
+is smaller and easier to inspect: the exact moment when control changes from
+roulade to the official standing policy.
+
+First, we need to define success. A dramatic animation is not enough. The trunk
+must accumulate at least three hundred degrees of rotation. Its upright score
+must fall below minus zero point eight, proving that the body reached a real
+inverted orientation. After recovery, the average upright score must be at
+least zero point nine. Finally, the duck must stop within twenty centimetres of
+its starting point. All of those conditions must pass for three different
+initial joint perturbations.
+
+The simulator runs its controller at fifty hertz, so one control step is twenty
+milliseconds. We search every handoff from thirty-five through sixty steps.
+That covers zero point seven seconds through one point two seconds and produces
+twenty-six candidates. Each candidate is evaluated on seeds twenty-three,
+seventy-nine, and one hundred ninety-one. The seeds add small joint-angle noise
+before the robot settles, exposing timing choices that work only from one exact
+pose.
+
+The early timings are surprisingly capable. Handoffs from thirty-five through
+forty-one steps pass all three seeds. But the margin changes across the range,
+so we rank successful candidates by worst-case displacement and final balance.
+At forty-one steps, or zero point eight two seconds, the worst drift is eleven
+point eight five centimetres and every final upright score is one point zero.
+
+One step later, the behavior becomes fragile. At forty-two steps, seed
+twenty-three keeps rotating past the useful landing window. It accumulates more
+than six hundred fifty degrees and finishes with an upright score of zero point
+eight one eight, below the required zero point nine. That single twenty
+millisecond delay turns a three-out-of-three controller into a two-out-of-three
+controller. Longer handoffs often produce extra rotations, poor recovery, or
+drift well beyond twenty centimetres.
+
+Now look at the selected timing from two cameras. The overview shows the full
+body path and makes displacement easy to judge. The inset comes from the
+robot's physical head camera. During the roll, that view rotates with the head,
+which makes the control transition visible in a way a fixed cinematic camera
+cannot. We keep the graphics deliberately quiet so the motion remains the
+evidence.
+
+Seed twenty-three completes three hundred forty-four point one degrees of body
+rotation and stops eleven point eight five centimetres away. Seed seventy-nine
+completes three hundred thirty-five point three degrees and stops ten point nine
+eight centimetres away. Seed one hundred ninety-one completes three hundred
+thirty point one degrees and stops ten point four two centimetres away. Every
+run reaches inversion, returns to a final upright score of one point zero, and
+passes the displacement limit.
+
+The lesson is not that forty-one steps is a universal number. It is specific to
+this robot, these policies, this simulator, and this control rate. The broader
+lesson is that transitions between competent controllers are themselves a
+control problem. Define physical gates, search at the system's real timing
+resolution, test perturbations, and inspect the boundary where success first
+becomes unstable.
+
+The challenge specification, all twenty-six candidate results, the selected
+policy, evaluation seeds, tests, and rendering script are available in the
+Sarvoday Robotics repository. The next step is to carry the same discipline
+into locomotion: replace feet with rollers and ask Microduck to skate with a
+measurable speed, stopping distance, and stability margin.
