@@ -9,7 +9,7 @@
   "youtube_shorts_allowed": false,
   "daily_created_count": 1,
   "daily_ready_count": 1,
-  "daily_published_count": 1,
+  "daily_published_count": 2,
   "daily_count_date": "2026-09-02",
   "high_resolution_rendering_blocked": false,
   "technical_scope": [
@@ -47,12 +47,16 @@
   "episode_003_youtube_duration_seconds": 278,
   "episode_003_youtube_resolution": "2560x1440 at 60 fps",
   "episode_003_youtube_draft_url": "https://youtu.be/RD62DgCWy4U",
-  "episode_003_youtube_status": "private draft ready for publication confirmation",
+  "episode_003_youtube_status": "published",
+  "episode_003_youtube_published_at": "2026-09-02",
   "episode_003_x_reply_target": "https://x.com/HannesVonEssen/status/2095193921060049010",
   "episode_003_x_reply_clips": [
     "stream/episode-003/episode-003-short-physics.mp4",
     "stream/episode-003/episode-003-short-result.mp4"
   ],
+  "episode_003_x_reply_status": "ready; Chrome file upload blocked until extension file-URL access is enabled",
+  "youtube_auto_publish_authorized": true,
+  "youtube_publish_policy": "Publish immediately after every engineering, quality, factual-accuracy, and privacy gate passes; never publish incomplete or sub-3-minute YouTube videos.",
   "challenge_006_result": "26 roll-to-stand handoff timings searched; 0.82 s passed all three perturbed seeds with 330.1–344.1 degrees cumulative body rotation, full inversion, final upright score 1.0, and 0.104–0.119 m displacement",
-  "next_step": "Render moving evidence for Challenge 006 and build its educational landscape episode. Episode 003 remains ready for action-time publication confirmation."
+  "next_step": "Render moving evidence for Challenge 006 and build its educational landscape episode. Retry the requested Episode 003 X reply clips after Chrome extension file-upload permission is enabled."
 }
