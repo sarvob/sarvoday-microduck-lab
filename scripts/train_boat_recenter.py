@@ -37,13 +37,26 @@ OUT = ROOT / "artifacts" / "012-variable-speed-boat-balance"
 
 
 def recenter_command(gains: np.ndarray, position: np.ndarray,
-                     velocity: np.ndarray) -> np.ndarray:
-    """PD deck-centering command for the frozen walking policy."""
+                     velocity: np.ndarray, roll: float = 0.0,
+                     apparent_pitch: float = 0.0,
+                     roll_rate: float = 0.0,
+                     apparent_pitch_rate: float = 0.0) -> np.ndarray:
+    """Deck-centering command for the frozen walking policy.
+
+    Four gains reproduce the original position/velocity PD controller. Eight
+    gains add axis-specific wave feed-forward so a corrective step can begin
+    before deck-relative drift reaches an edge.
+    """
     command = np.array([
         -gains[0] * position[0] - gains[1] * velocity[0],
         -gains[2] * position[1] - gains[3] * velocity[1],
         0.0,
     ], dtype=np.float32)
+    if len(gains) == 8:
+        command[0] += gains[4] * apparent_pitch + gains[5] * apparent_pitch_rate
+        command[1] += gains[6] * roll + gains[7] * roll_rate
+    elif len(gains) != 4:
+        raise ValueError("recenter gains must contain 4 or 8 values")
     command[0] = np.clip(command[0], VEL_BACK, VEL_FWD)
     command[1] = np.clip(command[1], -0.2, 0.2)
     return command
@@ -104,7 +117,9 @@ def rollout(sim: Microduck, profile: dict, seed: int, residual_weights: np.ndarr
         residual = residual_vector(
             residual_weights, roll, apparent_pitch, roll_rate,
             apparent_pitch_rate, relative_position, relative_velocity, limit)
-        command = recenter_command(recenter_gains, relative_position, relative_velocity)
+        command = recenter_command(
+            recenter_gains, relative_position, relative_velocity, roll,
+            apparent_pitch, roll_rate, apparent_pitch_rate)
         if walk_threshold_m is not None:
             drift_before_control = float(np.linalg.norm(relative_position))
             next_walking = (

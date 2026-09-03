@@ -23,7 +23,7 @@
     "006-controlled-roll",
     "012-variable-speed-boat-balance"
   ],
-  "technical_status": "challenge_012_attempt_6_chop_failure_diagnosed; all three failures are deck exits, not direct floor contacts",
+  "technical_status": "challenge_012_attempt_7_rejected; anticipatory wave feed-forward produced no verified improvement over attempt 6",
   "editorial_status": "episode_003_short_drafts_rejected_for_youtube; rebuilding as 3-minute educational landscape videos",
   "captions_status": "timed_captions_uploaded",
   "audio_finalization_pipeline": "local_kokoro_ready_for_future_episodes",
@@ -104,5 +104,7 @@
   "challenge_012_training_attempt_6_artifact": "artifacts/012-variable-speed-boat-balance/joint-walk-refinement-result.json",
   "challenge_012_attempt_6_diagnosis": "All three chop runs exit the deck bounds without direct foot-floor contact: seeds 29 and 83 cross the lateral edge at 8.04 and 7.90 seconds, while seed 197 falls behind longitudinally at 6.18 seconds",
   "challenge_012_attempt_6_diagnosis_artifact": "artifacts/012-variable-speed-boat-balance/attempt-6-chop-diagnosis.json",
-  "next_step": "For attempt 7, optimize axis-specific capture and command saturation against longitudinal lag and lateral roll drift while preserving all harbor gates; keep surge held out."
+  "challenge_012_training_attempt_7": "Eight-gain axis-specific wave feed-forward search retained the zero-feed-forward attempt-6 controller as best; all harbor gates still pass, chop remains 6.18-8.04 seconds, and held-out surge was not touched",
+  "challenge_012_training_attempt_7_artifact": "artifacts/012-variable-speed-boat-balance/wave-capture-training-result.json",
+  "next_step": "Measure command saturation and contact timing in each chop failure before choosing whether attempt 8 should change step timing or the deck-relative capture objective; keep surge held out."
 }

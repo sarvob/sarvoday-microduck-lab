@@ -1,0 +1,210 @@
+{
+  "challenge": "012-variable-speed-boat-balance",
+  "attempt": 7,
+  "architecture": "frozen walk policy and residual + learned axis-specific wave capture",
+  "held_out_profile_touched": false,
+  "serialized_parameter_decimals": 12,
+  "evaluated_after_serialization": true,
+  "training_seed": 1211,
+  "residual_weights_frozen_from_attempt_6": true,
+  "capture_gain_names": [
+    "x_position",
+    "x_velocity",
+    "y_position",
+    "y_velocity",
+    "apparent_pitch",
+    "apparent_pitch_rate",
+    "roll",
+    "roll_rate"
+  ],
+  "capture_gains": [
+    2.77445737626,
+    0.262167893047,
+    1.651509703906,
+    0.149695787252,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "history": [
+    {
+      "generation": 1,
+      "harbor_gates_passed": 3,
+      "chop_gates_passed": 0,
+      "worst_chop_survival_s": 6.18
+    },
+    {
+      "generation": 2,
+      "harbor_gates_passed": 3,
+      "chop_gates_passed": 0,
+      "worst_chop_survival_s": 6.18
+    },
+    {
+      "generation": 3,
+      "harbor_gates_passed": 3,
+      "chop_gates_passed": 0,
+      "worst_chop_survival_s": 6.18
+    },
+    {
+      "generation": 4,
+      "harbor_gates_passed": 3,
+      "chop_gates_passed": 0,
+      "worst_chop_survival_s": 6.18
+    },
+    {
+      "generation": 5,
+      "harbor_gates_passed": 3,
+      "chop_gates_passed": 0,
+      "worst_chop_survival_s": 6.18
+    },
+    {
+      "generation": 6,
+      "harbor_gates_passed": 3,
+      "chop_gates_passed": 0,
+      "worst_chop_survival_s": 6.18
+    },
+    {
+      "generation": 7,
+      "harbor_gates_passed": 3,
+      "chop_gates_passed": 0,
+      "worst_chop_survival_s": 6.18
+    },
+    {
+      "generation": 8,
+      "harbor_gates_passed": 3,
+      "chop_gates_passed": 0,
+      "worst_chop_survival_s": 6.18
+    },
+    {
+      "generation": 9,
+      "harbor_gates_passed": 3,
+      "chop_gates_passed": 0,
+      "worst_chop_survival_s": 6.18
+    },
+    {
+      "generation": 10,
+      "harbor_gates_passed": 3,
+      "chop_gates_passed": 0,
+      "worst_chop_survival_s": 6.18
+    }
+  ],
+  "training_score": 1509.93717,
+  "training_evaluations": [
+    {
+      "profile": "harbor",
+      "seed": 29,
+      "survival_time_s": 20.0,
+      "deck_contact_ratio": 0.959,
+      "minimum_upright_score": 0.9936,
+      "final_upright_score": 0.9981,
+      "maximum_relative_deck_displacement_m": 0.1907,
+      "failed": false,
+      "failure_reason": null,
+      "failure_time_s": null,
+      "final_relative_position_m": [
+        -0.0823,
+        -0.0672
+      ],
+      "walking_ratio": 1.0,
+      "policy_switches": 0,
+      "score": 179.88207
+    },
+    {
+      "profile": "harbor",
+      "seed": 83,
+      "survival_time_s": 20.0,
+      "deck_contact_ratio": 0.957,
+      "minimum_upright_score": 0.9935,
+      "final_upright_score": 0.9985,
+      "maximum_relative_deck_displacement_m": 0.2046,
+      "failed": false,
+      "failure_reason": null,
+      "failure_time_s": null,
+      "final_relative_position_m": [
+        -0.0932,
+        -0.0079
+      ],
+      "walking_ratio": 1.0,
+      "policy_switches": 0,
+      "score": 179.762
+    },
+    {
+      "profile": "harbor",
+      "seed": 197,
+      "survival_time_s": 20.0,
+      "deck_contact_ratio": 0.95,
+      "minimum_upright_score": 0.9917,
+      "final_upright_score": 0.9989,
+      "maximum_relative_deck_displacement_m": 0.2049,
+      "failed": false,
+      "failure_reason": null,
+      "failure_time_s": null,
+      "final_relative_position_m": [
+        -0.0884,
+        -0.0131
+      ],
+      "walking_ratio": 1.0,
+      "policy_switches": 0,
+      "score": 179.62691
+    },
+    {
+      "profile": "chop",
+      "seed": 29,
+      "survival_time_s": 8.04,
+      "deck_contact_ratio": 0.6841,
+      "minimum_upright_score": -0.4466,
+      "final_upright_score": 0.2474,
+      "maximum_relative_deck_displacement_m": 0.3718,
+      "failed": true,
+      "failure_reason": "deck_exit",
+      "failure_time_s": 8.04,
+      "final_relative_position_m": [
+        -0.2362,
+        0.2729
+      ],
+      "walking_ratio": 1.0,
+      "policy_switches": 0,
+      "score": 72.40592
+    },
+    {
+      "profile": "chop",
+      "seed": 83,
+      "survival_time_s": 7.9,
+      "deck_contact_ratio": 0.7139,
+      "minimum_upright_score": -0.3858,
+      "final_upright_score": 0.0769,
+      "maximum_relative_deck_displacement_m": 0.4117,
+      "failed": true,
+      "failure_reason": "deck_exit",
+      "failure_time_s": 7.9,
+      "final_relative_position_m": [
+        -0.2904,
+        0.2857
+      ],
+      "walking_ratio": 1.0,
+      "policy_switches": 0,
+      "score": 71.82682
+    },
+    {
+      "profile": "chop",
+      "seed": 197,
+      "survival_time_s": 6.18,
+      "deck_contact_ratio": 0.7573,
+      "minimum_upright_score": 0.1376,
+      "final_upright_score": 0.4826,
+      "maximum_relative_deck_displacement_m": 0.6938,
+      "failed": true,
+      "failure_reason": "deck_exit",
+      "failure_time_s": 6.18,
+      "final_relative_position_m": [
+        -0.682,
+        -0.0818
+      ],
+      "walking_ratio": 1.0,
+      "policy_switches": 0,
+      "score": 59.24833
+    }
+  ],
+  "training_success": false
+}
