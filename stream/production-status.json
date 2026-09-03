@@ -9,10 +9,10 @@
   "minimum_video_resolution": "YouTube: 2560x1440 landscape; X clips: 1440x2560 vertical",
   "youtube_minimum_duration_seconds": 180,
   "youtube_shorts_allowed": false,
-  "daily_created_count": 2,
+  "daily_created_count": 1,
   "daily_ready_count": 1,
-  "daily_published_count": 2,
-  "daily_count_date": "2026-09-02",
+  "daily_published_count": 0,
+  "daily_count_date": "2026-09-03",
   "high_resolution_rendering_blocked": false,
   "technical_scope": [
     "001-spin-in-place",
@@ -71,6 +71,10 @@
   "episode_004_search_montage": "stream/episode-004/search-evaluation-montage.mp4",
   "episode_004_search_montage_status": "Verified: all 26 timing candidates across all 3 evaluation seeds, 167.7 s unique motion coverage",
   "episode_004_search_montage_quality": "2560x1440 at 60 fps, H.264 High, yuv420p, CRF 16; 10,062 frames; representative early, middle, and late frames visually inspected",
-  "episode_004_editorial_status": "All source assets verified: 167.7 s search montage, dual-view success and boundary failure, animated timing sweep, 4:17 narration, production plan, and YouTube metadata; final assembly pending",
-  "next_step": "Assemble the 4:17 educational episode from the verified assets, run final quality/privacy gates, and publish immediately. Retry the requested Episode 003 X reply clips after Chrome extension file-upload permission is enabled."
+  "episode_004_final_video": "stream/episode-004/episode-004-controlled-roll.mp4",
+  "episode_004_final_quality": "257.333 s, 2560x1440 at 60 fps, H.264 High, yuv420p, AAC 48 kHz; mean -16.0 dB, peak -1.5 dB; full decode and nine-point visual inspection passed",
+  "episode_004_motion_coverage": "184.2 s unique simulator footage (71.6 percent of runtime); no duplicate footage or empty runtime padding",
+  "episode_004_youtube_status": "ready_to_publish; final browser upload control unavailable in the current automation run",
+  "episode_004_editorial_status": "Final 4:17 educational landscape episode passed engineering, encoding, playback, audio, factual, visual, and privacy gates",
+  "next_step": "Publish Episode 004 immediately when browser upload control is available, record its public URL, then promote Challenge 012 from Next. Retry the requested Episode 003 X reply clips after Chrome extension file-upload permission is enabled."
 }

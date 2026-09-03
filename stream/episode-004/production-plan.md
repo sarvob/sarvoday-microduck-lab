@@ -22,10 +22,11 @@ Target: 3:45–4:30 educational landscape video, 2560×1440 at 60 fps.
 - Do not imply that the frozen roulade or stand networks were trained here.
 - State that the learned component is the high-level 0.82 s handoff.
 
-## Remaining production work
+## Production result
 
-1. Assemble the verified success, 0.84 s boundary-failure, and animated
-   timing-sweep evidence against the narration. Use the unique 26-timing ×
-   3-seed search montage for motion-rich explanation without duplicate footage.
-2. Run full playback, audio, privacy, and
-   encoding checks before immediate public upload.
+- Final runtime: 4:17 (257.333 seconds).
+- Delivery: 2560×1440 at 60 fps, H.264 High, yuv420p, AAC 48 kHz.
+- Motion coverage: 184.2 seconds of unique simulator footage (71.6%).
+- Audio: −16.0 dB mean, −1.5 dB peak.
+- Full decode, nine-point visual inspection, engineering tests, and privacy
+  checks passed. The episode is ready for immediate public upload.
