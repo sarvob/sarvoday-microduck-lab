@@ -1,0 +1,69 @@
+{
+  "challenge": "012-variable-speed-boat-balance",
+  "controller_attempt": 6,
+  "profile": "chop",
+  "held_out_profile_touched": false,
+  "failure_reason_counts": {
+    "deck_exit": 3
+  },
+  "evaluations": [
+    {
+      "profile": "chop",
+      "seed": 29,
+      "survival_time_s": 8.04,
+      "deck_contact_ratio": 0.6841,
+      "minimum_upright_score": -0.4466,
+      "final_upright_score": 0.2474,
+      "maximum_relative_deck_displacement_m": 0.3718,
+      "failed": true,
+      "failure_reason": "deck_exit",
+      "failure_time_s": 8.04,
+      "final_relative_position_m": [
+        -0.2362,
+        0.2729
+      ],
+      "walking_ratio": 1.0,
+      "policy_switches": 0,
+      "score": 72.40592
+    },
+    {
+      "profile": "chop",
+      "seed": 83,
+      "survival_time_s": 7.9,
+      "deck_contact_ratio": 0.7139,
+      "minimum_upright_score": -0.3858,
+      "final_upright_score": 0.0769,
+      "maximum_relative_deck_displacement_m": 0.4117,
+      "failed": true,
+      "failure_reason": "deck_exit",
+      "failure_time_s": 7.9,
+      "final_relative_position_m": [
+        -0.2904,
+        0.2857
+      ],
+      "walking_ratio": 1.0,
+      "policy_switches": 0,
+      "score": 71.82682
+    },
+    {
+      "profile": "chop",
+      "seed": 197,
+      "survival_time_s": 6.18,
+      "deck_contact_ratio": 0.7573,
+      "minimum_upright_score": 0.1376,
+      "final_upright_score": 0.4826,
+      "maximum_relative_deck_displacement_m": 0.6938,
+      "failed": true,
+      "failure_reason": "deck_exit",
+      "failure_time_s": 6.18,
+      "final_relative_position_m": [
+        -0.682,
+        -0.0818
+      ],
+      "walking_ratio": 1.0,
+      "policy_switches": 0,
+      "score": 59.24833
+    }
+  ],
+  "finding": "Attempt 6 loses the chop runs through deck-bound exits rather than direct foot-floor contact; attempt 7 should target lateral and longitudinal capture before increasing attitude-gain complexity."
+}

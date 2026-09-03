@@ -23,7 +23,7 @@
     "006-controlled-roll",
     "012-variable-speed-boat-balance"
   ],
-  "technical_status": "challenge_012_attempt_6_failed_but_reproducibly_improved; all harbor gates pass and worst chop survival rose from 5.56 to 6.18 seconds",
+  "technical_status": "challenge_012_attempt_6_chop_failure_diagnosed; all three failures are deck exits, not direct floor contacts",
   "editorial_status": "episode_003_short_drafts_rejected_for_youtube; rebuilding as 3-minute educational landscape videos",
   "captions_status": "timed_captions_uploaded",
   "audio_finalization_pipeline": "local_kokoro_ready_for_future_episodes",
@@ -102,5 +102,7 @@
   "challenge_012_reproducibility_artifact": "artifacts/012-variable-speed-boat-balance/candidate-reverification.json",
   "challenge_012_training_attempt_6": "Twelve-decimal post-serialization evaluation passes all three harbor gates and improves chop survival to 6.18-8.04 seconds, but chop still fails; held-out surge was not touched",
   "challenge_012_training_attempt_6_artifact": "artifacts/012-variable-speed-boat-balance/joint-walk-refinement-result.json",
-  "next_step": "Diagnose the exact chop failure mode and trajectory for attempt 6 before choosing attempt 7; keep surge held out. Publish Episode 004 immediately when browser upload control is available and record its public URL."
+  "challenge_012_attempt_6_diagnosis": "All three chop runs exit the deck bounds without direct foot-floor contact: seeds 29 and 83 cross the lateral edge at 8.04 and 7.90 seconds, while seed 197 falls behind longitudinally at 6.18 seconds",
+  "challenge_012_attempt_6_diagnosis_artifact": "artifacts/012-variable-speed-boat-balance/attempt-6-chop-diagnosis.json",
+  "next_step": "For attempt 7, optimize axis-specific capture and command saturation against longitudinal lag and lateral roll drift while preserving all harbor gates; keep surge held out."
 }

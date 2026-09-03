@@ -79,6 +79,8 @@ def rollout(sim: Microduck, profile: dict, seed: int, residual_weights: np.ndarr
     upright_samples = []
     maximum_drift = 0.0
     failed = False
+    failure_reason = None
+    failure_time_s = None
     walking = walk_threshold_m is None
     walking_steps = 0
     policy_switches = 0
@@ -134,6 +136,14 @@ def rollout(sim: Microduck, profile: dict, seed: int, residual_weights: np.ndarr
         completed_steps = step + 1
         failed = floor_contact or not inside
         if failed:
+            reasons = []
+            if floor_contact:
+                reasons.append("floor_contact")
+            if not inside:
+                reasons.append("deck_exit")
+            failure_reason = "+".join(reasons)
+            failure_time_s = (step + 1) * CTRL_DT
+        if failed:
             break
 
     survival = completed_steps * CTRL_DT
@@ -152,6 +162,11 @@ def rollout(sim: Microduck, profile: dict, seed: int, residual_weights: np.ndarr
         "final_upright_score": round(float(np.mean(upright_samples[-25:])), 4),
         "maximum_relative_deck_displacement_m": round(maximum_drift, 4),
         "failed": bool(failed),
+        "failure_reason": failure_reason,
+        "failure_time_s": (
+            None if failure_time_s is None else round(failure_time_s, 3)),
+        "final_relative_position_m": [
+            round(float(value), 4) for value in relative_position],
         "walking_ratio": round(walking_steps / max(completed_steps, 1), 4),
         "policy_switches": policy_switches,
         "score": round(score, 5),
