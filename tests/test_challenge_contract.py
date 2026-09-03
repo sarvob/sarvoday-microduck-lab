@@ -109,6 +109,7 @@ class ChallengeContractTest(unittest.TestCase):
         profiles = spec["environment"]["profiles"]
         success = spec["success"]
         self.assertEqual(len(profiles), 3)
+        self.assertGreaterEqual(spec["environment"]["motion_ramp_s"], 2.0)
         self.assertEqual(success["required_profiles"], 3)
         self.assertGreaterEqual(success["minimum_duration_per_profile_s"], 20.0)
         self.assertGreaterEqual(success["minimum_deck_contact_ratio"], 0.9)
@@ -118,6 +119,15 @@ class ChallengeContractTest(unittest.TestCase):
         self.assertTrue(spec["baseline"]["policy_frozen"])
         self.assertEqual(len(spec["training"]["learned_parameters"]), 8)
         self.assertIn("held-out", spec["disclosure"].lower())
+
+    def test_challenge_012_baseline_is_measured_before_training(self):
+        path = ROOT / "artifacts" / "012-variable-speed-boat-balance" / "baseline.json"
+        result = json.loads(path.read_text(encoding="utf-8"))
+        self.assertTrue(result["policy_frozen"])
+        self.assertEqual(result["evaluation_count"], 9)
+        self.assertFalse(result["success"])
+        self.assertTrue(all(row["duration_s"] == 20.0 for row in result["evaluations"]))
+        self.assertTrue(all("survival_time_s" in row for row in result["evaluations"]))
 
 
 if __name__ == "__main__":

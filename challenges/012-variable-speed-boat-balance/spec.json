@@ -8,6 +8,7 @@
     "control_rate_hz": 50,
     "deck_size_m": [1.6, 0.8],
     "evaluation_duration_s": 20.0,
+    "motion_ramp_s": 3.0,
     "profiles": [
       {
         "name": "harbor",

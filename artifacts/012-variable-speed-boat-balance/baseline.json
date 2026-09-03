@@ -1,0 +1,190 @@
+{
+  "challenge": "012-variable-speed-boat-balance",
+  "controller": "official shipped Microduck standing policy",
+  "policy_frozen": true,
+  "evaluation_count": 9,
+  "success_gate": {
+    "required_profiles": 3,
+    "minimum_duration_per_profile_s": 20.0,
+    "minimum_upright_score": 0.5,
+    "minimum_final_upright_score": 0.9,
+    "minimum_deck_contact_ratio": 0.95,
+    "maximum_relative_deck_displacement_m": 0.3,
+    "must_avoid_floor_contact": true,
+    "must_remain_inside_deck_bounds": true
+  },
+  "success": false,
+  "evaluations": [
+    {
+      "profile": "harbor",
+      "seed": 29,
+      "duration_s": 20.0,
+      "speed_range_mps": [
+        0.0,
+        0.26
+      ],
+      "minimum_upright_score": -0.1789,
+      "final_upright_score": 1.0,
+      "deck_contact_ratio": 0.379,
+      "maximum_relative_deck_displacement_m": 3.0106,
+      "floor_contact": true,
+      "first_floor_contact_s": 8.24,
+      "first_deck_exit_s": 7.34,
+      "survival_time_s": 7.34,
+      "remained_inside_deck_bounds": false,
+      "success": false
+    },
+    {
+      "profile": "harbor",
+      "seed": 83,
+      "duration_s": 20.0,
+      "speed_range_mps": [
+        0.0,
+        0.26
+      ],
+      "minimum_upright_score": -0.1451,
+      "final_upright_score": 1.0,
+      "deck_contact_ratio": 0.376,
+      "maximum_relative_deck_displacement_m": 3.0928,
+      "floor_contact": true,
+      "first_floor_contact_s": 8.2,
+      "first_deck_exit_s": 7.3,
+      "survival_time_s": 7.3,
+      "remained_inside_deck_bounds": false,
+      "success": false
+    },
+    {
+      "profile": "harbor",
+      "seed": 197,
+      "duration_s": 20.0,
+      "speed_range_mps": [
+        0.0,
+        0.26
+      ],
+      "minimum_upright_score": -0.1456,
+      "final_upright_score": 1.0,
+      "deck_contact_ratio": 0.371,
+      "maximum_relative_deck_displacement_m": 3.0156,
+      "floor_contact": true,
+      "first_floor_contact_s": 8.2,
+      "first_deck_exit_s": 7.32,
+      "survival_time_s": 7.32,
+      "remained_inside_deck_bounds": false,
+      "success": false
+    },
+    {
+      "profile": "chop",
+      "seed": 29,
+      "duration_s": 20.0,
+      "speed_range_mps": [
+        0.0,
+        0.53
+      ],
+      "minimum_upright_score": -0.7013,
+      "final_upright_score": 1.0,
+      "deck_contact_ratio": 0.199,
+      "maximum_relative_deck_displacement_m": 5.568,
+      "floor_contact": true,
+      "first_floor_contact_s": 5.98,
+      "first_deck_exit_s": 4.4,
+      "survival_time_s": 4.4,
+      "remained_inside_deck_bounds": false,
+      "success": false
+    },
+    {
+      "profile": "chop",
+      "seed": 83,
+      "duration_s": 20.0,
+      "speed_range_mps": [
+        0.0,
+        0.53
+      ],
+      "minimum_upright_score": -0.3279,
+      "final_upright_score": 1.0,
+      "deck_contact_ratio": 0.194,
+      "maximum_relative_deck_displacement_m": 6.1894,
+      "floor_contact": true,
+      "first_floor_contact_s": 5.24,
+      "first_deck_exit_s": 4.48,
+      "survival_time_s": 4.48,
+      "remained_inside_deck_bounds": false,
+      "success": false
+    },
+    {
+      "profile": "chop",
+      "seed": 197,
+      "duration_s": 20.0,
+      "speed_range_mps": [
+        0.0,
+        0.53
+      ],
+      "minimum_upright_score": -0.4794,
+      "final_upright_score": 1.0,
+      "deck_contact_ratio": 0.17,
+      "maximum_relative_deck_displacement_m": 7.4202,
+      "floor_contact": true,
+      "first_floor_contact_s": 4.46,
+      "first_deck_exit_s": 4.08,
+      "survival_time_s": 4.08,
+      "remained_inside_deck_bounds": false,
+      "success": false
+    },
+    {
+      "profile": "surge",
+      "seed": 29,
+      "duration_s": 20.0,
+      "speed_range_mps": [
+        0.0,
+        0.8499
+      ],
+      "minimum_upright_score": -0.5417,
+      "final_upright_score": 1.0,
+      "deck_contact_ratio": 0.124,
+      "maximum_relative_deck_displacement_m": 9.6164,
+      "floor_contact": true,
+      "first_floor_contact_s": 4.0,
+      "first_deck_exit_s": 3.26,
+      "survival_time_s": 3.26,
+      "remained_inside_deck_bounds": false,
+      "success": false
+    },
+    {
+      "profile": "surge",
+      "seed": 83,
+      "duration_s": 20.0,
+      "speed_range_mps": [
+        0.0,
+        0.8499
+      ],
+      "minimum_upright_score": -0.3699,
+      "final_upright_score": 1.0,
+      "deck_contact_ratio": 0.139,
+      "maximum_relative_deck_displacement_m": 8.7765,
+      "floor_contact": true,
+      "first_floor_contact_s": 4.9,
+      "first_deck_exit_s": 3.32,
+      "survival_time_s": 3.32,
+      "remained_inside_deck_bounds": false,
+      "success": false
+    },
+    {
+      "profile": "surge",
+      "seed": 197,
+      "duration_s": 20.0,
+      "speed_range_mps": [
+        0.0,
+        0.8499
+      ],
+      "minimum_upright_score": -0.9814,
+      "final_upright_score": 1.0,
+      "deck_contact_ratio": 0.117,
+      "maximum_relative_deck_displacement_m": 9.9947,
+      "floor_contact": true,
+      "first_floor_contact_s": 3.2,
+      "first_deck_exit_s": 2.84,
+      "survival_time_s": 2.84,
+      "remained_inside_deck_bounds": false,
+      "success": false
+    }
+  ]
+}

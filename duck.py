@@ -227,13 +227,17 @@ def build_xml(mjcf_path, mesh_dir):
 
 # -- The sim -------------------------------------------------------------
 class Microduck:
-    def __init__(self, width=640, height=360, render=True, variant="legs"):
+    def __init__(self, width=640, height=360, render=True, variant="legs",
+                 xml_transform=None):
         import mujoco
         import onnxruntime as ort
         self.mj = mujoco
         self.variant = variant
         mjcf, mesh_dir, policy_dir = ensure_assets(variant)
-        self.model = mujoco.MjModel.from_xml_string(build_xml(mjcf, mesh_dir))
+        xml = build_xml(mjcf, mesh_dir)
+        if xml_transform is not None:
+            xml = xml_transform(xml)
+        self.model = mujoco.MjModel.from_xml_string(xml)
         self.data = mujoco.MjData(self.model)
 
         opts = ort.SessionOptions()
