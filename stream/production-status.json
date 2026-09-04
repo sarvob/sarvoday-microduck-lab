@@ -23,7 +23,7 @@
     "006-controlled-roll",
     "012-variable-speed-boat-balance"
   ],
-  "technical_status": "challenge_012_attempt_7_rejected; anticipatory wave feed-forward produced no verified improvement over attempt 6",
+  "technical_status": "challenge_012_attempt_7_diagnosed; chop failures show sustained contact loss plus command saturation before deck exit",
   "editorial_status": "episode_003_short_drafts_rejected_for_youtube; rebuilding as 3-minute educational landscape videos",
   "captions_status": "timed_captions_uploaded",
   "audio_finalization_pipeline": "local_kokoro_ready_for_future_episodes",
@@ -113,5 +113,7 @@
   "challenge_012_attempt_6_diagnosis_artifact": "artifacts/012-variable-speed-boat-balance/attempt-6-chop-diagnosis.json",
   "challenge_012_training_attempt_7": "Eight-gain axis-specific wave feed-forward search retained the zero-feed-forward attempt-6 controller as best; all harbor gates still pass, chop remains 6.18-8.04 seconds, and held-out surge was not touched",
   "challenge_012_training_attempt_7_artifact": "artifacts/012-variable-speed-boat-balance/wave-capture-training-result.json",
-  "next_step": "Measure command saturation and contact timing in each chop failure before choosing whether attempt 8 should change step timing or the deck-relative capture objective; keep surge held out."
+  "challenge_012_attempt_7_saturation_contact_diagnosis": "Longitudinal walk commands saturate for 57.47-58.71% of chop steps; sustained contact loss begins at 2.86-3.02 s, before 6.18-8.04 s deck exits; lateral commands and joint residuals also saturate materially",
+  "challenge_012_attempt_7_saturation_contact_artifact": "artifacts/012-variable-speed-boat-balance/attempt-7-saturation-contact-diagnosis.json",
+  "next_step": "Build attempt 8 as a contact-aware capture/step-timing controller around the frozen walking policy; do not merely increase gain limits, and keep surge held out."
 }

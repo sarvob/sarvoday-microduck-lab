@@ -1,0 +1,96 @@
+{
+  "challenge": "012-variable-speed-boat-balance",
+  "controller_attempts": [
+    6,
+    7
+  ],
+  "profile": "chop",
+  "held_out_profile_touched": false,
+  "evaluations": [
+    {
+      "seed": 29,
+      "survival_time_s": 8.04,
+      "exit_axis": "lateral",
+      "final_relative_position_m": [
+        -0.2362,
+        0.2729
+      ],
+      "x_command_saturation_ratio": 0.5871,
+      "y_command_saturation_ratio": 0.2786,
+      "residual_saturation_ratio": 0.2811,
+      "peak_raw_command": [
+        0.7826,
+        0.6102
+      ],
+      "left_foot_contact_ratio": 0.505,
+      "right_foot_contact_ratio": 0.4627,
+      "both_feet_contact_ratio": 0.2836,
+      "last_second_any_contact_ratio": 0.62,
+      "longest_no_contact_gap_s": 0.14,
+      "first_sustained_contact_loss_s": 3.02
+    },
+    {
+      "seed": 83,
+      "survival_time_s": 7.9,
+      "exit_axis": "longitudinal",
+      "final_relative_position_m": [
+        -0.2904,
+        0.2857
+      ],
+      "x_command_saturation_ratio": 0.5747,
+      "y_command_saturation_ratio": 0.2937,
+      "residual_saturation_ratio": 0.1797,
+      "peak_raw_command": [
+        0.9333,
+        0.5651
+      ],
+      "left_foot_contact_ratio": 0.5063,
+      "right_foot_contact_ratio": 0.4506,
+      "both_feet_contact_ratio": 0.243,
+      "last_second_any_contact_ratio": 0.74,
+      "longest_no_contact_gap_s": 0.24,
+      "first_sustained_contact_loss_s": 2.86
+    },
+    {
+      "seed": 197,
+      "survival_time_s": 6.18,
+      "exit_axis": "longitudinal",
+      "final_relative_position_m": [
+        -0.682,
+        -0.0818
+      ],
+      "x_command_saturation_ratio": 0.5761,
+      "y_command_saturation_ratio": 0.3657,
+      "residual_saturation_ratio": 0.356,
+      "peak_raw_command": [
+        2.0628,
+        0.4804
+      ],
+      "left_foot_contact_ratio": 0.5405,
+      "right_foot_contact_ratio": 0.5243,
+      "both_feet_contact_ratio": 0.3074,
+      "last_second_any_contact_ratio": 0.42,
+      "longest_no_contact_gap_s": 0.22,
+      "first_sustained_contact_loss_s": 2.98
+    }
+  ],
+  "summary": {
+    "x_command_saturation_range": [
+      0.5747,
+      0.5871
+    ],
+    "y_command_saturation_range": [
+      0.2786,
+      0.3657
+    ],
+    "residual_saturation_range": [
+      0.1797,
+      0.356
+    ],
+    "first_sustained_contact_loss_range_s": [
+      2.86,
+      3.02
+    ]
+  },
+  "finding": "The longitudinal walk command saturates for 57-59% of each chop run; lateral commands and the bounded joint residual also saturate materially. Sustained contact loss begins near 3 seconds, well before every deck exit. Attempt 8 should change capture and step timing rather than merely increase gain limits."
+}
