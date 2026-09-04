@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import xml.etree.ElementTree as ET
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
@@ -24,6 +25,73 @@ from train_boat_recenter import recenter_command  # noqa: E402
 from train_boat_residual import control_step, residual_vector  # noqa: E402
 
 W, H, SOURCE_FPS, DELIVERY_FPS = 2560, 1440, 50, 60
+
+
+def add_cinematic_boat(xml: str) -> str:
+    """Add visual-only hull, water, wave crests, and deck detail.
+
+    Collision and controller dynamics still come from ``add_boat_deck``. The
+    water surface is explicitly illustrative; the prescribed deck trajectory
+    remains the experiment's physical disturbance input.
+    """
+    root = ET.fromstring(add_boat_deck(xml))
+    asset = root.find("asset")
+    world = root.find("worldbody")
+    boat = root.find("./worldbody/body[@name='boat_deck']")
+    assert asset is not None and world is not None and boat is not None
+    ET.SubElement(asset, "texture", {
+        "name": "watertex", "type": "2d", "builtin": "checker",
+        "width": "512", "height": "512", "rgb1": "0.012 0.105 0.15",
+        "rgb2": "0.018 0.135 0.18",
+    })
+    ET.SubElement(asset, "material", {
+        "name": "watermat", "texture": "watertex", "texrepeat": "9 5",
+        "reflectance": "0.22", "shininess": "0.65", "specular": "0.45",
+    })
+    ET.SubElement(world, "geom", {
+        "name": "cinematic_water", "type": "plane", "size": "30 14 0.05",
+        "pos": "5 0 -0.145", "material": "watermat", "group": "2",
+        "contype": "0", "conaffinity": "0",
+    })
+    for i in range(34):
+        x = -7.0 + i * 0.75
+        ET.SubElement(world, "geom", {
+            "name": f"wave_crest_{i}", "type": "capsule", "size": "0.014",
+            "fromto": f"{x} -9 -0.122 {x} 9 -0.122", "rgba": "0.20 0.61 0.71 0.16",
+            "group": "2", "contype": "0", "conaffinity": "0",
+        })
+    # Twin pontoons and bow caps make the moving body read as a boat even in
+    # silhouette. Every added geom is visual-only.
+    for side in (-0.29, 0.29):
+        ET.SubElement(boat, "geom", {
+            "type": "capsule", "size": "0.10", "fromto": f"-0.64 {side} -0.12 0.63 {side} -0.12",
+            "rgba": "0.025 0.075 0.105 1", "group": "2", "mass": "0", "contype": "0", "conaffinity": "0",
+        })
+        ET.SubElement(boat, "geom", {
+            "type": "ellipsoid", "size": "0.20 0.12 0.115", "pos": f"0.67 {side} -0.12",
+            "rgba": "0.035 0.11 0.15 1", "group": "2", "mass": "0", "contype": "0", "conaffinity": "0",
+        })
+        ET.SubElement(boat, "geom", {
+            "type": "capsule", "size": "0.014", "fromto": f"-0.70 {side} 0.12 0.70 {side} 0.12",
+            "rgba": "0.74 0.82 0.84 1", "group": "2", "mass": "0", "contype": "0", "conaffinity": "0",
+        })
+        for x in (-0.62, 0.0, 0.62):
+            ET.SubElement(boat, "geom", {
+                "type": "capsule", "size": "0.012", "fromto": f"{x} {side} 0.03 {x} {side} 0.13",
+                "rgba": "0.74 0.82 0.84 1", "group": "2", "mass": "0", "contype": "0", "conaffinity": "0",
+            })
+    for x in (-0.58, -0.30, -0.02, 0.26, 0.54):
+        ET.SubElement(boat, "geom", {
+            "type": "box", "size": "0.12 0.335 0.008", "pos": f"{x} 0 0.064",
+            "rgba": "0.31 0.34 0.34 1", "group": "2", "mass": "0", "contype": "0", "conaffinity": "0",
+        })
+    # A restrained cyan boot stripe and wake lines improve separation from water.
+    for side in (-0.34, 0.34):
+        ET.SubElement(boat, "geom", {
+            "type": "capsule", "size": "0.018", "fromto": f"-0.66 {side} -0.07 0.66 {side} -0.07",
+            "rgba": "0.12 0.58 0.69 1", "group": "2", "mass": "0", "contype": "0", "conaffinity": "0",
+        })
+    return ET.tostring(root, encoding="unicode")
 
 
 def font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
@@ -73,14 +141,18 @@ def annotate(frame: np.ndarray, pov: np.ndarray, profile: str, seed: int,
 
 def render_seed(process: subprocess.Popen, profile: dict, seed: int,
                 residual_weights: np.ndarray, gains: np.ndarray, spec: dict) -> None:
-    sim = Microduck(render=False, xml_transform=add_boat_deck)
+    sim = Microduck(render=False, xml_transform=add_cinematic_boat)
     sim.model.geom("ball_geom").rgba[3] = 0
-    sim.model.geom("floor").rgba[:] = [0.025, 0.10, 0.14, 1]
+    # Keep the physical safety floor active but visually reveal the hull and
+    # lower illustrative water surface beneath it.
+    floor_id = sim.model.geom("floor").id
+    sim.model.geom_matid[floor_id] = -1
+    sim.model.geom_rgba[floor_id] = [0, 0, 0, 0]
     sim.model.vis.global_.offwidth, sim.model.vis.global_.offheight = W, H
     sim.model.vis.map.znear = 0.08
     sim.renderer = sim.mj.Renderer(sim.model, height=H, width=W)
     sim.cam.trackbodyid = sim.model.body("boat_deck").id
-    sim.cam.distance, sim.cam.elevation, sim.cam_offset = 2.45, -38.0, 145.0
+    sim.cam.distance, sim.cam.elevation, sim.cam_offset = 2.15, -24.0, 145.0
     pov_renderer = sim.mj.Renderer(sim.model, height=495, width=880)
     pov_camera = sim.mj.MjvCamera()
     pov_camera.type = sim.mj.mjtCamera.mjCAMERA_FIXED
@@ -111,6 +183,10 @@ def render_seed(process: subprocess.Popen, profile: dict, seed: int,
             apparent_pitch = pitch + np.arctan2(acceleration, 9.81)
             apparent_pitch_rate = (apparent_pitch - previous_apparent_pitch) / CTRL_DT
             set_deck_state(sim, boat_q, boat_d, deck_x, speed, roll, pitch, roll_rate, pitch_rate)
+            for index in range(34):
+                gid = sim.model.geom(f"wave_crest_{index}").id
+                phase = 0.72 * index - 2.1 * t
+                sim.model.geom_pos[gid, 2] = -0.122 + 0.016 * np.sin(phase)
             rel_pos = sim.data.xpos[sim.trunk, :2] - sim.data.qpos[boat_q:boat_q + 2] - start_relative
             rel_vel = sim.data.qvel[:2] - np.array([speed, 0.0])
             residual = residual_vector(residual_weights, roll, apparent_pitch, roll_rate,
@@ -141,6 +217,7 @@ def render_seed(process: subprocess.Popen, profile: dict, seed: int,
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("profile", choices=["harbor", "chop"])
+    parser.add_argument("--seed", type=int, action="append", dest="seeds")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     spec = json.loads((ROOT / "challenges/012-variable-speed-boat-balance/spec.json").read_text())
@@ -148,7 +225,7 @@ def main() -> None:
     profile = next(row for row in spec["environment"]["profiles"] if row["name"] == args.profile)
     process = writer(args.output or HERE / f"{args.profile}-3-seeds.mp4")
     try:
-        for seed in spec["training"]["seeds"]:
+        for seed in args.seeds or spec["training"]["seeds"]:
             render_seed(process, profile, seed, np.asarray(result["residual_weights"]),
                         np.asarray(result["recenter_gains"]), spec)
     finally:

@@ -10,7 +10,7 @@ ffmpeg -y -hide_banner -loglevel error \
   -loop 1 -t 20 -i "$episode_dir/04-gates.png" \
   -loop 1 -t 26 -i "$episode_dir/05-diagnosis.png" \
   -loop 1 -t 28 -i "$episode_dir/06-next.png" \
-  -loop 1 -t 30 -i "$episode_dir/07-outro.png" \
+  -loop 1 -t 39 -i "$episode_dir/07-outro.png" \
   -i "$episode_dir/harbor-3-seeds.mp4" \
   -i "$episode_dir/chop-3-seeds.mp4" \
   -i "$episode_dir/narration.wav" \

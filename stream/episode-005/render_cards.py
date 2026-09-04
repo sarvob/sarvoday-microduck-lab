@@ -37,8 +37,8 @@ def card(name, eyebrow, title, subtitle, blocks):
     im.save(HERE / name)
 
 
-card("01-intro.png", "Challenge 012", "Can a tiny robot balance on a moving boat?",
-     "A verified progress report — success, failure, and the next experiment",
+card("01-intro.png", "Challenge 012", "Microduck learns its sea legs.",
+     "A measured balance-control experiment — including the failure boundary",
      [("Simulator", "MuJoCo", "50 Hz control\n1.6 × 0.8 m deck", CYAN),
       ("Evidence", "3 seeds", "Same controller\nperturbed starts", AMBER),
       ("Status", "In progress", "Harbor passes\nrough water fails", GREEN)])

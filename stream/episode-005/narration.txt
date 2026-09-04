@@ -1,6 +1,6 @@
 Can a tiny robot balance on a moving boat? This is Challenge Twelve in the Sarvoday Robotics Microduck Lab. The answer so far is precise: yes in harbor motion, no in rough chop, and the difference tells us what to build next.
 
-This is a MuJoCo simulation running control at fifty hertz. The deck is one point six meters long and zero point eight meters wide. It translates forward while rolling and pitching. Every run begins with a small, deterministic perturbation to the robot's joints. The overview follows the boat, while the inset is the physical camera mounted in the robot's head.
+This is a MuJoCo simulation running control at fifty hertz. The deck is one point six meters long and zero point eight meters wide. It translates forward while rolling and pitching. The animated water makes that motion easier to see, but it is not a fluid simulation: the boat's deterministic trajectory is the physical disturbance input. Every run begins with a small perturbation to the robot's joints. The overview follows the boat, while the inset is the physical camera mounted in the robot's head.
 
 The task is stricter than simply avoiding a fall. Microduck must survive for twenty seconds, stay upright, keep its feet in contact with the deck at least ninety-five percent of the time, remain within thirty centimeters of its starting position, never touch the floor, and never leave the usable deck boundary.
 
