@@ -23,7 +23,7 @@
     "006-controlled-roll",
     "012-variable-speed-boat-balance"
   ],
-  "technical_status": "challenge_012_attempt_8_rejected; contact-aware command latching preserved harbor but reduced chop robustness",
+  "technical_status": "challenge_012_attempt_8_rejected and stance phase diagnosed; corrective demand arrives after support is lost",
   "editorial_status": "episode_003_short_drafts_rejected_for_youtube; rebuilding as 3-minute educational landscape videos",
   "captions_status": "timed_captions_uploaded",
   "audio_finalization_pipeline": "local_kokoro_ready_for_future_episodes",
@@ -117,5 +117,6 @@
   "challenge_012_attempt_7_saturation_contact_artifact": "artifacts/012-variable-speed-boat-balance/attempt-7-saturation-contact-diagnosis.json",
   "challenge_012_training_attempt_8": "A 32-candidate contact-aware command-latching search preserved all three harbor gates, but its best candidate reduced worst chop survival from 6.18 s to 5.66 s and mean chop survival by 1.4333 s; rejected",
   "challenge_012_training_attempt_8_artifact": "artifacts/012-variable-speed-boat-balance/contact-capture-training-result.json",
-  "next_step": "Before attempt 9, measure which foot is in stance when each axis command saturates and whether command direction agrees with the available support foot; keep surge held out."
+  "challenge_012_stance_phase_diagnosis": "Longitudinal command saturation is only 8.25-16.67% during double support but 69.03-81.55% during single or zero support; the PD layer reacts after useful support is lost",
+  "next_step": "Prototype attempt 9 as phase-aware anticipatory foot placement or a dedicated learned recovery policy; do not raise proportional gains, and keep surge held out."
 }

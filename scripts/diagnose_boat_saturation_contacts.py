@@ -62,6 +62,12 @@ def diagnose(sim: Microduck, profile: dict, seed: int, residual_weights: np.ndar
     contact_rows: list[tuple[bool, bool]] = []
     raw_commands: list[np.ndarray] = []
     relative_position = np.zeros(2)
+    support_counts = {name: 0 for name in ("both", "left_only", "right_only", "none")}
+    x_saturation_by_support = {name: 0 for name in support_counts}
+    y_saturation_by_support = {name: 0 for name in support_counts}
+    reversals_by_support = {name: 0 for name in support_counts}
+    prior_support = (True, True)
+    prior_sign = np.zeros(2, dtype=int)
 
     for step in range(round(spec["environment"]["evaluation_duration_s"] / CTRL_DT)):
         t = step * CTRL_DT
@@ -83,13 +89,28 @@ def diagnose(sim: Microduck, profile: dict, seed: int, residual_weights: np.ndar
             -gains[0] * relative_position[0] - gains[1] * relative_velocity[0],
             -gains[2] * relative_position[1] - gains[3] * relative_velocity[1],
         ])
+        support_name = (
+            "both" if all(prior_support)
+            else "left_only" if prior_support[0]
+            else "right_only" if prior_support[1]
+            else "none"
+        )
+        support_counts[support_name] += 1
         command = np.array([
             np.clip(raw[0], VEL_BACK, VEL_FWD),
             np.clip(raw[1], -0.2, 0.2),
             0.0,
         ], dtype=np.float32)
-        x_saturated += int(raw[0] <= VEL_BACK or raw[0] >= VEL_FWD)
-        y_saturated += int(abs(raw[1]) >= 0.2)
+        x_is_saturated = raw[0] <= VEL_BACK or raw[0] >= VEL_FWD
+        y_is_saturated = abs(raw[1]) >= 0.2
+        x_saturated += int(x_is_saturated)
+        y_saturated += int(y_is_saturated)
+        x_saturation_by_support[support_name] += int(x_is_saturated)
+        y_saturation_by_support[support_name] += int(y_is_saturated)
+        sign = np.where(np.abs(raw) >= 0.05, np.sign(raw).astype(int), 0)
+        reversals = (sign != 0) & (prior_sign != 0) & (sign != prior_sign)
+        reversals_by_support[support_name] += int(np.any(reversals))
+        prior_sign = np.where(sign != 0, sign, prior_sign)
         raw_commands.append(raw)
         residual = residual_vector(
             residual_weights, roll, apparent_pitch, roll_rate,
@@ -98,7 +119,8 @@ def diagnose(sim: Microduck, profile: dict, seed: int, residual_weights: np.ndar
         control_step(sim, residual, mode="walk", command3=command)
         previous_roll, previous_pitch = roll, pitch
         previous_speed, previous_apparent_pitch = speed, apparent_pitch
-        contact_rows.append(foot_contacts(sim, deck_geom, foot_geoms))
+        prior_support = foot_contacts(sim, deck_geom, foot_geoms)
+        contact_rows.append(prior_support)
         relative = sim.data.xpos[sim.trunk, :2] - sim.data.qpos[boat_q:boat_q + 2]
         inside = (
             abs(float(relative[0])) <= DECK_HALF[0] - 0.12
@@ -136,6 +158,18 @@ def diagnose(sim: Microduck, profile: dict, seed: int, residual_weights: np.ndar
         "longest_no_contact_gap_s": round(longest_gap * CTRL_DT, 3),
         "first_sustained_contact_loss_s": (
             None if first_sustained_loss is None else round(first_sustained_loss, 3)),
+        "support_state_ratio": {
+            name: round(count / steps, 4) for name, count in support_counts.items()
+        },
+        "x_saturation_ratio_by_support": {
+            name: round(x_saturation_by_support[name] / max(count, 1), 4)
+            for name, count in support_counts.items()
+        },
+        "y_saturation_ratio_by_support": {
+            name: round(y_saturation_by_support[name] / max(count, 1), 4)
+            for name, count in support_counts.items()
+        },
+        "command_direction_reversals_by_support": reversals_by_support,
     }
 
 
@@ -172,12 +206,27 @@ def main() -> None:
                 min(row["first_sustained_contact_loss_s"] for row in rows),
                 max(row["first_sustained_contact_loss_s"] for row in rows),
             ],
+            "x_saturation_with_both_feet_contact_range": [
+                min(row["x_saturation_ratio_by_support"]["both"] for row in rows),
+                max(row["x_saturation_ratio_by_support"]["both"] for row in rows),
+            ],
+            "x_saturation_with_single_or_zero_support_range": [
+                min(row["x_saturation_ratio_by_support"][name]
+                    for row in rows for name in ("left_only", "right_only", "none")),
+                max(row["x_saturation_ratio_by_support"][name]
+                    for row in rows for name in ("left_only", "right_only", "none")),
+            ],
+            "zero_contact_ratio_range": [
+                min(row["support_state_ratio"]["none"] for row in rows),
+                max(row["support_state_ratio"]["none"] for row in rows),
+            ],
         },
         "finding": (
-            "The longitudinal walk command saturates for 57-59% of each chop run; lateral "
-            "commands and the bounded joint residual also saturate materially. Sustained "
-            "contact loss begins near 3 seconds, well before every deck exit. Attempt 8 "
-            "should change capture and step timing rather than merely increase gain limits."
+            "The longitudinal command saturates only 8-17% of double-support steps but "
+            "69-82% of single-support or airborne steps. The largest corrections therefore "
+            "arrive after useful support is already lost. Simple contact latching failed in "
+            "attempt 8; the next architecture needs phase-aware anticipatory foot placement "
+            "or a newly trained recovery policy, not larger proportional gains."
         ),
     }
     OUT_PATH.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")

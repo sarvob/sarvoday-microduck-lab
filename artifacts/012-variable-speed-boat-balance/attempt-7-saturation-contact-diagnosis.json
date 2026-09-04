@@ -27,7 +27,31 @@
       "both_feet_contact_ratio": 0.2836,
       "last_second_any_contact_ratio": 0.62,
       "longest_no_contact_gap_s": 0.14,
-      "first_sustained_contact_loss_s": 3.02
+      "first_sustained_contact_loss_s": 3.02,
+      "support_state_ratio": {
+        "both": 0.2836,
+        "left_only": 0.2214,
+        "right_only": 0.1791,
+        "none": 0.3159
+      },
+      "x_saturation_ratio_by_support": {
+        "both": 0.1667,
+        "left_only": 0.764,
+        "right_only": 0.6944,
+        "none": 0.7795
+      },
+      "y_saturation_ratio_by_support": {
+        "both": 0.0877,
+        "left_only": 0.3146,
+        "right_only": 0.4028,
+        "none": 0.3543
+      },
+      "command_direction_reversals_by_support": {
+        "both": 1,
+        "left_only": 2,
+        "right_only": 1,
+        "none": 1
+      }
     },
     {
       "seed": 83,
@@ -49,7 +73,31 @@
       "both_feet_contact_ratio": 0.243,
       "last_second_any_contact_ratio": 0.74,
       "longest_no_contact_gap_s": 0.24,
-      "first_sustained_contact_loss_s": 2.86
+      "first_sustained_contact_loss_s": 2.86,
+      "support_state_ratio": {
+        "both": 0.2456,
+        "left_only": 0.2608,
+        "right_only": 0.2076,
+        "none": 0.2861
+      },
+      "x_saturation_ratio_by_support": {
+        "both": 0.0825,
+        "left_only": 0.8155,
+        "right_only": 0.6951,
+        "none": 0.6903
+      },
+      "y_saturation_ratio_by_support": {
+        "both": 0.0412,
+        "left_only": 0.3204,
+        "right_only": 0.3659,
+        "none": 0.4336
+      },
+      "command_direction_reversals_by_support": {
+        "both": 0,
+        "left_only": 0,
+        "right_only": 3,
+        "none": 0
+      }
     },
     {
       "seed": 197,
@@ -71,7 +119,31 @@
       "both_feet_contact_ratio": 0.3074,
       "last_second_any_contact_ratio": 0.42,
       "longest_no_contact_gap_s": 0.22,
-      "first_sustained_contact_loss_s": 2.98
+      "first_sustained_contact_loss_s": 2.98,
+      "support_state_ratio": {
+        "both": 0.3107,
+        "left_only": 0.233,
+        "right_only": 0.2136,
+        "none": 0.2427
+      },
+      "x_saturation_ratio_by_support": {
+        "both": 0.0938,
+        "left_only": 0.7639,
+        "right_only": 0.803,
+        "none": 0.8133
+      },
+      "y_saturation_ratio_by_support": {
+        "both": 0.0521,
+        "left_only": 0.3889,
+        "right_only": 0.6212,
+        "none": 0.52
+      },
+      "command_direction_reversals_by_support": {
+        "both": 0,
+        "left_only": 0,
+        "right_only": 1,
+        "none": 1
+      }
     }
   ],
   "summary": {
@@ -90,7 +162,19 @@
     "first_sustained_contact_loss_range_s": [
       2.86,
       3.02
+    ],
+    "x_saturation_with_both_feet_contact_range": [
+      0.0825,
+      0.1667
+    ],
+    "x_saturation_with_single_or_zero_support_range": [
+      0.6903,
+      0.8155
+    ],
+    "zero_contact_ratio_range": [
+      0.2427,
+      0.3159
     ]
   },
-  "finding": "The longitudinal walk command saturates for 57-59% of each chop run; lateral commands and the bounded joint residual also saturate materially. Sustained contact loss begins near 3 seconds, well before every deck exit. Attempt 8 should change capture and step timing rather than merely increase gain limits."
+  "finding": "The longitudinal command saturates only 8-17% of double-support steps but 69-82% of single-support or airborne steps. The largest corrections therefore arrive after useful support is already lost. Simple contact latching failed in attempt 8; the next architecture needs phase-aware anticipatory foot placement or a newly trained recovery policy, not larger proportional gains."
 }
