@@ -1,0 +1,9 @@
+Fifteen out of fifteen.
+
+The reactive version got fourteen. Prediction earned exactly one extra save. Small number. Big difference when that one ball decides the match.
+
+It did not fall. It stayed inside the goal zone. And every visible robot movement came from the authentic Microduck simulation.
+
+Next, I want to make the game meaner. Curved shots. Bad lighting. A ball that disappears behind something. Maybe even a penalty taker.
+
+For today, the tiny duck gets the gloves.

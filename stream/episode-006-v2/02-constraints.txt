@@ -1,0 +1,9 @@
+Before training anything, three problems were already waiting.
+
+Problem one. Microduck cannot glide sideways like a human keeper. To cover the goal, it has to pivot, walk, then recover. That turn you see is not the duck getting confused. It is the price of using the locomotion the real robot already has.
+
+Problem two. The only view the decision layer gets is the camera in its head. The ball starts small, moves quickly, and can leave the frame while the robot turns.
+
+Problem three. The goal is compact, but so is the robot. Being almost right still means the ball goes through.
+
+No new walking model. No secret simulator coordinates. Just camera pixels, one prediction, and the frozen Microduck walk.
