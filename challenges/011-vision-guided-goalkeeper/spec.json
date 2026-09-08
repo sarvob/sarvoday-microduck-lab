@@ -1,0 +1,18 @@
+{
+  "id": "011-vision-guided-goalkeeper",
+  "title": "Challenge 011 — vision-guided goalkeeper",
+  "description": "Use Microduck's physical head camera to estimate a rolling ball trajectory and move to the predicted goal-line crossing.",
+  "training": {
+    "seeds": [7, 19, 31, 43, 59, 73, 89, 101, 127, 149],
+    "prediction_gains": [0.0, 0.5, 0.75, 1.0, 1.15, 1.3]
+  },
+  "evaluation": {
+    "seeds": [211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283]
+  },
+  "success": {
+    "minimum_blocks": 12,
+    "evaluation_shots": 15,
+    "must_stay_in_goal_zone": true,
+    "must_not_fall": true
+  }
+}

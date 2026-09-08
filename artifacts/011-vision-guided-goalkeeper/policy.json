@@ -1,0 +1,48 @@
+{
+  "challenge": "011-vision-guided-goalkeeper",
+  "prediction_gain": 1.0,
+  "frozen_locomotion_policy": "BEST_alpha_walking.onnx",
+  "perception": "orange-ball segmentation from rendered physical head_camera pixels",
+  "training_summary": [
+    {
+      "prediction_gain": 0.0,
+      "blocks": 9,
+      "shots": 10
+    },
+    {
+      "prediction_gain": 0.5,
+      "blocks": 10,
+      "shots": 10
+    },
+    {
+      "prediction_gain": 0.75,
+      "blocks": 10,
+      "shots": 10
+    },
+    {
+      "prediction_gain": 1.0,
+      "blocks": 10,
+      "shots": 10
+    },
+    {
+      "prediction_gain": 1.15,
+      "blocks": 10,
+      "shots": 10
+    },
+    {
+      "prediction_gain": 1.3,
+      "blocks": 10,
+      "shots": 10
+    }
+  ],
+  "baseline_evidence": [
+    "artifacts/011-vision-guided-goalkeeper/baseline-shot-1.mp4",
+    "artifacts/011-vision-guided-goalkeeper/baseline-shot-2.mp4",
+    "artifacts/011-vision-guided-goalkeeper/baseline-shot-3.mp4"
+  ],
+  "predictor_evidence": [
+    "artifacts/011-vision-guided-goalkeeper/predictor-shot-1.mp4",
+    "artifacts/011-vision-guided-goalkeeper/predictor-shot-2.mp4",
+    "artifacts/011-vision-guided-goalkeeper/predictor-shot-3.mp4"
+  ]
+}

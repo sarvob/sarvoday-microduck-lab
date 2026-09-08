@@ -1,0 +1,39 @@
+Here is a tiny robot facing a very product-shaped problem: the ball is moving, the camera is noisy, and being almost right still means conceding the goal.
+
+For this build, I wanted to know whether Microduck could become a goalkeeper without replacing the locomotion it already knows. The bet was simple. Keep Pollen Robotics' walking policy frozen. Give the robot a real view from its head camera. Then learn just enough prediction to move toward where the ball will be, instead of where it was a moment ago.
+
+That distinction sounds small. It is the difference between a demo that follows an orange dot and a behavior that can make a useful decision.
+
+First, the setup. This is the authentic Microduck model and the official walking network. The orange ball has real mass, friction, spin, and contact in MuJoCo. Each shot starts beyond the robot, with a randomized launch speed and approach angle. The dark arena, goal frame, cyan line, lighting, and graphics are presentation elements. They do not push the robot, move the ball, or change a score.
+
+There was one practical camera problem before the experiment could even begin. The shipped head-camera frame was inside the face geometry, so its image was mostly the robot's own lens shell. I moved that camera forward along its existing optical axis by twelve centimeters and rolled the image upright. It remains attached to the real head. That is a mounting correction, not a synthetic observer floating above the scene.
+
+Now the perception loop. Every tenth of a second, the controller receives an image from that head camera. It finds the orange pixels, computes their centroid, and casts a calibrated ray into the scene. Because the ball radius is known, the ray can be intersected with the ball-center plane. That gives a noisy visual estimate of the ball position. The controller never reads the ball's hidden simulator coordinates to make its decision.
+
+We keep the most recent observations and fit a short straight-line trajectory. From that line, we estimate where the ball should cross the cyan goal line. One number controls how strongly Microduck trusts that future estimate. A gain of zero means: chase the current observation. A gain of one means: move toward the predicted crossing point. Values above one deliberately over-lead the ball.
+
+This is where the product question becomes measurable. Is prediction actually useful, or is it just a clever-looking overlay?
+
+The baseline uses the same camera, the same orange-pixel detector, the same update rate, and the same frozen walking policy. The only difference is that it aims at the ball's latest observed lateral position. On slow or central shots, that works surprisingly well. The robot is compact, the ball is not enormous, and a late correction can still create contact.
+
+But watch the harder case. The ball starts close to the center, then travels toward the far side of the goal. At decision time, the baseline sees only a small lateral offset, so it makes a small move. By the time the true crossing becomes obvious, our observation window is over and the walking policy cannot recover the missing distance. The ball crosses without touching Microduck.
+
+This failure is useful. We do not need a bigger neural network, a faster physics engine, or a more dramatic animation. We need the decision target to describe the future, not the past.
+
+For training, I tested six bounded prediction gains on ten seeded shots. Zero, one half, three quarters, one, one point one five, and one point three. The zero-gain baseline blocked nine out of ten training shots. Every predictive setting from one half upward blocked all ten. Because several choices tied, I selected a gain of one: trust the estimated crossing directly, without arbitrary under-leading or overshooting.
+
+Nothing inside the official Microduck walking network changed. The learned product layer is one scalar sitting above it. That matters because it keeps the behavior understandable. The camera estimates a trajectory. The trajectory produces a target. The existing locomotion policy tries to reach that target.
+
+Then came the real test: fifteen unseen shots, with seeds that were never used to choose the gain. The baseline blocked fourteen. The predictor blocked fifteen. Both stayed upright, and neither left the declared goal zone.
+
+One extra save out of fifteen is not a revolution, and I do not want to sell it as one. The baseline was already strong on this deliberately compact goal. What the result demonstrates is more specific: on the single fast, wide shot that exposed the reactive system, forecasting the crossing supplied enough early intent for the same locomotion policy to create real ball contact.
+
+There are limitations. The current detector assumes an orange ball against a controlled arena. The trajectory model is linear. Perception happens during the opening part of the shot, before the robot turns far enough to lose the ball from view. A real product would need robust detection under different lighting, continuous tracking during motion, uncertainty estimates, and shots from both sides of a larger goal.
+
+The next build should attack exactly those assumptions. Randomize color and light. Add partial occlusion. Let the ball curve. Then ask the controller to decide whether it is confident enough to move, or whether holding the center is the safer product behavior.
+
+For now, this challenge passes its declared gate: at least twelve saves out of fifteen unseen shots, no falls, and no goal-zone exits. The measured result is fifteen out of fifteen for prediction, compared with fourteen out of fifteen for position chasing.
+
+The interesting lesson is not that prediction always wins. It is that a small, testable decision layer can make an existing robot capability more useful without pretending we retrained the whole machine. Keep the robot real. Keep the physics honest. Make the product bet measurable. Then let the awkward miss tell us what to build next.
+
+The full challenge specification, controller, evaluation seeds, and results are in the public Sarvoday Robotics repository. If you have a nastier goalkeeper test in mind, that sounds like exactly the right next ticket.
