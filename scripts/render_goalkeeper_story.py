@@ -17,7 +17,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "artifacts" / "011-vision-guided-goalkeeper" / "story-v2"
+OUT = ROOT / "artifacts" / "011-vision-guided-goalkeeper" / "story-v3"
 
 spec = importlib.util.spec_from_file_location("goalkeeper", ROOT / "scripts" / "train_goalkeeper.py")
 g = importlib.util.module_from_spec(spec)
@@ -96,6 +96,7 @@ def render(seed: int, gain: float, mode: str, shot_number: int, name: str) -> No
         case["speed"] / g.D.BALL_RADIUS, 0.0,
     ]
     observations: list[tuple[float, np.ndarray]] = []
+    tracking_observations: list[tuple[float, np.ndarray]] = []
     measured = None
     target = 0.02
     blocked = crossed = False
@@ -105,12 +106,15 @@ def render(seed: int, gain: float, mode: str, shot_number: int, name: str) -> No
                             ffmpeg_params=["-pix_fmt", "yuv420p", "-movflags", "+faststart"]) as writer:
         for step in range(round(10.5 / g.D.CTRL_DT)):
             t = step * g.D.CTRL_DT
-            if step % g.DETECT_EVERY == 0 and t <= 1.4:
+            if step % g.DETECT_EVERY == 0 and not blocked and not crossed:
                 perception.update_scene(sim.data, camera="head_camera", scene_option=sim.opt)
                 pframe = perception.render()
                 measured = g.visual_ball_position(sim, pframe)
                 if measured is not None:
-                    observations.append((t, measured.copy()))
+                    tracking_observations.append((t, measured.copy()))
+                    if t <= 1.4:
+                        observations.append((t, measured.copy()))
+            g.track_ball_with_head(sim, tracking_observations, t)
             if t >= g.DECIDE_AT:
                 estimate = g.forecast(observations, gain)
                 if estimate is not None:
@@ -146,6 +150,8 @@ def render(seed: int, gain: float, mode: str, shot_number: int, name: str) -> No
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     render(229, 0.0, "baseline", 1, "baseline-hard-miss.mp4")
+    render(101, 0.0, "baseline", 7, "baseline-center-save.mp4")
+    render(197, 0.0, "baseline", 14, "baseline-wide-save.mp4")
     render(229, 1.0, "predictor", 1, "predictor-hard-save.mp4")
     render(101, 1.0, "predictor", 7, "predictor-center-save.mp4")
     render(197, 1.0, "predictor", 14, "predictor-wide-save.mp4")

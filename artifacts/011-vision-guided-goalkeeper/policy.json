@@ -3,10 +3,12 @@
   "prediction_gain": 1.0,
   "frozen_locomotion_policy": "BEST_alpha_walking.onnx",
   "perception": "orange-ball segmentation from rendered physical head_camera pixels",
+  "head_tracking": "camera-pixel observations only; no simulator ball coordinates",
+  "decision_window_seconds": 1.4,
   "training_summary": [
     {
       "prediction_gain": 0.0,
-      "blocks": 9,
+      "blocks": 7,
       "shots": 10
     },
     {
@@ -34,15 +36,5 @@
       "blocks": 10,
       "shots": 10
     }
-  ],
-  "baseline_evidence": [
-    "artifacts/011-vision-guided-goalkeeper/baseline-shot-1.mp4",
-    "artifacts/011-vision-guided-goalkeeper/baseline-shot-2.mp4",
-    "artifacts/011-vision-guided-goalkeeper/baseline-shot-3.mp4"
-  ],
-  "predictor_evidence": [
-    "artifacts/011-vision-guided-goalkeeper/predictor-shot-1.mp4",
-    "artifacts/011-vision-guided-goalkeeper/predictor-shot-2.mp4",
-    "artifacts/011-vision-guided-goalkeeper/predictor-shot-3.mp4"
   ]
 }

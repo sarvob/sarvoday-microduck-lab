@@ -12,7 +12,7 @@ So the challenge was simple: keep the authentic Pollen Robotics walking policy,
 give the duck only its head-camera view, and find a useful controller with a
 small search that fits inside a couple of hours.
 
-The reactive version saved 14 of 15 unseen shots. The version that predicted
+The reactive version saved 9 of 15 unseen shots. The version that predicted
 where the ball would cross the goal line saved 15 of 15. No falls and no exits
 from the goal zone.
 
@@ -37,6 +37,8 @@ Technical disclosure:
 - The official Microduck walking network remains frozen.
 - The controller detects the orange ball from camera pixels and estimates its
   goal-line crossing. It does not read hidden ball coordinates for decisions.
+- The physical head follows those visible detections, while the goalkeeper's
+  target is locked from the first 1.4 seconds of camera observations.
 - The narrow right-side lab rail reports measurements but does not alter the
   simulation.
 - The real-world goalkeeper footage is used under the Pexels license:

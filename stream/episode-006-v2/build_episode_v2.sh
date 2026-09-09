@@ -3,7 +3,7 @@ set -euo pipefail
 
 here="$(cd "$(dirname "$0")" && pwd)"
 root="$(cd "$here/../.." && pwd)"
-story="$root/artifacts/011-vision-guided-goalkeeper/story-v2"
+story="$root/artifacts/011-vision-guided-goalkeeper/story-v3"
 tmp="$here/render-segments"
 mkdir -p "$tmp"
 
@@ -96,6 +96,6 @@ ffmpeg -y -hide_banner -loglevel error -f concat -safe 0 -i "$list" \
   -i "$here/narration-v2.wav" -i "$here/soundtrack.wav" \
   -filter_complex "[2:a]volume=0.20[m];[1:a]asplit=2[n1][n2];[m][n1]sidechaincompress=threshold=0.025:ratio=7:attack=18:release=420[ducked];[ducked][n2]amix=inputs=2:duration=first:normalize=0,loudnorm=I=-15.5:TP=-1.2:LRA=10[a]" \
   -map 0:v:0 -map "[a]" -t 318 -c:v copy -c:a aac -b:a 256k -ar 48000 \
-  -movflags +faststart "$here/episode-006-goalkeeper-story-v3.mp4"
+  -movflags +faststart "$here/episode-006-goalkeeper-story-v4.mp4"
 
-printf '%s\n' "$here/episode-006-goalkeeper-story-v3.mp4"
+printf '%s\n' "$here/episode-006-goalkeeper-story-v4.mp4"

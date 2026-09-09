@@ -51,7 +51,7 @@ panel(
     "Six tiny controllers enter",
     "The two-hour-sized search",
     [
-        (0, "React to the current position", "9 of 10 training saves"),
+        (0, "React to the current position", "7 of 10 training saves"),
         (1, "Predict the goal-line crossing", "5 bounded gains reached 10 of 10"),
         (2, "Choose the simplest winner", "Direct forecast, no oversteer"),
     ],
@@ -63,7 +63,7 @@ panel(
     "Final score",
     [
         (15, "Prediction saves", "15 of 15 unseen shots"),
-        (14, "Reactive saves", "One far-post shot gets through"),
+        (9, "Reactive saves", "Six late decisions get through"),
         (0, "Falls or zone exits", "The physical safety gates stayed clean"),
     ],
     "result.png",
