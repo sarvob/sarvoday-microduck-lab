@@ -29,6 +29,7 @@ SPEC = ROOT / "challenges" / "011-vision-guided-goalkeeper" / "spec.json"
 OUT = ROOT / "artifacts" / "011-vision-guided-goalkeeper"
 WAYPOINT_WEIGHTS = ROOT / "artifacts" / "002-two-marker-sprint" / "policy.json"
 GOAL_X = 0.08
+GOAL_HALF_WIDTH = 0.43
 ZONE_Y = (0.02, 0.36)
 SHOT_SECONDS = 13.0
 DETECT_EVERY = 5
@@ -233,6 +234,18 @@ def ball_contact(sim: D.Microduck) -> bool:
     return False
 
 
+def ball_is_goal(ball_x: float, ball_y: float) -> bool:
+    """Return true only after the entire ball crosses inside the goal mouth.
+
+    A robot touch is deliberately irrelevant here. A deflection that still
+    carries the ball over the line is a goal, not a save.
+    """
+    return (
+        ball_x - D.BALL_RADIUS >= GOAL_X
+        and abs(ball_y) + D.BALL_RADIUS <= GOAL_HALF_WIDTH
+    )
+
+
 def run_shot(case: dict, gain: float, weights: np.ndarray, capture: bool = False) -> dict:
     sim = setup_sim(1920 if capture else 640, 1080 if capture else 360, True)
     perception_renderer = sim.mj.Renderer(sim.model, 360, 640) if capture else sim.renderer
@@ -247,8 +260,8 @@ def run_shot(case: dict, gain: float, weights: np.ndarray, capture: bool = False
     observations: list[tuple[float, np.ndarray]] = []
     tracking_observations: list[tuple[float, np.ndarray]] = []
     target_y = 0.02
-    blocked = False
-    crossed = False
+    contacted = False
+    goal_scored = False
     fell = False
     left_zone = False
     frames = []
@@ -257,7 +270,7 @@ def run_shot(case: dict, gain: float, weights: np.ndarray, capture: bool = False
     steps = round(SHOT_SECONDS / D.CTRL_DT)
     for step in range(steps):
         t = step * D.CTRL_DT
-        if step % DETECT_EVERY == 0 and not blocked and not crossed:
+        if step % DETECT_EVERY == 0 and not goal_scored:
             perception_renderer.update_scene(sim.data, camera="head_camera", scene_option=sim.opt)
             perception_head = perception_renderer.render()
             measured = visual_ball_position(sim, perception_head)
@@ -277,10 +290,9 @@ def run_shot(case: dict, gain: float, weights: np.ndarray, capture: bool = False
         cmd = (0.0, 0.0, 0.0) if t < DECIDE_AT else waypoint_command(
             sim, target_y, min(t / SHOT_SECONDS, 1.0), weights)
         sim.control_step("walk" if t >= DECIDE_AT else "stand", cmd)
-        blocked = blocked or ball_contact(sim)
+        contacted = contacted or ball_contact(sim)
         bx, by = sim.ball_xy()
-        if bx >= GOAL_X and not blocked:
-            crossed = True
+        goal_scored = goal_scored or ball_is_goal(bx, by)
         y = float(sim.data.qpos[1])
         left_zone = left_zone or not (-0.02 <= y <= 0.39)
         fell = fell or float(sim.proj_gravity()[2]) > -0.5
@@ -290,11 +302,17 @@ def run_shot(case: dict, gain: float, weights: np.ndarray, capture: bool = False
             sim.cam.distance, sim.cam.azimuth, sim.cam.elevation = 1.50, 0, -18
             sim.renderer.update_scene(sim.data, camera=sim.cam, scene_option=sim.opt)
             frames.append(sim.renderer.render().copy())
-        if bx > 0.55 or (crossed and t > 10.5):
+        if bx > 0.55 or (goal_scored and t > 10.5):
             break
-    result = {**case, "gain": gain, "blocked": bool(blocked), "crossed_unblocked": bool(crossed),
+    saved = contacted and not goal_scored
+    result = {**case, "gain": gain,
+              "contacted": bool(contacted), "goal_scored": bool(goal_scored),
+              "saved": bool(saved),
+              # Retain legacy fields for readers of existing result files, but
+              # make their meaning match the corrected goal-line outcome.
+              "blocked": bool(saved), "crossed_unblocked": bool(goal_scored),
               "fell": bool(fell), "left_goal_zone": bool(left_zone),
-              "passed": bool(blocked and not fell and not left_zone),
+              "passed": bool(saved and not fell and not left_zone),
               "robot_final_y": round(float(sim.data.qpos[1]), 4),
               "ball_final_x": round(float(sim.ball_xy()[0]), 4),
               "ball_final_y": round(float(sim.ball_xy()[1]), 4),

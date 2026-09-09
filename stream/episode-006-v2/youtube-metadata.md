@@ -12,7 +12,7 @@ So the challenge was simple: keep the authentic Pollen Robotics walking policy,
 give the duck only its head-camera view, and find a useful controller with a
 small search that fits inside a couple of hours.
 
-The reactive version saved 9 of 15 unseen shots. The version that predicted
+The reactive version saved 7 of 15 unseen shots. The version that predicted
 where the ball would cross the goal line saved 15 of 15. No falls and no exits
 from the goal zone.
 
@@ -34,6 +34,8 @@ Technical disclosure:
 
 - Microduck, its head-camera images, ball motion, contacts, and scoring come
   from the measured MuJoCo experiment.
+- A touch is shown as CONTACT first. SAVE appears only when the complete shot
+  stays out; a deflection that later crosses the line is scored as a GOAL.
 - The official Microduck walking network remains frozen.
 - The controller detects the orange ball from camera pixels and estimates its
   goal-line crossing. It does not read hidden ball coordinates for decisions.

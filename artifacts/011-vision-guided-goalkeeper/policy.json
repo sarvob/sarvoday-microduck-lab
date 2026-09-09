@@ -8,17 +8,17 @@
   "training_summary": [
     {
       "prediction_gain": 0.0,
-      "blocks": 7,
+      "blocks": 5,
       "shots": 10
     },
     {
       "prediction_gain": 0.5,
-      "blocks": 10,
+      "blocks": 9,
       "shots": 10
     },
     {
       "prediction_gain": 0.75,
-      "blocks": 10,
+      "blocks": 9,
       "shots": 10
     },
     {

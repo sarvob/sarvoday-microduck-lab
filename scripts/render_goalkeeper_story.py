@@ -32,7 +32,8 @@ def font(size: int, bold: bool = False):
 
 def frame_layout(scene: np.ndarray, pov: np.ndarray, *, mode: str, shot_number: int,
                  t: float, speed: float, measured: np.ndarray | None,
-                 target: float, gain: float, blocked: bool, crossed: bool) -> np.ndarray:
+                 target: float, gain: float, contacted: bool,
+                 goal_scored: bool, save_confirmed: bool) -> np.ndarray:
     canvas = Image.new("RGB", (2560, 1440), "#060A0F")
     action = Image.fromarray(scene).resize((2140, 1204), Image.Resampling.LANCZOS)
     canvas.paste(action, (0, 118))
@@ -71,12 +72,15 @@ def frame_layout(scene: np.ndarray, pov: np.ndarray, *, mode: str, shot_number: 
         draw.text((152, 1112), "IT MUST TURN TO MOVE SIDEWAYS", font=font(35, True), fill="#FFFFFF")
         draw.text((152, 1165), "The pivot is a real locomotion constraint", font=font(25), fill="#C4D0D6")
 
-    if blocked:
+    if goal_scored:
+        draw.rounded_rectangle((2190, 1130, 2510, 1250), 28, fill="#442016", outline="#FF7650", width=4)
+        draw.text((2250, 1160), "GOAL", font=font(44, True), fill="#FF7650")
+    elif save_confirmed:
         draw.rounded_rectangle((2190, 1130, 2510, 1250), 28, fill="#123B2E", outline="#43E6A0", width=4)
         draw.text((2250, 1160), "SAVE", font=font(44, True), fill="#43E6A0")
-    elif crossed:
-        draw.rounded_rectangle((2190, 1130, 2510, 1250), 28, fill="#442716", outline="#FFB24C", width=4)
-        draw.text((2250, 1160), "MISS", font=font(44, True), fill="#FFB24C")
+    elif contacted:
+        draw.rounded_rectangle((2190, 1130, 2510, 1250), 28, fill="#172A35", outline="#8AA1AF", width=4)
+        draw.text((2224, 1167), "CONTACT", font=font(34, True), fill="#C4D0D6")
 
     draw.text((2180, 1358), "Values shown here do not alter physics", font=font(16), fill="#67808D")
     return np.asarray(canvas)
@@ -99,14 +103,15 @@ def render(seed: int, gain: float, mode: str, shot_number: int, name: str) -> No
     tracking_observations: list[tuple[float, np.ndarray]] = []
     measured = None
     target = 0.02
-    blocked = crossed = False
+    contacted = goal_scored = save_confirmed = False
+    contact_time = None
     path = OUT / name
     with imageio.get_writer(path, fps=25, codec="libx264", quality=7,
                             macro_block_size=1,
                             ffmpeg_params=["-pix_fmt", "yuv420p", "-movflags", "+faststart"]) as writer:
         for step in range(round(10.5 / g.D.CTRL_DT)):
             t = step * g.D.CTRL_DT
-            if step % g.DETECT_EVERY == 0 and not blocked and not crossed:
+            if step % g.DETECT_EVERY == 0 and not goal_scored:
                 perception.update_scene(sim.data, camera="head_camera", scene_option=sim.opt)
                 pframe = perception.render()
                 measured = g.visual_ball_position(sim, pframe)
@@ -122,9 +127,19 @@ def render(seed: int, gain: float, mode: str, shot_number: int, name: str) -> No
             cmd = (0.0, 0.0, 0.0) if t < g.DECIDE_AT else g.waypoint_command(
                 sim, target, min(t / g.SHOT_SECONDS, 1.0), weights)
             sim.control_step("walk" if t >= g.DECIDE_AT else "stand", cmd)
-            blocked = blocked or g.ball_contact(sim)
-            bx, _ = sim.ball_xy()
-            crossed = crossed or (bx >= g.GOAL_X and not blocked)
+            contact_now = g.ball_contact(sim)
+            if contact_now and not contacted:
+                contact_time = t
+            contacted = contacted or contact_now
+            bx, by = sim.ball_xy()
+            goal_scored = goal_scored or g.ball_is_goal(bx, by)
+            # Do not announce a save at impact. Give the deflection time to
+            # reveal whether it still carries the ball across the line.
+            if contacted and not goal_scored and contact_time is not None and t - contact_time >= 0.55:
+                velocity = sim.data.qvel[sim.ball_d:sim.ball_d + 2]
+                safely_in_front = bx + g.D.BALL_RADIUS < g.GOAL_X
+                moving_away_or_stopped = velocity[0] <= 0.01 or float(np.linalg.norm(velocity)) < 0.08
+                save_confirmed = safely_in_front and moving_away_or_stopped
             if step % 2 == 0:
                 # Start behind the shot, then move to a three-quarter view as
                 # Microduck pivots. This keeps its facing direction legible.
@@ -140,8 +155,9 @@ def render(seed: int, gain: float, mode: str, shot_number: int, name: str) -> No
                 writer.append_data(frame_layout(
                     scene, pov, mode=mode, shot_number=shot_number, t=t,
                     speed=case["speed"], measured=measured, target=target,
-                    gain=gain, blocked=blocked, crossed=crossed))
-            if bx > 0.52 or (crossed and t > 9.6):
+                    gain=gain, contacted=contacted, goal_scored=goal_scored,
+                    save_confirmed=save_confirmed))
+            if bx > 0.52 or (goal_scored and t > 9.6):
                 break
     perception.close()
     sim.renderer.close()
@@ -149,9 +165,9 @@ def render(seed: int, gain: float, mode: str, shot_number: int, name: str) -> No
 
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
-    render(229, 0.0, "baseline", 1, "baseline-hard-miss.mp4")
-    render(101, 0.0, "baseline", 7, "baseline-center-save.mp4")
-    render(197, 0.0, "baseline", 14, "baseline-wide-save.mp4")
+    render(229, 0.0, "baseline", 1, "baseline-hard-goal.mp4")
+    render(101, 0.0, "baseline", 7, "baseline-center-goal.mp4")
+    render(197, 0.0, "baseline", 14, "baseline-wide-goal.mp4")
     render(229, 1.0, "predictor", 1, "predictor-hard-save.mp4")
     render(101, 1.0, "predictor", 7, "predictor-center-save.mp4")
     render(197, 1.0, "predictor", 14, "predictor-wide-save.mp4")

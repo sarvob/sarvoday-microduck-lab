@@ -51,8 +51,8 @@ panel(
     "Six tiny controllers enter",
     "The two-hour-sized search",
     [
-        (0, "React to the current position", "7 of 10 training saves"),
-        (1, "Predict the goal-line crossing", "5 bounded gains reached 10 of 10"),
+        (0, "React to the current position", "5 of 10 training saves"),
+        (1, "Predict the goal-line crossing", "3 bounded gains reached 10 of 10"),
         (2, "Choose the simplest winner", "Direct forecast, no oversteer"),
     ],
     "training.png",
@@ -63,7 +63,7 @@ panel(
     "Final score",
     [
         (15, "Prediction saves", "15 of 15 unseen shots"),
-        (9, "Reactive saves", "Six late decisions get through"),
+        (7, "Reactive saves", "Eight late decisions get through"),
         (0, "Falls or zone exits", "The physical safety gates stayed clean"),
     ],
     "result.png",
@@ -87,11 +87,11 @@ thumb.save(HERE / "thumbnail-v2.jpg", quality=92, optimize=True)
 def overlay(name, kicker, title, subtitle, accent="#43E6A0"):
     im = Image.new("RGBA", (2560, 1440), (0, 0, 0, 0))
     d = ImageDraw.Draw(im)
-    d.rounded_rectangle((92, 82, 1690, 510), 40, fill=(5, 13, 20, 225),
+    d.rounded_rectangle((66, 34, 1420, 214), 28, fill=(5, 13, 20, 218),
                         outline=(40, 67, 80, 255), width=4)
-    d.text((156, 140), kicker.upper(), font=font(29, True), fill=accent)
-    d.text((156, 200), title, font=font(68, True), fill="#FFFFFF")
-    d.text((160, 306), subtitle, font=font(31), fill="#C2D0D7")
+    d.text((112, 60), kicker.upper(), font=font(19, True), fill=accent)
+    d.text((112, 92), title, font=font(40, True), fill="#FFFFFF")
+    d.text((114, 150), subtitle, font=font(23), fill="#C2D0D7")
     im.save(HERE / name)
 
 

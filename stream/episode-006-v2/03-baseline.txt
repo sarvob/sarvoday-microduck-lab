@@ -1,11 +1,13 @@
-I started with the obvious version. See the ball. Walk toward where it is.
+We started with the obvious version. See the ball. Walk toward where it is. Sensible, right?
 
-And honestly, it looked good. Central shots bounced away. Slow shots were easy. The little keeper was doing the job.
+And honestly, it looked good at first. The duck got a touch on the ball. We nearly called it a save.
+
+But... wait. Keep watching.
 
 Then this shot arrived.
 
 The ball begins near the middle and drifts toward the far side. Microduck reacts to the position it can see. It turns. It moves. But every correction is already a little late.
 
-The ball reaches the line first.
+The touch changes the ball, but not enough. It still crosses the line. Goal.
 
-That miss gave us the actual product problem. The robot was answering the wrong question. Not where is the ball now. Where will it meet the goal?
+That goal gave us the actual product problem. The robot was answering the wrong question. Not, where is the ball now? Where will it meet the goal?

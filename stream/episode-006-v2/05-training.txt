@@ -1,9 +1,9 @@
 Then I let six versions compete.
 
-One ignored the future. Five trusted the predicted crossing by different amounts. Ten seeded shots each. Small enough to finish quickly, large enough to reject an idea that only works once.
+One ignored the future. Five trusted the predicted crossing by different amounts. Ten seeded shots each. Small enough to finish quickly, large enough to expose a lucky demo.
 
-The reactive duck saved seven out of ten. Every predictive version saved all ten.
+The reactive duck saved five out of ten. Oof. Half the shots still became goals. The strongest predictive versions saved all ten.
 
-Several tied, so I chose the least dramatic answer. Trust the forecast directly. No extra oversteer. No giant network. One useful number sitting above the walking controller.
+Several tied, so we chose the least dramatic answer: trust the forecast directly. No extra oversteer. No giant network. Just one useful number sitting above the walking controller.
 
 Training was done. But the scoreboard that matters was still hidden.

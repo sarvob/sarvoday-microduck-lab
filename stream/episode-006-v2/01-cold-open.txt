@@ -1,7 +1,7 @@
-Real goalkeepers make this look unfairly easy. One step, one dive, save.
+Real goalkeepers make this look almost unfair. One step. One dive. Done.
 
-Microduck has none of that. No arms. No sidestep. Tiny feet. And once it turns to run across the goal, its own camera can lose the ball.
+Microduck? Well... it has no arms, no sidestep, and feet roughly the size of two ambitious crackers. Worse, the moment it turns to run, its own camera can lose the ball.
 
-So I gave myself a small product challenge. Could this duck become a goalkeeper with one compact control idea and a search that fits inside a couple of hours?
+So we made a bet: give this tiny duck a couple of hours and one compact control idea. Could it become a goalkeeper?
 
-First shot. Watch the far post.
+Okay. First shot. Watch the far post.

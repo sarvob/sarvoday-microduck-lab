@@ -35,6 +35,21 @@ class GoalkeeperCameraAlignmentTest(unittest.TestCase):
         self.assertGreater(float(sim.data.qpos[1]), 0.08)
         self.assertLess(float(sim.data.qpos[1]), 0.15)
 
+    def test_touch_does_not_override_a_later_goal(self):
+        # Outcome scoring is based on the whole ball crossing the line inside
+        # the posts. Whether the robot touched it is intentionally irrelevant.
+        self.assertTrue(goalkeeper.ball_is_goal(
+            goalkeeper.GOAL_X + goalkeeper.D.BALL_RADIUS + 0.001, 0.16))
+
+    def test_partial_crossing_is_not_yet_a_goal(self):
+        self.assertFalse(goalkeeper.ball_is_goal(
+            goalkeeper.GOAL_X + goalkeeper.D.BALL_RADIUS - 0.001, 0.16))
+
+    def test_ball_outside_post_is_not_a_goal(self):
+        self.assertFalse(goalkeeper.ball_is_goal(
+            goalkeeper.GOAL_X + goalkeeper.D.BALL_RADIUS + 0.001,
+            goalkeeper.GOAL_HALF_WIDTH))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -2,7 +2,7 @@ The change was deliberately tiny.
 
 Keep a short memory of what the head camera saw. Draw a line through those observations. Extend that line to the goal. Then move toward that crossing point before the shot gets there.
 
-That is the whole bet.
+That's the whole bet. Tiny change. Very large consequences... hopefully.
 
 The walking policy stays untouched. The physics stay untouched. We are only changing the target Microduck receives.
 
@@ -10,4 +10,4 @@ Now replay the same difficult shot.
 
 The duck still has to make its awkward pivot. But this time the target is already waiting near the far post. Earlier intent gives the same little feet enough time.
 
-Contact. Save.
+Contact. Now wait... the ball stays out. Save.
