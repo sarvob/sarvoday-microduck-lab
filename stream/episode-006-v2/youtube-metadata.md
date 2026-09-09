@@ -39,8 +39,9 @@ Technical disclosure:
   goal-line crossing. It does not read hidden ball coordinates for decisions.
 - The narrow right-side lab rail reports measurements but does not alter the
   simulation.
-- The opening human-goalkeeper sequence is an original low-poly Blender
-  animation, not celebrity or broadcast footage.
+- The real-world goalkeeper footage is used under the Pexels license:
+  Anastasia Shuraeva (video 9502506) and Tima Miroshnichenko (video 6084018).
+- No celebrity likeness or broadcast-match footage is used.
 - Music and sound effects were generated specifically for this episode.
 
 #Robotics #Microduck #MuJoCo #RobotLearning #ComputerVision

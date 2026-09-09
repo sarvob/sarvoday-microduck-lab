@@ -8,7 +8,9 @@ tmp="$here/render-segments"
 mkdir -p "$tmp"
 
 for f in "$here"/narration-parts/{01,02,03,04,05,06,07}.wav \
-  "$here/soundtrack.wav" "$here/keeper-broll.mp4" \
+  "$here/soundtrack.wav" \
+  "$here/stock-broll/pexels-9502506.mp4" \
+  "$here/stock-broll/pexels-6084018.mp4" \
   "$here"/{constraints,training,result}.png \
   "$here"/{cold-title,baseline-title,predictor-title,final-test}.png \
   "$story"/{baseline-hard-miss,baseline-center-save,baseline-wide-save,predictor-hard-save,predictor-center-save,predictor-wide-save}.mp4; do
@@ -48,7 +50,15 @@ encode_still() {
     -maxrate 26M -bufsize 36M -pix_fmt yuv420p -r 60 -movflags +faststart "$tmp/$name.mp4"
 }
 
-encode_overlay "$here/keeper-broll.mp4" "$here/cold-title.png" 8 00-cold
+encode_portrait_broll() {
+  local src="$1" seconds="$2" name="$3" start="${4:-0}"
+  ffmpeg -y -hide_banner -loglevel error -stream_loop -1 -ss "$start" -i "$src" -t "$seconds" \
+    -filter_complex "[0:v]split=2[bg][fg];[bg]scale=2560:1440:force_original_aspect_ratio=increase,crop=2560:1440,boxblur=28:2,eq=brightness=-0.18:saturation=0.75[back];[fg]scale=-2:1320[front];[back][front]overlay=(W-w)/2:(H-h)/2,eq=contrast=1.04:saturation=1.08,fps=60" \
+    -an -c:v h264_videotoolbox -b:v 18M -maxrate 26M -bufsize 36M \
+    -pix_fmt yuv420p -r 60 -movflags +faststart "$tmp/$name.mp4"
+}
+
+encode_overlay "$here/stock-broll/pexels-9502506.mp4" "$here/cold-title.png" 8 00-cold
 encode_overlay "$story/baseline-hard-miss.mp4" "$here/cold-title.png" 12 01-the-bet
 encode_overlay "$story/predictor-hard-save.mp4" "$here/predictor-title.png" 20 02-can-it-save
 encode_still "$here/constraints.png" 8 03-constraints
@@ -74,7 +84,7 @@ encode_video "$story/predictor-center-save.mp4" 8 22-final-center-replay 0.3
 encode_video "$story/predictor-wide-save.mp4" 10 23-final-wide-replay 1.2
 encode_still "$here/result.png" 12 24-result
 encode_video "$story/predictor-hard-save.mp4" 10 25-victory 0.5
-encode_video "$here/keeper-broll.mp4" 5 26-keeper-button 1.0
+encode_portrait_broll "$here/stock-broll/pexels-6084018.mp4" 5 26-keeper-button 1.0
 
 list="$tmp/concat-v2.txt"
 : > "$list"
@@ -86,6 +96,6 @@ ffmpeg -y -hide_banner -loglevel error -f concat -safe 0 -i "$list" \
   -i "$here/narration-v2.wav" -i "$here/soundtrack.wav" \
   -filter_complex "[2:a]volume=0.20[m];[1:a]asplit=2[n1][n2];[m][n1]sidechaincompress=threshold=0.025:ratio=7:attack=18:release=420[ducked];[ducked][n2]amix=inputs=2:duration=first:normalize=0,loudnorm=I=-15.5:TP=-1.2:LRA=10[a]" \
   -map 0:v:0 -map "[a]" -t 318 -c:v copy -c:a aac -b:a 256k -ar 48000 \
-  -movflags +faststart "$here/episode-006-goalkeeper-story-v2.mp4"
+  -movflags +faststart "$here/episode-006-goalkeeper-story-v3.mp4"
 
-printf '%s\n' "$here/episode-006-goalkeeper-story-v2.mp4"
+printf '%s\n' "$here/episode-006-goalkeeper-story-v3.mp4"
