@@ -1,0 +1,15 @@
+Okay... this is annoying.
+
+Microduck can do a full roll. But if we let the roll controller run for point eight four seconds, it doesn't stop. It just... keeps becoming a wheel.
+
+So we changed one thing. Not the neural network. Not the robot. Just the handoff—twenty milliseconds earlier.
+
+Point eight two seconds.
+
+And... look at that. Roll. Catch. Stand.
+
+We tried it from three slightly different starting poses. Three clean recoveries. Same frozen Microduck policy; one better product decision above it.
+
+Honestly, twenty milliseconds shouldn't feel this dramatic. But in robotics, one control step can be the difference between a trick... and a skill.
+
+Subscribe. Next time, we make it do something even less reasonable.
