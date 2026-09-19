@@ -1,0 +1,7 @@
+Can a second camera save a goalkeeper that can't see? We put a screen between the ball and Microduck's head camera. Same robot. Same shot. Same physics. The head view found the ball zero times. And, yeah... the duck mostly guarded the wrong patch of floor. Across fifteen unseen shots, it saved only two.
+
+Then we added one camera above the field. Not magic coordinates—actual rendered pixels, calibrated back onto the floor. The walking policy stayed frozen. Watch the same shot.
+
+Now the duck moves before the ball reaches the screen. Contact... wait... save.
+
+Fifteen new shots. Fifteen saves. Great. Now the harder question: how late can that outside view arrive before the advantage disappears?

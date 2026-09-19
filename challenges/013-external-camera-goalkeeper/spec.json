@@ -1,0 +1,21 @@
+{
+  "id": "013-external-camera-goalkeeper",
+  "title": "Challenge 013 — goalkeeper with an outside camera",
+  "description": "Compare the published head-camera goalkeeper against the same frozen controller when a visual-only screen blocks its early view, then add a calibrated overhead camera whose rendered pixels—not hidden simulator coordinates—supply the trajectory observations.",
+  "evaluation": {
+    "seeds": [307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389]
+  },
+  "success": {
+    "minimum_saves": 12,
+    "evaluation_shots": 15,
+    "must_stay_in_goal_zone": true,
+    "must_not_fall": true
+  },
+  "frozen": [
+    "MuJoCo physics",
+    "authentic Pollen Robotics Microduck model",
+    "BEST_alpha_walking.onnx locomotion policy",
+    "prediction gain 1.0",
+    "shot generator and strict whole-ball goal scoring"
+  ]
+}

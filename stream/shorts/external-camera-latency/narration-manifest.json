@@ -1,0 +1,51 @@
+[
+  {
+    "start": 0.15,
+    "speed": 1.05,
+    "text": "Your video call freezes for four seconds. Annoying. For a robot goalkeeper? Maybe fatal.",
+    "duration": 6.012,
+    "file": "narration-01.wav"
+  },
+  {
+    "start": 6.8,
+    "speed": 1.03,
+    "text": "Last time, an overhead camera rescued our duck from a blocked view. But we'd quietly assumed its pixels arrived on time.",
+    "duration": 7.27,
+    "file": "narration-02.wav"
+  },
+  {
+    "start": 14.9,
+    "speed": 1.06,
+    "text": "So we froze the robot, the shots, the physics, and the predictor. Then we delayed the camera feed.",
+    "duration": 5.687,
+    "file": "narration-03.wav"
+  },
+  {
+    "start": 21.4,
+    "speed": 1.06,
+    "text": "No lag: fifteen saves out of fifteen. One second: still fifteen. Two seconds: somehow, still fifteen.",
+    "duration": 6.693,
+    "file": "narration-04.wav"
+  },
+  {
+    "start": 29.0,
+    "speed": 1.02,
+    "text": "At three seconds, it just clears our bar: twelve out of fifteen.",
+    "duration": 3.731,
+    "file": "narration-05.wav"
+  },
+  {
+    "start": 34.2,
+    "speed": 1.04,
+    "text": "Then four seconds. The frames do arrive, with their original timestamps, but the duck gets the message after the moment is gone. Seven saves out of fifteen.",
+    "duration": 9.973,
+    "file": "narration-06.wav"
+  },
+  {
+    "start": 45.7,
+    "speed": 1.02,
+    "text": "Great. We found the cliff. Next, the Wi-Fi starts dropping frames.",
+    "duration": 4.527,
+    "file": "narration-07.wav"
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "id": "014-external-camera-latency",
+  "title": "Challenge 014 — how late can the outside camera arrive?",
+  "description": "Measure the goalkeeper's tolerance to timestamped external-camera latency on a fresh matched shot suite. Camera frames are rendered on time, held in a delivery queue, and released only after the declared delay. The robot, physics, predictor, locomotion, shot generator, and scoring stay frozen.",
+  "evaluation": {
+    "seeds": [397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479],
+    "latency_seconds": [0.0, 1.0, 2.0, 3.0, 4.0]
+  },
+  "tolerance_gate": {
+    "minimum_saves": 12,
+    "evaluation_shots": 15,
+    "must_stay_in_goal_zone": true,
+    "must_not_fall": true
+  },
+  "frozen": [
+    "MuJoCo physics",
+    "authentic Pollen Robotics Microduck model",
+    "BEST_alpha_walking.onnx locomotion policy",
+    "rendered-pixel overhead camera and calibration",
+    "prediction gain 1.0 and timestamp-aware forecast",
+    "shot generator and strict whole-ball goal scoring"
+  ]
+}
