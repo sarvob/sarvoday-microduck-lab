@@ -1,0 +1,32 @@
+[
+  {
+    "start": 0.15,
+    "speed": 1.04,
+    "text": "Your video call skips a few frames. You keep talking. But can a robot goalkeeper keep saving?"
+  },
+  {
+    "start": 6.1,
+    "speed": 1.04,
+    "text": "We gave our duck the same fresh shots, then made its overhead-camera packets disappear. No delay. No secret ball position."
+  },
+  {
+    "start": 14.5,
+    "speed": 1.03,
+    "text": "First surprise: one hundred fifteen of two hundred ten frames vanished, and it still saved all fifteen shots. Apparently, this duck can fill in some blanks."
+  },
+  {
+    "start": 25.4,
+    "speed": 1.02,
+    "text": "Then we removed one hundred sixty-eight frames. Same robot. Same shots. Now five goals slipped through."
+  },
+  {
+    "start": 34.0,
+    "speed": 1.02,
+    "text": "Ten saves out of fifteen misses our twelve-save bar. It never fell; it simply ran out of useful pictures."
+  },
+  {
+    "start": 42.0,
+    "speed": 1.03,
+    "text": "So we'll add loss detection and a fallback, then test bursts instead of random gaps. Because Wi-Fi rarely fails politely."
+  }
+]

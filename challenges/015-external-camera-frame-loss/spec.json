@@ -1,0 +1,24 @@
+{
+  "id": "015-external-camera-frame-loss",
+  "title": "Challenge 015 — how many outside-camera frames can disappear?",
+  "description": "Measure the goalkeeper's tolerance to deterministic matched external-camera packet loss on a fresh shot suite. Every camera frame is rendered on time, assigned one precomputed per-shot loss score, and either delivered immediately or discarded. Higher loss conditions keep a strict subset of the frames kept at lower loss. The robot, physics, predictor, locomotion, shot generator, and scoring stay frozen.",
+  "evaluation": {
+    "seeds": [487, 491, 499, 503, 509, 521, 523, 541, 547, 557, 563, 569, 571, 577, 587],
+    "drop_fractions": [0.0, 0.25, 0.5, 0.75, 0.9],
+    "loss_mask_seed": 15015
+  },
+  "tolerance_gate": {
+    "minimum_saves": 12,
+    "evaluation_shots": 15,
+    "must_stay_in_goal_zone": true,
+    "must_not_fall": true
+  },
+  "frozen": [
+    "MuJoCo physics",
+    "authentic Pollen Robotics Microduck model",
+    "BEST_alpha_walking.onnx locomotion policy",
+    "rendered-pixel overhead camera and calibration",
+    "zero delivery latency, prediction gain 1.0, and timestamp-aware forecast",
+    "shot generator and strict whole-ball goal scoring"
+  ]
+}
