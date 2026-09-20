@@ -24,5 +24,8 @@
 
 ## Upload state
 
-The master is QA-passed and ready for a private SarvodayRobotics upload. YouTube
-URL and draft state must be filled after the authenticated browser upload.
+YouTube Studio was authenticated on SarvodayRobotics, but Chrome rejected the
+browser-assisted local-file transfer with `Not allowed`. No upload or YouTube
+URL was created. Open `chrome://extensions`, choose Details for the ChatGPT
+browser extension, enable `Allow access to file URLs`, return to the preserved
+YouTube Studio upload dialog, and select this master.

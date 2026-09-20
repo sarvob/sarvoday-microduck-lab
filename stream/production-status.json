@@ -427,11 +427,13 @@
   "challenge_015_spec": "challenges/015-external-camera-frame-loss/spec.json",
   "challenge_015_result": "On 15 fresh matched shots per condition, the frozen goalkeeper saved 15/15 after 0, 70, and 115 of 210 rendered packets were dropped; 10/15 after 168 were dropped; and 8/15 after 192 were dropped. Every condition had zero falls and zero goal-zone exits. Higher-loss conditions retained a strict subset of lower-loss frames; every kept observation came from rendered overhead-camera pixels with zero added delivery delay.",
   "challenge_015_result_artifact": "artifacts/015-external-camera-frame-loss/result.json",
+  "challenge_015_repository_url": "https://github.com/sarvob/sarvoday-microduck-lab/tree/d6ea60e79c15feface343fe9b262ae591330703c/artifacts/015-external-camera-frame-loss",
   "challenge_015_evidence": "artifacts/015-external-camera-frame-loss/evidence-drop-0.50-seed-487.mp4 and artifacts/015-external-camera-frame-loss/evidence-drop-0.75-seed-487.mp4",
   "challenge_015_final_short": "stream/shorts/external-camera-frame-loss/external-camera-frame-loss-final.mp4",
   "challenge_015_final_short_qa": "50.0 seconds; 1440x2560 at 60 fps; H.264 High, yuv420p; AAC-LC 48 kHz; -16.70 LUFS integrated and -1.49 dBTP; full decode, intended-fade-only black-frame scan, contact-sheet review, terminal score-label audit, source-rights record, privacy scan, and all 153 repository tests passed.",
-  "challenge_015_youtube_status": "QA-passed local master; private upload not yet attempted in this run.",
-  "next_open_four_hour_slots": "After live YouTube Studio verification and subject to action-time publication confirmation, use the next open America/Los_Angeles four-hour cadence slots for challenges 013, 014, and 015 in order.",
+  "challenge_015_youtube_status": "QA-passed local master; authenticated private upload attempt on 2026-09-19 was blocked before transfer because Chrome denied the ChatGPT extension local-file access. No YouTube draft or URL exists.",
+  "challenge_015_youtube_upload_blocker": "Open chrome://extensions, click Details under the ChatGPT browser extension, enable Allow access to file URLs, return to the preserved SarvodayRobotics YouTube Studio upload dialog, and select stream/shorts/external-camera-frame-loss/external-camera-frame-loss-final.mp4.",
+  "next_open_four_hour_slots": "Subject to live status verification and publication confirmation: use 2026-09-19 8:00 PM America/Los_Angeles for challenge 013, 2026-09-20 12:00 AM for challenge 014, and 2026-09-20 4:00 AM for challenge 015, or shift the sequence to the next open four-hour slots if any are already occupied.",
   "latest_completed_video_status": "challenge_015_QA_passed_ready_for_private_upload",
   "latest_completed_video_title": "How Many Missing Frames Before This Robot Misses?",
   "latest_completed_video_path": "stream/shorts/external-camera-frame-loss/external-camera-frame-loss-final.mp4",
@@ -439,5 +441,5 @@
   "latest_short_title": "How Many Missing Frames Before This Robot Misses?",
   "latest_short_url": null,
   "latest_short_published_at": null,
-  "next_step": "Verify live YouTube Studio state, upload the QA-passed challenge 014 and challenge 015 masters as private SarvodayRobotics drafts when local-file access permits, and enter their prepared metadata. Challenge 013 remains a private draft until live status proves otherwise. The next engineering test is burst-loss tolerance plus a safe fallback; do not claim it until simulated."
+  "next_step": "Enable Chrome local-file access for the ChatGPT browser extension, then use the preserved SarvodayRobotics upload dialog to upload the QA-passed challenge 015 master as a private draft and enter stream/shorts/external-camera-frame-loss/youtube.md. Challenge 014 has the same upload blocker, and challenge 013 remains a private draft awaiting live schedule verification. The next engineering test is burst-loss tolerance plus a safe fallback; do not claim it until simulated."
 }
